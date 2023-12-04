@@ -66,6 +66,22 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "coding-standards-apply": [
+            "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix"
+        ],
+        "coding-standards-check": [
+            "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --dry-run"
+        ],
+        "translations-update": [
+            "# We need a translation from en to en (!) (without prefix) to be able to process placeholders in en.",
+            "DEFAULT_LOCALE=en bin/console translation:extract --clean --force en --prefix=''",
+            "DEFAULT_LOCALE=en bin/console translation:extract --clean --force da",
+            "# Mark default translations (prefixed with `__`) as “Needs work” in Danish translations",
+            "sed --in-place='' 's/<target>__/<target state=\"needs-l10n\">__/' translations/*.da.*xlf"
+        ],
+        "psalm": [
+            "./vendor/bin/psalm --no-cache"
         ]
     },
     "conflict": {
@@ -76,5 +92,13 @@
             "allow-contrib": false,
             "require": "6.4.*"
         }
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.40",
+        "phpunit/phpunit": "^10.5",
+        "psalm/plugin-symfony": "^5.1",
+        "symfony/phpunit-bridge": "^7.0",
+        "vimeo/psalm": "^5.16",
+        "weirdan/doctrine-psalm-plugin": "^2.9"
     }
 }

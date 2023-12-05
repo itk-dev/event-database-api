@@ -1,16 +1,19 @@
 {
+    "name": "itkdev/event-database-api",
+    "description": "API front-end for the event database",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "api-platform/core": "^3.2",
         "doctrine/doctrine-bundle": "^2.11",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^2.17",
+        "elasticsearch/elasticsearch": "^8.11",
         "nelmio/cors-bundle": "^2.4",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.24",
@@ -72,13 +75,6 @@
         ],
         "coding-standards-check": [
             "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --dry-run"
-        ],
-        "translations-update": [
-            "# We need a translation from en to en (!) (without prefix) to be able to process placeholders in en.",
-            "DEFAULT_LOCALE=en bin/console translation:extract --clean --force en --prefix=''",
-            "DEFAULT_LOCALE=en bin/console translation:extract --clean --force da",
-            "# Mark default translations (prefixed with `__`) as “Needs work” in Danish translations",
-            "sed --in-place='' 's/<target>__/<target state=\"needs-l10n\">__/' translations/*.da.*xlf"
         ],
         "psalm": [
             "./vendor/bin/psalm --no-cache"

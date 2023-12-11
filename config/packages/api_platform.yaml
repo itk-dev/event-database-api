@@ -11,6 +11,16 @@ api_platform:
         jsonopenapi: ['application/vnd.openapi+json']
         html: ['text/html']
 
+    mapping:
+        paths:
+            - '%kernel.project_dir%/src/Api/Dto'
+
+    doctrine:
+        enabled: false
+
+    elasticsearch:
+        hosts: ['%env(INDEXING_URL)%']
+
     defaults:
         stateless: true
         cache_headers:

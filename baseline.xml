@@ -4,6 +4,9 @@
     <MissingTemplateParam>
       <code>ProviderInterface</code>
     </MissingTemplateParam>
+    <UndefinedMethod>
+      <code>getMethod</code>
+    </UndefinedMethod>
   </file>
   <file src="src/Command/FixturesLoadCommand.php">
     <UndefinedDocblockClass>
@@ -34,9 +37,13 @@
       <code>\HttpException</code>
     </UndefinedDocblockClass>
   </file>
-  <file src="src/Service/EsIndex.php">
-    <UndefinedClass>
-      <code>\IndexInterface</code>
-    </UndefinedClass>
+  <file src="src/Service/ElasticSearchIndex.php">
+    <InvalidArgument>
+      <code>$params</code>
+      <code><![CDATA[['name' => $indexName]]]></code>
+    </InvalidArgument>
+    <PossiblyInvalidArgument>
+      <code>$response</code>
+    </PossiblyInvalidArgument>
   </file>
 </files>

@@ -28,11 +28,9 @@ services:
     deploy:
       resources:
         limits:
-          memory: 4096M
+          memory: 1096M
         reservations:
-          memory: 4096M
-    volumes:
-      - ./.docker/data/elasticsearch:/usr/share/elasticsearch/data
+          memory: 1096M
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false

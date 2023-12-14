@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="5.16.0@2897ba636551a8cb61601cc26f6ccfbba6c36591">
   <file src="src/Api/State/EventRepresentationProvider.php">
+    <InvalidReturnStatement>
+      <code><![CDATA[match ($operation->getMethod()) {
+            Request::METHOD_GET => [$this->index->get(IndexNames::Events->value, $uriVariables['id'])],
+            // @TODO: Handle not support methods correctly
+            default => []
+        }]]></code>
+    </InvalidReturnStatement>
+    <MissingTemplateParam>
+      <code>ProviderInterface</code>
+    </MissingTemplateParam>
+    <UndefinedMethod>
+      <code>getMethod</code>
+    </UndefinedMethod>
+  </file>
+  <file src="src/Api/State/OrganizationRepresentationProvider.php">
+    <InvalidReturnStatement>
+      <code><![CDATA[match ($operation->getMethod()) {
+            Request::METHOD_GET => [$this->index->get(IndexNames::Organization->value, $uriVariables['id'])],
+            // @TODO: Handle not support methods correctly
+            default => []
+        }]]></code>
+    </InvalidReturnStatement>
     <MissingTemplateParam>
       <code>ProviderInterface</code>
     </MissingTemplateParam>

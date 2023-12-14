@@ -8,7 +8,7 @@ use App\Model\IndexNames;
 use App\Service\IndexInterface;
 use Symfony\Component\HttpFoundation\Request;
 
-final class EventRepresentationProvider implements ProviderInterface
+final class OrganizationRepresentationProvider implements ProviderInterface
 {
     public function __construct(
         private readonly IndexInterface $index,
@@ -18,7 +18,7 @@ final class EventRepresentationProvider implements ProviderInterface
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
         return match ($operation->getMethod()) {
-            Request::METHOD_GET => [$this->index->get(IndexNames::Events->value, $uriVariables['id'])],
+            Request::METHOD_GET => [$this->index->get(IndexNames::Organization->value, $uriVariables['id'])],
             // @TODO: Handle not support methods correctly
             default => []
         };

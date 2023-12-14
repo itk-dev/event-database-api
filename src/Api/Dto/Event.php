@@ -5,12 +5,12 @@ namespace App\Api\Dto;
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
 use App\Api\State\EventRepresentationProvider;
 
 #[ApiResource(operations: [
     new Get(
         openapiContext: [
-            'summary' => 'Get single event base on identifier',
             'parameters' => [
                 [
                     'name' => 'id',
@@ -27,6 +27,10 @@ use App\Api\State\EventRepresentationProvider;
                 ],
             ],
         ],
+        output: EventRepresentationProvider::class,
+        provider: EventRepresentationProvider::class,
+    ),
+    new GetCollection(
         output: EventRepresentationProvider::class,
         provider: EventRepresentationProvider::class,
     ),

@@ -52,14 +52,33 @@ class ElasticSearchIndex implements IndexInterface
         return $this->parseResponse($response);
     }
 
+    public function getAll(string $indexName, int $from = 0, int $size = 10): array
+    {
+        $params = [
+            'index' => $indexName,
+            'query' => [
+                'query_string' => [
+                    'query' => '*',
+                ],
+            ],
+            'size' => $size,
+            'from' => $from,
+            'sort' => [
+                'entityId',
+            ],
+        ];
+
+        $response = $this->client->search($params);
+        $data = $this->parseResponse($response);
+
+        return $data['hits'];
+    }
+
     /**
      * @throws \JsonException
      */
     private function parseResponse(Elasticsearch $response): array
     {
-        $json = (string) $response->getBody();
-        $document = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
-
-        return $document['_source'];
+        return json_decode((string) $response->getBody(), true, 512, JSON_THROW_ON_ERROR);
     }
 }

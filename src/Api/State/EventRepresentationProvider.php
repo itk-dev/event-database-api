@@ -2,14 +2,17 @@
 
 namespace App\Api\State;
 
+use ApiPlatform\Metadata\CollectionOperationInterface;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
 use App\Model\IndexNames;
 use App\Service\IndexInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 final class EventRepresentationProvider implements ProviderInterface
 {
+    // @TODO: should we create enum with 5,10,15,20
+    public const PAGE_SIZE = 10;
+
     public function __construct(
         private readonly IndexInterface $index,
     ) {
@@ -17,10 +20,12 @@ final class EventRepresentationProvider implements ProviderInterface
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
-        return match ($operation->getMethod()) {
-            Request::METHOD_GET => [$this->index->get(IndexNames::Events->value, $uriVariables['id'])],
-            // @TODO: Handle not support methods correctly
-            default => []
-        };
+        if ($operation instanceof CollectionOperationInterface) {
+            $data = $this->index->getAll(IndexNames::Events->value, 0, self::PAGE_SIZE);
+
+            return $data['hits'];
+        }
+
+        return (object) $this->index->get(IndexNames::Events->value, $uriVariables['id'])['_source'];
     }
 }

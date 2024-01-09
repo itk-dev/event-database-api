@@ -17,5 +17,5 @@ interface IndexInterface
 
     public function get(string $indexName, int $id): array;
 
-    public function getAll(string $indexName, int $from = 0, int $size = 10): array;
+    public function getAll(string $indexName, array $filters = [], int $from = 0, int $size = 10): array;
 }

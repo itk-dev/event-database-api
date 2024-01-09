@@ -52,21 +52,27 @@ class ElasticSearchIndex implements IndexInterface
         return $this->parseResponse($response);
     }
 
-    public function getAll(string $indexName, int $from = 0, int $size = 10): array
+    public function getAll(string $indexName, array $filters = [], int $from = 0, int $size = 10): array
     {
         $params = [
             'index' => $indexName,
-            'query' => [
-                'query_string' => [
-                    'query' => '*',
-                ],
-            ],
+            'query' => [],
             'size' => $size,
             'from' => $from,
             'sort' => [
                 'entityId',
             ],
         ];
+
+        foreach ($filters as $filter) {
+            $params['query'] += $filter;
+        }
+
+        if (empty($params['query'])) {
+            $params['query'] += [
+                "match_all" =>  [],
+            ];
+        }
 
         $response = $this->client->search($params);
         $data = $this->parseResponse($response);

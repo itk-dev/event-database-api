@@ -22,7 +22,7 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 #[AsCommand(
     name: 'app:fixtures:load',
-    description: 'Add a short description for your command',
+    description: 'Load index fixtures from GitHub',
 )]
 class FixturesLoadCommand extends Command
 {

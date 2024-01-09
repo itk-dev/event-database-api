@@ -9,6 +9,7 @@ use Elastic\Elasticsearch\Exception\MissingParameterException;
 use Elastic\Elasticsearch\Exception\ServerResponseException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
@@ -42,28 +43,21 @@ class FixtureLoader
         $this->createIndex($indexName);
         $this->indexItems($indexName, $items);
     }
-
     /**
      * Download data as JSON from a given URL.
      *
      * @param string $url
-     *   The URL from which to download the data
+     *    The URL from which to download the data
      *
      * @return array
-     *   The downloaded data as an associative array
+     *    The downloaded data as an associative array
      *
+     * @throws ClientExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
      * @throws \HttpException
-     *   If unable to download the fixture data
-     * @throws \JsonException
-     *    If there is an error, decoding the downloaded data
-     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
-     *   If a client exception occurs during the HTTP request
-     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
-     *   If a redirection exception occurs during the HTTP request
-     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
-     *   If a server exception occurs during the HTTP request
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
-     *   If a transport exception occurs during the HTTP request
      */
     private function download(string $url): array
     {
@@ -73,7 +67,7 @@ class FixtureLoader
             throw new \HttpException('Unable to download fixture data');
         }
 
-        return json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        return $response->toArray();
     }
 
     /**

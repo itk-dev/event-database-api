@@ -43,6 +43,7 @@ class FixtureLoader
         $this->createIndex($indexName);
         $this->indexItems($indexName, $items);
     }
+
     /**
      * Download data as JSON from a given URL.
      *

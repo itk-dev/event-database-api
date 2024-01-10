@@ -2,10 +2,9 @@
 
 namespace App\Api\Filter;
 
-use ApiPlatform\Metadata\Operation;
 use ApiPlatform\Elasticsearch\Filter\AbstractFilter;
+use ApiPlatform\Metadata\Operation;
 use Symfony\Component\PropertyInfo\Type;
-
 
 final class EventTagFilter extends AbstractFilter
 {
@@ -13,7 +12,7 @@ final class EventTagFilter extends AbstractFilter
     {
         $properties = $this->getProperties($resourceClass);
         $terms = [
-            "boost" => 1.0,
+            'boost' => 1.0,
         ];
         foreach ($properties as $property) {
             if (empty($context['filters'][$property])) {

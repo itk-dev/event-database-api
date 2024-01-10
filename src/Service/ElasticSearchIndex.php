@@ -70,7 +70,7 @@ class ElasticSearchIndex implements IndexInterface
 
         if (empty($params['query'])) {
             $params['query'] += [
-                "match_all" =>  [],
+                'match_all' => [],
             ];
         }
 

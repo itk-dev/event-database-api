@@ -25,7 +25,7 @@ services:
     # please note that last definitions always *replace* previous ones
 
 
-    App\Api\State\EventRepresentationProvider:
+    App\Api\State\AbstractProvider:
         arguments:
             $filterLocator: '@api_platform.filter_locator'
 

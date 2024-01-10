@@ -11,17 +11,18 @@ final class EventTagFilter extends AbstractFilter
     public function apply(array $clauseBody, string $resourceClass, Operation $operation = null, array $context = []): array
     {
         $properties = $this->getProperties($resourceClass);
-        $terms = [
-            'boost' => 1.0,
-        ];
+        $terms = [];
+
+        /** @var string $property */
         foreach ($properties as $property) {
             if (empty($context['filters'][$property])) {
+                // If no value or empty value is set, skip it.
                 continue;
             }
-            $terms[$property] = $context['filters'][$property];
+            $terms[$property] = explode(',', $context['filters'][$property]);
         }
 
-        return ['terms' => $terms];
+        return empty($terms) ? $terms : ['terms' => $terms + ['boost' => 1.0]];
     }
 
     public function getDescription(string $resourceClass): array

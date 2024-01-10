@@ -29,6 +29,14 @@ services:
         arguments:
             $filterLocator: '@api_platform.filter_locator'
 
+    App\Api\State\EventRepresentationProvider:
+        arguments:
+            $filterLocator: '@api_platform.filter_locator'
+
+    App\Api\State\OrganizationRepresentationProvider:
+        arguments:
+            $filterLocator: '@api_platform.filter_locator'
+
     App\Command\FixturesLoadCommand:
         arguments:
             $appEnv: '%env(string:APP_ENV)%'

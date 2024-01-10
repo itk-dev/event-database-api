@@ -16,9 +16,9 @@ final class OrganizationRepresentationProvider extends AbstractProvider implemen
     {
         if ($operation instanceof CollectionOperationInterface) {
             $filters = $this->getFilters($operation, $context);
-            $data = $this->index->getAll(IndexNames::Organization->value, $filters, $context['filters']['page'] * self::PAGE_SIZE, self::PAGE_SIZE);
+            $from = $this->calculatePageOffset($context);
 
-            return $data['hits'];
+            return $this->index->getAll(IndexNames::Organization->value, $filters, $from, self::PAGE_SIZE);
         }
 
         return [$this->index->get(IndexNames::Organization->value, $uriVariables['id'])['_source']];

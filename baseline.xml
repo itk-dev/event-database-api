@@ -6,12 +6,16 @@
     </InternalMethod>
   </file>
   <file src="src/Api/State/EventRepresentationProvider.php">
+    <InvalidReturnStatement>
+      <code><![CDATA[$this->index->getAll(IndexNames::Events->value, $filters, $from, self::PAGE_SIZE)]]></code>
+    </InvalidReturnStatement>
     <MissingTemplateParam>
       <code>ProviderInterface</code>
     </MissingTemplateParam>
   </file>
   <file src="src/Api/State/OrganizationRepresentationProvider.php">
     <InvalidReturnStatement>
+      <code><![CDATA[$this->index->getAll(IndexNames::Organization->value, $filters, $from, self::PAGE_SIZE)]]></code>
       <code><![CDATA[[$this->index->get(IndexNames::Organization->value, $uriVariables['id'])['_source']]]]></code>
     </InvalidReturnStatement>
     <MissingTemplateParam>

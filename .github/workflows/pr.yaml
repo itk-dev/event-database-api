@@ -170,11 +170,49 @@ jobs:
       - name: markdownlint
         run: yarn run coding-standards-check
 
+  apispec:
+    runs-on: ubuntu-latest
+    name: API Specification validation
+    strategy:
+      fail-fast: false
+      matrix:
+        php: [ '8.2' ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - name: Setup PHP, with composer and extensions
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php}}
+          extensions: ctype, iconv, imagick, json, redis, soap, xmlreader, zip
+          coverage: none
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+
+      - name: Export specifications
+        run: bin/console api:openapi:export --yaml --output=public/spec.yaml --no-interaction
+
+      - name: Check for changes in specifications
+        run: git diff --diff-filter=ACMRT --exit-code public/spec.yaml
+
   changelog:
     runs-on: ubuntu-latest
     name: Changelog should be updated
-    strategy:
-      fail-fast: false
     steps:
       - name: Checkout
         uses: actions/checkout@v2

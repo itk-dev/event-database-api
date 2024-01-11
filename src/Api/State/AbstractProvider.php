@@ -3,8 +3,9 @@
 namespace App\Api\State;
 
 use ApiPlatform\Elasticsearch\Filter\FilterInterface;
-use ApiPlatform\Elasticsearch\Filter\OrderFilter;
+use ApiPlatform\Elasticsearch\Filter\SortFilterInterface;
 use ApiPlatform\Metadata\Operation;
+use App\Model\FilterTypes;
 use App\Model\IndexNames;
 use App\Service\IndexInterface;
 use Psr\Container\ContainerInterface;
@@ -39,32 +40,25 @@ abstract class AbstractProvider
     protected function getFilters(Operation $operation, array $context = []): array
     {
         $resourceFilters = $operation->getFilters();
-        $orderFilters = [];
-        $outputFilters = [];
+        $outputFilters = [
+            FilterTypes::Filters => [],
+            FilterTypes::Sort => [],
+        ];
 
         if (!is_null($resourceFilters)) {
             foreach ($resourceFilters as $filterId) {
-                $filter = $this->filterLocator->has($filterId) ? $this->filterLocator->get($filterId) : null;
+                $filter = $this->getFilterById($filterId);
 
                 if ($filter instanceof FilterInterface) {
-                    // Apply the OrderFilter after every.
-                    if ($filter instanceof OrderFilter) {
-                        $orderFilters[$filterId] = $filter;
-                        continue;
-                    }
-
                     $data = $filter->apply([], IndexNames::Events->value, $operation, $context);
-                    if (!empty($data)) {
-                        $outputFilters[$filterId] = $data;
-                    }
-                }
-            }
 
-            foreach ($orderFilters as $filterId => $orderFilter) {
-                $outputFilters['orderFilters'] ??= [];
-                $data = $orderFilter->apply([], IndexNames::Events->value, $operation, $context);
-                if (!empty($data)) {
-                    $outputFilters['orderFilters'][$filterId] = $data;
+                    if (!empty($data)) {
+                        if ($filter instanceof SortFilterInterface) {
+                            $outputFilters[FilterTypes::Sort][] = $data;
+                        } else {
+                            $outputFilters[FilterTypes::Filters][] = $data;
+                        }
+                    }
                 }
             }
         }
@@ -84,5 +78,22 @@ abstract class AbstractProvider
     protected function calculatePageOffset(array $context): int
     {
         return (($context['filters']['page'] ?? 1) - 1) * self::PAGE_SIZE;
+    }
+
+    /**
+     * Retrieves a filter based on the provided filter ID.
+     *
+     * @param string $filterId
+     *   The ID of the filter to retrieve
+     *
+     * @return FilterInterface|null
+     *   The filter instance if found, otherwise null
+     *
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
+    protected function getFilterById(string $filterId): ?FilterInterface
+    {
+        return $this->filterLocator->has($filterId) ? $this->filterLocator->get($filterId) : null;
     }
 }

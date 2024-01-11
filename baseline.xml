@@ -54,12 +54,7 @@
   <file src="src/Service/ElasticSearchIndex.php">
     <InvalidArgument>
       <code>$params</code>
-      <code>$params</code>
       <code><![CDATA[['name' => $indexName]]]></code>
     </InvalidArgument>
-    <PossiblyInvalidArgument>
-      <code>$response</code>
-      <code>$response</code>
-    </PossiblyInvalidArgument>
   </file>
 </files>

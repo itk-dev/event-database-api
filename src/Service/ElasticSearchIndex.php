@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Exception\IndexException;
+use App\Model\FilterTypes;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\Exception\ClientResponseException;
 use Elastic\Elasticsearch\Exception\MissingParameterException;
@@ -17,9 +18,6 @@ class ElasticSearchIndex implements IndexInterface
     ) {
     }
 
-    /**
-     * @throws IndexException
-     */
     public function indexExists($indexName): bool
     {
         try {
@@ -36,12 +34,6 @@ class ElasticSearchIndex implements IndexInterface
         }
     }
 
-    /**
-     * @throws ClientResponseException
-     * @throws ServerResponseException
-     * @throws MissingParameterException
-     * @throws \JsonException
-     */
     public function get(string $indexName, int $id): array
     {
         $params = [
@@ -49,18 +41,54 @@ class ElasticSearchIndex implements IndexInterface
             'id' => $id,
         ];
 
-        // @TODO: check status codes.
-        $response = $this->client->get($params);
+        try {
+            /** @var Elasticsearch $response */
+            $response = $this->client->get($params);
+            if (Response::HTTP_OK !== $response->getStatusCode()) {
+                throw new IndexException('Failed to get document from Elasticsearch', $response->getStatusCode());
+            }
+            $result = $this->parseResponse($response);
+        } catch (ClientResponseException|ServerResponseException|MissingParameterException|\JsonException $e) {
+            throw new IndexException($e->getMessage(), $e->getCode(), $e);
+        }
 
-        return $this->parseResponse($response);
+        return $result;
+    }
+
+    public function getAll(string $indexName, array $filters = [], int $from = 0, int $size = 10): array
+    {
+        $params = $this->buildParams($indexName, $filters, $from, $size);
+
+        try {
+            /** @var Elasticsearch $response */
+            $response = $this->client->search($params);
+            if (Response::HTTP_OK !== $response->getStatusCode()) {
+                throw new IndexException('Failed to get document from Elasticsearch', $response->getStatusCode());
+            }
+            $results = $this->parseResponse($response);
+        } catch (ClientResponseException|ServerResponseException|\JsonException $e) {
+            throw new IndexException($e->getMessage(), $e->getCode(), $e);
+        }
+
+        return $this->extractSourceFromHits($results);
     }
 
     /**
-     * @throws ClientResponseException
-     * @throws ServerResponseException
-     * @throws \JsonException
+     * Builds the parameters for the Elasticsearch search request.
+     *
+     * @param string $indexName
+     *   The name of the index to search in
+     * @param array $filters
+     *   An array of filters to apply to the search query
+     * @param int $from
+     *   The starting offset for the search results
+     * @param int $size
+     *   The maximum number of search results to return
+     *
+     * @return array
+     *   The built parameters for the Elasticsearch search request
      */
-    public function getAll(string $indexName, array $filters = [], int $from = 0, int $size = 10): array
+    private function buildParams(string $indexName, array $filters, int $from, int $size): array
     {
         $params = [
             'index' => $indexName,
@@ -70,24 +98,36 @@ class ElasticSearchIndex implements IndexInterface
                 ],
                 'size' => $size,
                 'from' => $from,
+                // @TODO: add order filters to sort results
                 'sort' => [],
             ],
         ];
 
-        $body = [];
-        foreach ($filters as $filter) {
-            // @TODO: add order filters to sort
-            $body += $filter;
-        }
-
+        $body = $this->buildBody($filters);
         if (!empty($body)) {
             $params['body']['query'] = $body;
         }
 
-        $response = $this->client->search($params);
-        $results = $this->parseResponse($response);
+        return $params;
+    }
 
-        return $this->cleanUpHits($results);
+    /**
+     * Builds the body for Elasticsearch request using the given filters.
+     *
+     * @param array $filters
+     *   The filters to be included in the body
+     *
+     * @return array
+     *   The built body for Elasticsearch request
+     */
+    private function buildBody(array $filters): array
+    {
+        $body = [];
+        foreach ($filters[FilterTypes::Filters] as $filter) {
+            $body += $filter;
+        }
+
+        return $body;
     }
 
     /**
@@ -116,7 +156,7 @@ class ElasticSearchIndex implements IndexInterface
      * @return array
      *   The cleaned-up hits
      */
-    private function cleanUpHits(array $results): array
+    private function extractSourceFromHits(array $results): array
     {
         $hits = [];
         foreach ($results['hits']['hits'] as $hit) {

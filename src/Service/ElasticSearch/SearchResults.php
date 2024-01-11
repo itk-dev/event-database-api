@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Model;
+namespace App\Service\ElasticSearch;
 
 /**
- * Class SearchResults.
- *
  * Represents the results of a search operation.
  */
 final class SearchResults

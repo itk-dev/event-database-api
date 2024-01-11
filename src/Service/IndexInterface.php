@@ -3,7 +3,7 @@
 namespace App\Service;
 
 use App\Exception\IndexException;
-use App\Model\SearchResults;
+use App\Service\ElasticSearch\SearchResults;
 
 interface IndexInterface
 {

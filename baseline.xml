@@ -50,13 +50,13 @@
       <code>\HttpException</code>
     </UndefinedDocblockClass>
   </file>
-  <file src="src/Service/ElasticSearchIndex.php">
+  <file src="src/Service/ElasticSearch/ElasticSearchIndex.php">
     <InvalidArgument>
       <code>$params</code>
       <code><![CDATA[['name' => $indexName]]]></code>
     </InvalidArgument>
   </file>
-  <file src="src/Service/ElasticSearchPaginator.php">
+  <file src="src/Service/ElasticSearch/ElasticSearchPaginator.php">
     <MissingTemplateParam>
       <code>PaginatorInterface</code>
       <code>\IteratorAggregate</code>

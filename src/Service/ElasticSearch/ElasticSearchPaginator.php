@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\ElasticSearch;
 
 use ApiPlatform\State\Pagination\PaginatorInterface;
-use App\Model\SearchResults;
 
 /**
  * Paginator for Elasticsearch.

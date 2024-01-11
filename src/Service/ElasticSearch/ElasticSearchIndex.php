@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\ElasticSearch;
 
 use App\Exception\IndexException;
 use App\Model\FilterTypes;
-use App\Model\SearchResults;
+use App\Service\IndexInterface;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\Exception\ClientResponseException;
 use Elastic\Elasticsearch\Exception\MissingParameterException;

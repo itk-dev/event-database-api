@@ -15,7 +15,7 @@ use Psr\Container\ContainerInterface;
  */
 abstract class AbstractProvider
 {
-    protected const PAGE_SIZE = 10;
+    protected const PAGE_SIZE_FALLBACK = 10;
 
     public function __construct(
         protected readonly IndexInterface $index,
@@ -70,14 +70,28 @@ abstract class AbstractProvider
      * Calculates the offset for a paginated result based on the provided context.
      *
      * @param array $context
-     *   The context containing the pagination filters
+     *   The context containing the pagination information
      *
      * @return int
      *   The calculated offset value
      */
     protected function calculatePageOffset(array $context): int
     {
-        return (($context['filters']['page'] ?? 1) - 1) * self::PAGE_SIZE;
+        return (($context['filters']['page'] ?? 1) - 1) * $this->getImagesPerPage($context);
+    }
+
+    /**
+     * Retrieves the number of items per page.
+     *
+     * @param array $context
+     *   The context containing the pagination information
+     *
+     * @return int
+     *   The number of items per page as determined by the context
+     */
+    protected function getImagesPerPage(array $context): int
+    {
+        return $context['filters']['itemsPerPage'] ?? self::PAGE_SIZE_FALLBACK;
     }
 
     /**

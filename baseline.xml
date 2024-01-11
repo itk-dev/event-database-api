@@ -7,7 +7,7 @@
   </file>
   <file src="src/Api/State/EventRepresentationProvider.php">
     <InvalidReturnStatement>
-      <code><![CDATA[$this->index->getAll(IndexNames::Events->value, $filters, $from, self::PAGE_SIZE)]]></code>
+      <code><![CDATA[[$this->index->get(IndexNames::Events->value, $uriVariables['id'])['_source']]]]></code>
     </InvalidReturnStatement>
     <MissingTemplateParam>
       <code>ProviderInterface</code>
@@ -15,7 +15,6 @@
   </file>
   <file src="src/Api/State/OrganizationRepresentationProvider.php">
     <InvalidReturnStatement>
-      <code><![CDATA[$this->index->getAll(IndexNames::Organization->value, $filters, $from, self::PAGE_SIZE)]]></code>
       <code><![CDATA[[$this->index->get(IndexNames::Organization->value, $uriVariables['id'])['_source']]]]></code>
     </InvalidReturnStatement>
     <MissingTemplateParam>
@@ -56,5 +55,11 @@
       <code>$params</code>
       <code><![CDATA[['name' => $indexName]]]></code>
     </InvalidArgument>
+  </file>
+  <file src="src/Service/ElasticSearchPaginator.php">
+    <MissingTemplateParam>
+      <code>PaginatorInterface</code>
+      <code>\IteratorAggregate</code>
+    </MissingTemplateParam>
   </file>
 </files>

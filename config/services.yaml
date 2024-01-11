@@ -24,10 +24,22 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
+
+    App\Api\State\AbstractProvider:
+        arguments:
+            $filterLocator: '@api_platform.filter_locator'
+
+    App\Api\State\EventRepresentationProvider:
+        arguments:
+            $filterLocator: '@api_platform.filter_locator'
+
+    App\Api\State\OrganizationRepresentationProvider:
+        arguments:
+            $filterLocator: '@api_platform.filter_locator'
+
     App\Command\FixturesLoadCommand:
         arguments:
             $appEnv: '%env(string:APP_ENV)%'
-
 
     Elastic\Elasticsearch\Client:
         factory: [ '@Elastic\Elasticsearch\ClientBuilder', fromConfig ]

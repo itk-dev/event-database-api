@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="5.16.0@2897ba636551a8cb61601cc26f6ccfbba6c36591">
+  <file src="src/Api/State/AbstractProvider.php">
+    <InternalMethod>
+      <code>getFilters</code>
+    </InternalMethod>
+  </file>
   <file src="src/Api/State/EventRepresentationProvider.php">
+    <InvalidReturnStatement>
+      <code><![CDATA[$this->index->getAll(IndexNames::Events->value, $filters, $from, self::PAGE_SIZE)]]></code>
+    </InvalidReturnStatement>
     <MissingTemplateParam>
       <code>ProviderInterface</code>
     </MissingTemplateParam>
   </file>
   <file src="src/Api/State/OrganizationRepresentationProvider.php">
     <InvalidReturnStatement>
+      <code><![CDATA[$this->index->getAll(IndexNames::Organization->value, $filters, $from, self::PAGE_SIZE)]]></code>
       <code><![CDATA[[$this->index->get(IndexNames::Organization->value, $uriVariables['id'])['_source']]]]></code>
     </InvalidReturnStatement>
     <MissingTemplateParam>
@@ -45,12 +54,7 @@
   <file src="src/Service/ElasticSearchIndex.php">
     <InvalidArgument>
       <code>$params</code>
-      <code>$params</code>
       <code><![CDATA[['name' => $indexName]]]></code>
     </InvalidArgument>
-    <PossiblyInvalidArgument>
-      <code>$response</code>
-      <code>$response</code>
-    </PossiblyInvalidArgument>
   </file>
 </files>

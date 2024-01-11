@@ -2,6 +2,9 @@
 
 namespace App\Model;
 
+/**
+ * Represents an enumeration of index names.
+ */
 enum IndexNames: string
 {
     case Events = 'events';

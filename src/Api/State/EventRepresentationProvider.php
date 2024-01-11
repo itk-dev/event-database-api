@@ -6,24 +6,26 @@ use ApiPlatform\Metadata\CollectionOperationInterface;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
 use App\Model\IndexNames;
-use App\Service\IndexInterface;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
-final class EventRepresentationProvider implements ProviderInterface
+final class EventRepresentationProvider extends AbstractProvider implements ProviderInterface
 {
-    // @TODO: should we create enum with 5,10,15,20
-    public const PAGE_SIZE = 10;
-
-    public function __construct(
-        private readonly IndexInterface $index,
-    ) {
-    }
-
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     * @throws \App\Exception\IndexException
+     */
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
-        if ($operation instanceof CollectionOperationInterface) {
-            $data = $this->index->getAll(IndexNames::Events->value, 0, self::PAGE_SIZE);
+        // @TODO: should we create enum with 5,10,15,20
+        // Get page size from context.
 
-            return $data['hits'];
+        if ($operation instanceof CollectionOperationInterface) {
+            $filters = $this->getFilters($operation, $context);
+            $from = $this->calculatePageOffset($context);
+
+            return $this->index->getAll(IndexNames::Events->value, $filters, $from, self::PAGE_SIZE);
         }
 
         return (object) $this->index->get(IndexNames::Events->value, $uriVariables['id'])['_source'];

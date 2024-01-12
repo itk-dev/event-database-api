@@ -7,7 +7,7 @@ use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
-use App\Api\Filter\StringFieldFilter;
+use App\Api\Filter\MatchFilter;
 use App\Api\State\OrganizationRepresentationProvider;
 
 #[ApiResource(
@@ -43,13 +43,10 @@ use App\Api\State\OrganizationRepresentationProvider;
     paginationItemsPerPage: 20,
     paginationMaximumItemsPerPage: 100
 )]
-// #[ApiFilter(
-//    StringFieldFilter::class,
-//    properties: [
-//        'field' => 'name',
-//        'operator' => 'and'
-//    ]
-// )]
+#[ApiFilter(
+    MatchFilter::class,
+    properties: ['name']
+)]
 class Organization
 {
     #[ApiProperty(

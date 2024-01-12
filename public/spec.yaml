@@ -44,6 +44,21 @@ paths:
           explode: false
           allowReserved: false
         -
+          name: itemsPerPage
+          in: query
+          description: 'The number of items per page'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+            maximum: 50
+          style: form
+          explode: false
+          allowReserved: false
+        -
           name: tags
           in: query
           description: 'Filter base on values given'
@@ -116,6 +131,21 @@ paths:
           schema:
             type: integer
             default: 1
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: itemsPerPage
+          in: query
+          description: 'The number of items per page'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 20
+            minimum: 0
+            maximum: 100
           style: form
           explode: false
           allowReserved: false

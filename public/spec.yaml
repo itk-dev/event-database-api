@@ -149,6 +149,18 @@ paths:
           style: form
           explode: false
           allowReserved: false
+        -
+          name: name
+          in: query
+          description: 'Search field based on value given'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
       deprecated: false
     parameters: []
   '/api/v2/organizations/{id}':

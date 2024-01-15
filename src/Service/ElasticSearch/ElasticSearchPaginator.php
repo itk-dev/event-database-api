@@ -3,6 +3,7 @@
 namespace App\Service\ElasticSearch;
 
 use ApiPlatform\State\Pagination\PaginatorInterface;
+use App\Model\SearchResults;
 
 /**
  * Paginator for Elasticsearch.

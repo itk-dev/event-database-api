@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\ElasticSearch;
+namespace App\Model;
 
 /**
  * Represents the results of a search operation.

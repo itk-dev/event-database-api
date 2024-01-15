@@ -7,6 +7,6 @@ namespace App\Model;
  */
 enum FilterTypes: string
 {
-    public const Filters = 'filters';
-    public const Sort = 'sort';
+    case Filters = 'filters';
+    case Sort = 'sort';
 }

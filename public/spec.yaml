@@ -171,7 +171,7 @@ paths:
       responses:
         200:
           description: 'Single organization'
-      summary: 'Get single organization base on identifier'
+      summary: 'Get single organization based on identifier'
       description: 'Retrieves a Organization resource.'
       parameters:
         -

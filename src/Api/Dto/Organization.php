@@ -14,7 +14,7 @@ use App\Api\State\OrganizationRepresentationProvider;
     operations: [
         new Get(
             openapiContext: [
-                'summary' => 'Get single organization base on identifier',
+                'summary' => 'Get single organization based on identifier',
                 'parameters' => [
                     [
                         'name' => 'id',

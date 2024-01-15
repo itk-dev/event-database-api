@@ -72,6 +72,30 @@ paths:
           style: deepObject
           explode: false
           allowReserved: false
+        -
+          name: occurrences.start
+          in: query
+          description: 'Filter base on date (greater then or equal to)'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: occurrences.end
+          in: query
+          description: 'Filter base on date (less then or equal to)'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
       deprecated: false
     parameters: []
   '/api/v2/events/{id}':

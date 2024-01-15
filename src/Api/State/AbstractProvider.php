@@ -41,8 +41,8 @@ abstract class AbstractProvider
     {
         $resourceFilters = $operation->getFilters();
         $outputFilters = [
-            FilterTypes::Filters => [],
-            FilterTypes::Sort => [],
+            FilterTypes::Filters->value => [],
+            FilterTypes::Sort->value => [],
         ];
 
         if (!is_null($resourceFilters)) {
@@ -54,9 +54,9 @@ abstract class AbstractProvider
 
                     if (!empty($data)) {
                         if ($filter instanceof SortFilterInterface) {
-                            $outputFilters[FilterTypes::Sort][] = $data;
+                            $outputFilters[FilterTypes::Sort->value][] = $data;
                         } else {
-                            $outputFilters[FilterTypes::Filters][] = $data;
+                            $outputFilters[FilterTypes::Filters->value][] = $data;
                         }
                     }
                 }

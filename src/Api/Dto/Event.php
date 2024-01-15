@@ -7,8 +7,10 @@ use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use App\Api\Filter\DateFilter;
 use App\Api\Filter\EventTagFilter;
 use App\Api\State\EventRepresentationProvider;
+use App\Model\DateLimits;
 
 #[ApiResource(
     operations: [
@@ -45,6 +47,25 @@ use App\Api\State\EventRepresentationProvider;
 #[ApiFilter(
     EventTagFilter::class,
     properties: ['tags']
+)]
+#[ApiFilter(
+    DateFilter::class,
+    properties: [
+        'occurrences.start' => 'start',
+        'occurrences.end' => 'end',
+    ],
+    arguments: [
+        'config' => [
+            'start' => [
+                'limit' => DateLimits::GreaterThanOrEqual,
+                'throwOnInvalid' => true,
+            ],
+            'end' => [
+                'limit' => DateLimits::LessThanOrEqual,
+                'throwOnInvalid' => true,
+            ],
+        ],
+    ]
 )]
 class Event
 {

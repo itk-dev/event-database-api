@@ -4,6 +4,7 @@ namespace App\Service\ElasticSearch;
 
 use App\Exception\IndexException;
 use App\Model\FilterTypes;
+use App\Model\SearchResults;
 use App\Service\IndexInterface;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\Exception\ClientResponseException;
@@ -127,7 +128,7 @@ class ElasticSearchIndex implements IndexInterface
     private function buildBody(array $filters): array
     {
         $body = [];
-        foreach ($filters[FilterTypes::Filters] as $filter) {
+        foreach ($filters[FilterTypes::Filters->value] as $filter) {
             $body += $filter;
         }
 

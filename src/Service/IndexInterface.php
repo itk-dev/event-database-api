@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Exception\IndexException;
+use App\Service\ElasticSearch\SearchResults;
 
 interface IndexInterface
 {
@@ -46,10 +47,10 @@ interface IndexInterface
      * @param int $size
      *   The maximum number of records to retrieve. Default is 10.
      *
-     * @return array
+     * @return SearchResults
      *   An array containing the retrieved documents
      *
      * @throws IndexException
      */
-    public function getAll(string $indexName, array $filters = [], int $from = 0, int $size = 10): array;
+    public function getAll(string $indexName, array $filters = [], int $from = 0, int $size = 10): SearchResults;
 }

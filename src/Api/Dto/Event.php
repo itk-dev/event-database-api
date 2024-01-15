@@ -10,33 +10,38 @@ use ApiPlatform\Metadata\GetCollection;
 use App\Api\Filter\EventTagFilter;
 use App\Api\State\EventRepresentationProvider;
 
-#[ApiResource(operations: [
-    new Get(
-        openapiContext: [
-            'parameters' => [
-                [
-                    'name' => 'id',
-                    'in' => 'path',
-                    'required' => true,
-                    'schema' => [
-                        'type' => 'integer',
+#[ApiResource(
+    operations: [
+        new Get(
+            openapiContext: [
+                'parameters' => [
+                    [
+                        'name' => 'id',
+                        'in' => 'path',
+                        'required' => true,
+                        'schema' => [
+                            'type' => 'integer',
+                        ],
+                    ],
+                ],
+                'responses' => [
+                    '200' => [
+                        'description' => 'Single event',
                     ],
                 ],
             ],
-            'responses' => [
-                '200' => [
-                    'description' => 'Single event',
-                ],
-            ],
-        ],
-        output: EventRepresentationProvider::class,
-        provider: EventRepresentationProvider::class,
-    ),
-    new GetCollection(
-        output: EventRepresentationProvider::class,
-        provider: EventRepresentationProvider::class,
-    ),
-])]
+            output: EventRepresentationProvider::class,
+            provider: EventRepresentationProvider::class,
+        ),
+        new GetCollection(
+            output: EventRepresentationProvider::class,
+            provider: EventRepresentationProvider::class,
+        ),
+    ],
+    paginationClientItemsPerPage: true,
+    paginationItemsPerPage: 10,
+    paginationMaximumItemsPerPage: 50
+)]
 #[ApiFilter(
     EventTagFilter::class,
     properties: ['tags']

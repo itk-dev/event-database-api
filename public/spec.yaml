@@ -44,6 +44,21 @@ paths:
           explode: false
           allowReserved: false
         -
+          name: itemsPerPage
+          in: query
+          description: 'The number of items per page'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+            maximum: 50
+          style: form
+          explode: false
+          allowReserved: false
+        -
           name: tags
           in: query
           description: 'Filter base on values given'
@@ -119,6 +134,33 @@ paths:
           style: form
           explode: false
           allowReserved: false
+        -
+          name: itemsPerPage
+          in: query
+          description: 'The number of items per page'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 20
+            minimum: 0
+            maximum: 100
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: name
+          in: query
+          description: 'Search field based on value given'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
       deprecated: false
     parameters: []
   '/api/v2/organizations/{id}':
@@ -129,7 +171,7 @@ paths:
       responses:
         200:
           description: 'Single organization'
-      summary: 'Get single organization base on identifier'
+      summary: 'Get single organization based on identifier'
       description: 'Retrieves a Organization resource.'
       parameters:
         -

@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\ElasticSearch;
 
 use App\Exception\IndexException;
 use App\Model\FilterTypes;
+use App\Service\IndexInterface;
 use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\Exception\ClientResponseException;
 use Elastic\Elasticsearch\Exception\MissingParameterException;
@@ -55,7 +56,7 @@ class ElasticSearchIndex implements IndexInterface
         return $result;
     }
 
-    public function getAll(string $indexName, array $filters = [], int $from = 0, int $size = 10): array
+    public function getAll(string $indexName, array $filters = [], int $from = 0, int $size = 10): SearchResults
     {
         $params = $this->buildParams($indexName, $filters, $from, $size);
 
@@ -65,12 +66,15 @@ class ElasticSearchIndex implements IndexInterface
             if (Response::HTTP_OK !== $response->getStatusCode()) {
                 throw new IndexException('Failed to get document from Elasticsearch', $response->getStatusCode());
             }
-            $results = $this->parseResponse($response);
+            $data = $this->parseResponse($response);
         } catch (ClientResponseException|ServerResponseException|\JsonException $e) {
             throw new IndexException($e->getMessage(), $e->getCode(), $e);
         }
 
-        return $this->extractSourceFromHits($results);
+        return new SearchResults(
+            hits: $this->extractSourceFromHits($data),
+            total: $this->getTotalHits($data),
+        );
     }
 
     /**
@@ -164,5 +168,19 @@ class ElasticSearchIndex implements IndexInterface
         }
 
         return $hits;
+    }
+
+    /**
+     * Retrieves the total number of hits from the given search result.
+     *
+     * @param array $data
+     *   The data array containing the Elasticsearch response
+     *
+     * @return int
+     *   Returns the total number of hits as an integer. If the 'value' key is not present, 0 is returned.
+     */
+    private function getTotalHits(array $data): int
+    {
+        return $data['hits']['total']['value'] ?? 0;
     }
 }

@@ -15,6 +15,7 @@ See [keep a changelog] for information about writing changes to this log.
 - Added basic index service.
 - Basic events DTO added.
 - Added tags filter
+- Added pagination and match filter
 
 [keep a changelog]: https://keepachangelog.com/en/1.1.0/
 [unreleased]: https://github.com/itk-dev/event-database-imports/compare/main...develop

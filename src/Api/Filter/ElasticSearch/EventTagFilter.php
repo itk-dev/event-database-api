@@ -1,27 +1,28 @@
 <?php
 
-namespace App\Api\Filter;
+namespace App\Api\Filter\ElasticSearch;
 
 use ApiPlatform\Elasticsearch\Filter\AbstractFilter;
 use ApiPlatform\Metadata\Operation;
 use Symfony\Component\PropertyInfo\Type;
 
-/**
- * This class represents a filter that performs a search based on matching properties in a given resource.
- */
-final class MatchFilter extends AbstractFilter
+final class EventTagFilter extends AbstractFilter
 {
     public function apply(array $clauseBody, string $resourceClass, Operation $operation = null, array $context = []): array
     {
         $properties = $this->getProperties($resourceClass);
-        $matches = [];
+        $terms = [];
 
         /** @var string $property */
         foreach ($properties as $property) {
-            $matches[] = ['match' => [$property => $context['filters'][$property]]];
+            if (empty($context['filters'][$property])) {
+                // If no value or empty value is set, skip it.
+                continue;
+            }
+            $terms[$property] = explode(',', $context['filters'][$property]);
         }
 
-        return isset($matches[1]) ? ['bool' => ['should' => $matches]] : $matches[0];
+        return empty($terms) ? $terms : ['terms' => $terms + ['boost' => 1.0]];
     }
 
     public function getDescription(string $resourceClass): array
@@ -34,9 +35,10 @@ final class MatchFilter extends AbstractFilter
         foreach ($this->properties as $filterParameterName => $value) {
             $description[$filterParameterName] = [
                 'property' => $filterParameterName,
-                'type' => Type::BUILTIN_TYPE_STRING,
+                'type' => Type::BUILTIN_TYPE_ARRAY,
                 'required' => false,
-                'description' => 'Search field based on value given',
+                'description' => 'Filter base on values given',
+                'is_collection' => true,
                 'openapi' => [
                     'allowReserved' => false,
                     'allowEmptyValue' => true,

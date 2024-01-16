@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Api\Filter;
+namespace App\Api\Filter\ElasticSearch;
 
 use ApiPlatform\Elasticsearch\Filter\AbstractFilter;
 use ApiPlatform\Metadata\Operation;
@@ -47,17 +47,19 @@ final class DateFilter extends AbstractFilter
         }
 
         foreach ($this->properties as $property => $value) {
-            $conf = $this->config[$value];
-            $ranges[] = [
-                'range' => [
-                    $property => [
-                        $conf->getCompareOperator($conf->limit) => $context['filters'][$property],
+            if (!empty($context['filters'][$property])) {
+                $conf = $this->config[$value];
+                $ranges[] = [
+                    'range' => [
+                        $property => [
+                            $conf->getCompareOperator($conf->limit) => $context['filters'][$property],
+                        ],
                     ],
-                ],
-            ];
+                ];
+            }
         }
 
-        return isset($ranges[1]) ? ['bool' => ['must' => $ranges]] : $ranges;
+        return isset($ranges[1]) ? $ranges : $ranges[0];
     }
 
     public function getDescription(string $resourceClass): array

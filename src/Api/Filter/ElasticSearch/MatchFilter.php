@@ -1,28 +1,27 @@
 <?php
 
-namespace App\Api\Filter;
+namespace App\Api\Filter\ElasticSearch;
 
 use ApiPlatform\Elasticsearch\Filter\AbstractFilter;
 use ApiPlatform\Metadata\Operation;
 use Symfony\Component\PropertyInfo\Type;
 
-final class EventTagFilter extends AbstractFilter
+/**
+ * This class represents a filter that performs a search based on matching properties in a given resource.
+ */
+final class MatchFilter extends AbstractFilter
 {
     public function apply(array $clauseBody, string $resourceClass, Operation $operation = null, array $context = []): array
     {
         $properties = $this->getProperties($resourceClass);
-        $terms = [];
+        $matches = [];
 
         /** @var string $property */
         foreach ($properties as $property) {
-            if (empty($context['filters'][$property])) {
-                // If no value or empty value is set, skip it.
-                continue;
-            }
-            $terms[$property] = explode(',', $context['filters'][$property]);
+            $matches[] = ['match' => [$property => $context['filters'][$property]]];
         }
 
-        return empty($terms) ? $terms : ['terms' => $terms + ['boost' => 1.0]];
+        return isset($matches[1]) ? $matches : $matches[0];
     }
 
     public function getDescription(string $resourceClass): array
@@ -35,10 +34,9 @@ final class EventTagFilter extends AbstractFilter
         foreach ($this->properties as $filterParameterName => $value) {
             $description[$filterParameterName] = [
                 'property' => $filterParameterName,
-                'type' => Type::BUILTIN_TYPE_ARRAY,
+                'type' => Type::BUILTIN_TYPE_STRING,
                 'required' => false,
-                'description' => 'Filter base on values given',
-                'is_collection' => true,
+                'description' => 'Search field based on value given',
                 'openapi' => [
                     'allowReserved' => false,
                     'allowEmptyValue' => true,

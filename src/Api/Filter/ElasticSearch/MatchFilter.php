@@ -18,10 +18,12 @@ final class MatchFilter extends AbstractFilter
 
         /** @var string $property */
         foreach ($properties as $property) {
-            $matches[] = ['match' => [$property => $context['filters'][$property]]];
+            if (!empty($context['filters'][$property])) {
+                $matches[] = ['match' => [$property => $context['filters'][$property]]];
+            }
         }
 
-        return isset($matches[1]) ? $matches : $matches[0];
+        return isset($matches[1]) ? $matches : $matches[0] ?? $matches;
     }
 
     public function getDescription(string $resourceClass): array

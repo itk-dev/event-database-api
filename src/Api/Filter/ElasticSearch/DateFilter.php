@@ -59,7 +59,7 @@ final class DateFilter extends AbstractFilter
             }
         }
 
-        return isset($ranges[1]) ? $ranges : $ranges[0];
+        return isset($ranges[1]) ? $ranges : $ranges[0] ?? $ranges;
     }
 
     public function getDescription(string $resourceClass): array

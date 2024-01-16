@@ -128,8 +128,22 @@ class ElasticSearchIndex implements IndexInterface
     private function buildBody(array $filters): array
     {
         $body = [];
+        $combined = (bool) count($filters[FilterTypes::Filters->value]);
         foreach ($filters[FilterTypes::Filters->value] as $filter) {
-            $body += $filter;
+            if ($combined) {
+                $body['bool'] ??= ['must' => []];
+                // Ensure that associative arrays and lists are not combined with keys "0","1" etc. in the final json.
+                // So we need to loop over lists to ensure keys are "reset" in the final body statement.
+                if (array_is_list($filter)) {
+                    foreach ($filter as $val) {
+                        $body['bool']['must'][] = $val;
+                    }
+                } else {
+                    $body['bool']['must'][] = $filter;
+                }
+            } else {
+                $body += $filter;
+            }
         }
 
         return $body;

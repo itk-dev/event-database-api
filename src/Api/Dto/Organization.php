@@ -7,7 +7,7 @@ use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
-use App\Api\Filter\MatchFilter;
+use App\Api\Filter\ElasticSearch\MatchFilter;
 use App\Api\State\OrganizationRepresentationProvider;
 
 #[ApiResource(

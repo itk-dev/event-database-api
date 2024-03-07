@@ -2,8 +2,10 @@ version: "3"
 
 services:
   phpfpm:
+    networks:
+      - frontend
     depends_on:
-      - elasticsearch
+#      - elasticsearch
       - rabbit
 
   rabbit:

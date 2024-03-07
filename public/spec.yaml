@@ -8,6 +8,193 @@ servers:
     url: /
     description: ''
 paths:
+  /api/v2/daily_occurrences:
+    get:
+      operationId: api_daily_occurrences_get_collection
+      tags:
+        - DailyOccurrence
+      responses:
+        200:
+          description: 'DailyOccurrence collection'
+          content:
+            application/ld+json:
+              schema:
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/DailyOccurrence.DailyOccurrenceRepresentationProvider.jsonld' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:previous': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } }, example: { '@id': string, type: string, 'hydra:first': string, 'hydra:last': string, 'hydra:previous': string, 'hydra:next': string } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: [string, 'null'] }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
+      summary: 'Retrieves the collection of DailyOccurrence resources.'
+      description: 'Retrieves the collection of DailyOccurrence resources.'
+      parameters:
+        -
+          name: page
+          in: query
+          description: 'The collection page number'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 1
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: itemsPerPage
+          in: query
+          description: 'The number of items per page'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+            maximum: 50
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: event.title
+          in: query
+          description: 'Search field based on value given'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: event.organizer.name
+          in: query
+          description: 'Search field based on value given'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: event.organizer.entityId
+          in: query
+          description: 'Search field based on value given'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: event.location.name
+          in: query
+          description: 'Search field based on value given'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: event.location.entityId
+          in: query
+          description: 'Search field based on value given'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: event.publicAccess
+          in: query
+          description: 'Is this a public event'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: boolean
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: event.tags
+          in: query
+          description: 'Filter based on given tags'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: array
+            items:
+              type: string
+          style: deepObject
+          explode: false
+          allowReserved: false
+        -
+          name: start
+          in: query
+          description: 'Filter base on date (greater then or equal to)'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: end
+          in: query
+          description: 'Filter base on date (less then or equal to)'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+      deprecated: false
+    parameters: []
+  '/api/v2/daily_occurrences/{id}':
+    get:
+      operationId: api_daily_occurrences_id_get
+      tags:
+        - DailyOccurrence
+      responses:
+        200:
+          description: 'Single daily occurrence'
+      summary: 'Retrieves a DailyOccurrence resource.'
+      description: 'Retrieves a DailyOccurrence resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          description: ''
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: integer
+          style: simple
+          explode: false
+          allowReserved: false
+      deprecated: false
+    parameters: []
   /api/v2/events:
     get:
       operationId: api_events_get_collection
@@ -59,9 +246,81 @@ paths:
           explode: false
           allowReserved: false
         -
+          name: title
+          in: query
+          description: 'Search field based on value given'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: organizer.name
+          in: query
+          description: 'Search field based on value given'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: organizer.entityId
+          in: query
+          description: 'Search field based on value given'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: location.name
+          in: query
+          description: 'Search field based on value given'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: location.entityId
+          in: query
+          description: 'Search field based on value given'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: publicAccess
+          in: query
+          description: 'Is this a public event'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: boolean
+          style: form
+          explode: false
+          allowReserved: false
+        -
           name: tags
           in: query
-          description: 'Filter base on values given'
+          description: 'Filter based on given tags'
           required: false
           deprecated: false
           allowEmptyValue: true
@@ -108,6 +367,294 @@ paths:
           description: 'Single event'
       summary: 'Retrieves a Event resource.'
       description: 'Retrieves a Event resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          description: ''
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: integer
+          style: simple
+          explode: false
+          allowReserved: false
+      deprecated: false
+    parameters: []
+  /api/v2/locations:
+    get:
+      operationId: api_locations_get_collection
+      tags:
+        - Location
+      responses:
+        200:
+          description: 'Location collection'
+          content:
+            application/ld+json:
+              schema:
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Location.LocationRepresentationProvider.jsonld' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:previous': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } }, example: { '@id': string, type: string, 'hydra:first': string, 'hydra:last': string, 'hydra:previous': string, 'hydra:next': string } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: [string, 'null'] }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
+      summary: 'Retrieves the collection of Location resources.'
+      description: 'Retrieves the collection of Location resources.'
+      parameters:
+        -
+          name: page
+          in: query
+          description: 'The collection page number'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 1
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: itemsPerPage
+          in: query
+          description: 'The number of items per page'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 20
+            minimum: 0
+            maximum: 100
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: name
+          in: query
+          description: 'Search field based on value given'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: postalCode
+          in: query
+          description: 'Search field based on value given'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+      deprecated: false
+    parameters: []
+  '/api/v2/locations/{id}':
+    get:
+      operationId: api_locations_id_get
+      tags:
+        - Location
+      responses:
+        200:
+          description: 'Single location'
+      summary: 'Get single location based on identifier'
+      description: 'Retrieves a Location resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          description: ''
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: integer
+          style: simple
+          explode: false
+          allowReserved: false
+      deprecated: false
+    parameters: []
+  /api/v2/occurrences:
+    get:
+      operationId: api_occurrences_get_collection
+      tags:
+        - Occurrence
+      responses:
+        200:
+          description: 'Occurrence collection'
+          content:
+            application/ld+json:
+              schema:
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Occurrence.OccurrenceRepresentationProvider.jsonld' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:previous': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } }, example: { '@id': string, type: string, 'hydra:first': string, 'hydra:last': string, 'hydra:previous': string, 'hydra:next': string } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: [string, 'null'] }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
+      summary: 'Retrieves the collection of Occurrence resources.'
+      description: 'Retrieves the collection of Occurrence resources.'
+      parameters:
+        -
+          name: page
+          in: query
+          description: 'The collection page number'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 1
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: itemsPerPage
+          in: query
+          description: 'The number of items per page'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 10
+            minimum: 0
+            maximum: 50
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: event.title
+          in: query
+          description: 'Search field based on value given'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: event.organizer.name
+          in: query
+          description: 'Search field based on value given'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: event.organizer.entityId
+          in: query
+          description: 'Search field based on value given'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: event.location.name
+          in: query
+          description: 'Search field based on value given'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: event.location.entityId
+          in: query
+          description: 'Search field based on value given'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: event.publicAccess
+          in: query
+          description: 'Is this a public event'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: boolean
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: event.tags
+          in: query
+          description: 'Filter based on given tags'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: array
+            items:
+              type: string
+          style: deepObject
+          explode: false
+          allowReserved: false
+        -
+          name: start
+          in: query
+          description: 'Filter base on date (greater then or equal to)'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: end
+          in: query
+          description: 'Filter base on date (less then or equal to)'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+      deprecated: false
+    parameters: []
+  '/api/v2/occurrences/{id}':
+    get:
+      operationId: api_occurrences_id_get
+      tags:
+        - Occurrence
+      responses:
+        200:
+          description: 'Single occurrence'
+      summary: 'Retrieves a Occurrence resource.'
+      description: 'Retrieves a Occurrence resource.'
       parameters:
         -
           name: id
@@ -212,9 +759,271 @@ paths:
           allowReserved: false
       deprecated: false
     parameters: []
+  /api/v2/tags:
+    get:
+      operationId: api_tags_get_collection
+      tags:
+        - Tag
+      responses:
+        200:
+          description: 'Tag collection'
+          content:
+            application/ld+json:
+              schema:
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Tag.jsonld' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:previous': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } }, example: { '@id': string, type: string, 'hydra:first': string, 'hydra:last': string, 'hydra:previous': string, 'hydra:next': string } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: [string, 'null'] }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
+      summary: 'Retrieves the collection of Tag resources.'
+      description: 'Retrieves the collection of Tag resources.'
+      parameters:
+        -
+          name: page
+          in: query
+          description: 'The collection page number'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 1
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: itemsPerPage
+          in: query
+          description: 'The number of items per page'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 20
+            minimum: 0
+            maximum: 100
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: vocabulary
+          in: query
+          description: 'Search field based on value given'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+      deprecated: false
+    parameters: []
+  '/api/v2/tags/{name}':
+    get:
+      operationId: api_tags_name_get
+      tags:
+        - Tag
+      responses:
+        200:
+          description: 'Single tag'
+      summary: 'Get single tag'
+      description: 'Retrieves a Tag resource.'
+      parameters:
+        -
+          name: name
+          in: path
+          description: ''
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: simple
+          explode: false
+          allowReserved: false
+      deprecated: false
+    parameters: []
+  /api/v2/vocabularies:
+    get:
+      operationId: api_vocabularies_get_collection
+      tags:
+        - Vocabulary
+      responses:
+        200:
+          description: 'Vocabulary collection'
+          content:
+            application/ld+json:
+              schema:
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Vocabulary.jsonld' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:previous': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } }, example: { '@id': string, type: string, 'hydra:first': string, 'hydra:last': string, 'hydra:previous': string, 'hydra:next': string } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: [string, 'null'] }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
+      summary: 'Retrieves the collection of Vocabulary resources.'
+      description: 'Retrieves the collection of Vocabulary resources.'
+      parameters:
+        -
+          name: page
+          in: query
+          description: 'The collection page number'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 1
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: itemsPerPage
+          in: query
+          description: 'The number of items per page'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: integer
+            default: 20
+            minimum: 0
+            maximum: 100
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: tags
+          in: query
+          description: 'Search field based on value given'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+      deprecated: false
+    parameters: []
+  '/api/v2/vocabularies/{name}':
+    get:
+      operationId: api_vocabularies_name_get
+      tags:
+        - Vocabulary
+      responses:
+        200:
+          description: 'Single vocabulary'
+      summary: 'Get a vocabulary based on name'
+      description: 'Retrieves a Vocabulary resource.'
+      parameters:
+        -
+          name: name
+          in: path
+          description: ''
+          required: true
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: simple
+          explode: false
+          allowReserved: false
+      deprecated: false
+    parameters: []
 components:
   schemas:
+    DailyOccurrence.DailyOccurrenceRepresentationProvider.jsonld:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        '@context':
+          readOnly: true
+          oneOf:
+            -
+              type: string
+            -
+              type: object
+              properties:
+                '@vocab':
+                  type: string
+                hydra:
+                  type: string
+                  enum: ['http://www.w3.org/ns/hydra/core#']
+              required:
+                - '@vocab'
+                - hydra
+              additionalProperties: true
     Event.EventRepresentationProvider.jsonld:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        '@context':
+          readOnly: true
+          oneOf:
+            -
+              type: string
+            -
+              type: object
+              properties:
+                '@vocab':
+                  type: string
+                hydra:
+                  type: string
+                  enum: ['http://www.w3.org/ns/hydra/core#']
+              required:
+                - '@vocab'
+                - hydra
+              additionalProperties: true
+    Location.LocationRepresentationProvider.jsonld:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        '@context':
+          readOnly: true
+          oneOf:
+            -
+              type: string
+            -
+              type: object
+              properties:
+                '@vocab':
+                  type: string
+                hydra:
+                  type: string
+                  enum: ['http://www.w3.org/ns/hydra/core#']
+              required:
+                - '@vocab'
+                - hydra
+              additionalProperties: true
+    Occurrence.OccurrenceRepresentationProvider.jsonld:
       type: object
       description: ''
       deprecated: false
@@ -270,6 +1079,72 @@ components:
                 - '@vocab'
                 - hydra
               additionalProperties: true
+    Tag.jsonld:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        '@context':
+          readOnly: true
+          oneOf:
+            -
+              type: string
+            -
+              type: object
+              properties:
+                '@vocab':
+                  type: string
+                hydra:
+                  type: string
+                  enum: ['http://www.w3.org/ns/hydra/core#']
+              required:
+                - '@vocab'
+                - hydra
+              additionalProperties: true
+        name:
+          type: string
+    Vocabulary.jsonld:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        '@context':
+          readOnly: true
+          oneOf:
+            -
+              type: string
+            -
+              type: object
+              properties:
+                '@vocab':
+                  type: string
+                hydra:
+                  type: string
+                  enum: ['http://www.w3.org/ns/hydra/core#']
+              required:
+                - '@vocab'
+                - hydra
+              additionalProperties: true
+        name:
+          type: string
+        description:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
   responses: {  }
   parameters: {  }
   examples: {  }

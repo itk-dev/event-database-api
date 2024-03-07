@@ -11,7 +11,7 @@ use App\Service\ElasticSearch\ElasticSearchPaginator;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
-final class OrganizationRepresentationProvider extends AbstractProvider implements ProviderInterface
+final class LocationRepresentationProvider extends AbstractProvider implements ProviderInterface
 {
     /**
      * @throws ContainerExceptionInterface
@@ -24,13 +24,13 @@ final class OrganizationRepresentationProvider extends AbstractProvider implemen
             $filters = $this->getFilters($operation, $context);
             $offset = $this->calculatePageOffset($context);
             $limit = $this->getImagesPerPage($context);
-            $results = $this->index->getAll(IndexNames::Organizations->value, $filters, $offset, $limit);
+            $results = $this->index->getAll(IndexNames::Locations->value, $filters, $offset, $limit);
 
             return new ElasticSearchPaginator($results, $limit, $offset);
         }
 
         try {
-            return [$this->index->get(IndexNames::Organizations->value, $uriVariables['id'])['_source']];
+            return [$this->index->get(IndexNames::Locations->value, $uriVariables['id'])['_source']];
         } catch (IndexException $e) {
             if (404 === $e->getCode()) {
                 return null;

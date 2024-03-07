@@ -5,7 +5,9 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
-    errorBaseline="baseline.xml"
+    errorBaseline="psalm-baseline.xml"
+    findUnusedBaselineEntry="true"
+    findUnusedCode="false"
 >
     <projectFiles>
         <directory name="src"/>
@@ -18,6 +20,6 @@
             <containerXml>var/cache/dev/App_KernelDevDebugContainer.xml</containerXml>
         </pluginClass>
         <pluginClass class="Weirdan\DoctrinePsalmPlugin\Plugin"/>
-<!--        <pluginClass class="CuyZ\Valinor\QA\Psalm\ValinorPsalmPlugin"/>-->
+        <!--        <pluginClass class="CuyZ\Valinor\QA\Psalm\ValinorPsalmPlugin"/>-->
     </plugins>
 </psalm>

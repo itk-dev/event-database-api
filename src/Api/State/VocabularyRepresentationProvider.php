@@ -5,13 +5,15 @@ namespace App\Api\State;
 use ApiPlatform\Metadata\CollectionOperationInterface;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
+use App\Api\Dto\Vocabulary;
 use App\Exception\IndexException;
 use App\Model\IndexNames;
+use App\Model\SearchResults;
 use App\Service\ElasticSearch\ElasticSearchPaginator;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
-final class OrganizationRepresentationProvider extends AbstractProvider implements ProviderInterface
+final class VocabularyRepresentationProvider extends AbstractProvider implements ProviderInterface
 {
     /**
      * @throws ContainerExceptionInterface
@@ -24,13 +26,20 @@ final class OrganizationRepresentationProvider extends AbstractProvider implemen
             $filters = $this->getFilters($operation, $context);
             $offset = $this->calculatePageOffset($context);
             $limit = $this->getImagesPerPage($context);
-            $results = $this->index->getAll(IndexNames::Organizations->value, $filters, $offset, $limit);
+            $results = $this->index->getAll(IndexNames::Vocabularies->value, $filters, $offset, $limit);
+
+            $vocabularies = [];
+            foreach ($results->hits as $hit) {
+                $vocabularies[] = new Vocabulary(name: $hit['name'], description: $hit['description'], tags: $hit['tags']);
+            }
+
+            $results = new SearchResults(hits: $vocabularies, total: $results->total);
 
             return new ElasticSearchPaginator($results, $limit, $offset);
         }
 
         try {
-            return [$this->index->get(IndexNames::Organizations->value, $uriVariables['id'])['_source']];
+            $hit = $this->index->get(IndexNames::Vocabularies->value, $uriVariables['name'], 'name')['_source'];
         } catch (IndexException $e) {
             if (404 === $e->getCode()) {
                 return null;
@@ -38,5 +47,7 @@ final class OrganizationRepresentationProvider extends AbstractProvider implemen
 
             throw $e;
         }
+
+        return new Vocabulary(name: $hit['name'], description: $hit['description'], tags: $hit['tags']);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Api\State;
 use ApiPlatform\Metadata\CollectionOperationInterface;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
+use App\Exception\IndexException;
 use App\Model\IndexNames;
 use App\Service\ElasticSearch\ElasticSearchPaginator;
 use Psr\Container\ContainerExceptionInterface;
@@ -15,7 +16,7 @@ final class EventRepresentationProvider extends AbstractProvider implements Prov
     /**
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
-     * @throws \App\Exception\IndexException
+     * @throws IndexException
      */
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): ElasticSearchPaginator|array|null
     {
@@ -28,6 +29,14 @@ final class EventRepresentationProvider extends AbstractProvider implements Prov
             return new ElasticSearchPaginator($results, $limit, $offset);
         }
 
-        return [$this->index->get(IndexNames::Events->value, $uriVariables['id'])['_source']];
+        try {
+            return [$this->index->get(IndexNames::Events->value, $uriVariables['id'])['_source']];
+        } catch (IndexException $e) {
+            if (404 === $e->getCode()) {
+                return null;
+            }
+
+            throw $e;
+        }
     }
 }

@@ -29,11 +29,31 @@ services:
         arguments:
             $filterLocator: '@api_platform.filter_locator'
 
+    App\Api\State\DailyOccurrenceRepresentationProvider:
+        arguments:
+            $filterLocator: '@api_platform.filter_locator'
+
     App\Api\State\EventRepresentationProvider:
         arguments:
             $filterLocator: '@api_platform.filter_locator'
 
+    App\Api\State\LocationRepresentationProvider:
+        arguments:
+            $filterLocator: '@api_platform.filter_locator'
+
+    App\Api\State\OccurrenceRepresentationProvider:
+        arguments:
+            $filterLocator: '@api_platform.filter_locator'
+
     App\Api\State\OrganizationRepresentationProvider:
+        arguments:
+            $filterLocator: '@api_platform.filter_locator'
+
+    App\Api\State\TagRepresentationProvider:
+        arguments:
+            $filterLocator: '@api_platform.filter_locator'
+
+    App\Api\State\VocabularyRepresentationProvider:
         arguments:
             $filterLocator: '@api_platform.filter_locator'
 

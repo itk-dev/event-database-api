@@ -11,7 +11,7 @@ use App\Api\Filter\ElasticSearch\BooleanFilter;
 use App\Api\Filter\ElasticSearch\DateFilter;
 use App\Api\Filter\ElasticSearch\EventTagFilter;
 use App\Api\Filter\ElasticSearch\MatchFilter;
-use App\Api\State\EventRepresentationProvider;
+use App\Api\State\DailyOccurrenceRepresentationProvider;
 use App\Model\DateLimits;
 
 #[ApiResource(
@@ -30,16 +30,16 @@ use App\Model\DateLimits;
                 ],
                 'responses' => [
                     '200' => [
-                        'description' => 'Single event',
+                        'description' => 'Single daily occurrence',
                     ],
                 ],
             ],
-            output: EventRepresentationProvider::class,
-            provider: EventRepresentationProvider::class,
+            output: DailyOccurrenceRepresentationProvider::class,
+            provider: DailyOccurrenceRepresentationProvider::class,
         ),
         new GetCollection(
-            output: EventRepresentationProvider::class,
-            provider: EventRepresentationProvider::class,
+            output: DailyOccurrenceRepresentationProvider::class,
+            provider: DailyOccurrenceRepresentationProvider::class,
         ),
     ],
     paginationClientItemsPerPage: true,
@@ -48,21 +48,21 @@ use App\Model\DateLimits;
 )]
 #[ApiFilter(
     MatchFilter::class,
-    properties: ['title', 'organizer.name', 'organizer.entityId', 'location.name', 'location.entityId']
+    properties: ['event.title', 'event.organizer.name', 'event.organizer.entityId', 'event.location.name', 'event.location.entityId']
 )]
 #[ApiFilter(
     BooleanFilter::class,
-    properties: ['publicAccess']
+    properties: ['event.publicAccess']
 )]
 #[ApiFilter(
     EventTagFilter::class,
-    properties: ['tags']
+    properties: ['event.tags']
 )]
 #[ApiFilter(
     DateFilter::class,
     properties: [
-        'occurrences.start' => 'start',
-        'occurrences.end' => 'end',
+        'start' => 'start',
+        'end' => 'end',
     ],
     arguments: [
         'config' => [
@@ -77,7 +77,7 @@ use App\Model\DateLimits;
         ],
     ]
 )]
-class Event
+class DailyOccurrence
 {
     #[ApiProperty(
         identifier: true,

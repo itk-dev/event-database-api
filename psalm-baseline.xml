@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="5.16.0@2897ba636551a8cb61601cc26f6ccfbba6c36591">
+  <file src="src/Api/State/AbstractProvider.php">
+    <InternalMethod>
+      <code>getFilters</code>
+    </InternalMethod>
+  </file>
+  <file src="src/Api/State/DailyOccurrenceRepresentationProvider.php">
+    <InvalidReturnStatement>
+      <code><![CDATA[[$this->index->get(IndexNames::DailyOccurrences->value, $uriVariables['id'])['_source']]]]></code>
+    </InvalidReturnStatement>
+    <MissingTemplateParam>
+      <code>ProviderInterface</code>
+    </MissingTemplateParam>
+    <PossiblyNullArrayAccess>
+      <code><![CDATA[$this->index->get(IndexNames::DailyOccurrences->value, $uriVariables['id'])['_source']]]></code>
+    </PossiblyNullArrayAccess>
+  </file>
+  <file src="src/Api/State/EventRepresentationProvider.php">
+    <InvalidReturnStatement>
+      <code><![CDATA[[$this->index->get(IndexNames::Events->value, $uriVariables['id'])['_source']]]]></code>
+    </InvalidReturnStatement>
+    <MissingTemplateParam>
+      <code>ProviderInterface</code>
+    </MissingTemplateParam>
+    <PossiblyNullArrayAccess>
+      <code><![CDATA[$this->index->get(IndexNames::Events->value, $uriVariables['id'])['_source']]]></code>
+    </PossiblyNullArrayAccess>
+  </file>
+  <file src="src/Api/State/LocationRepresentationProvider.php">
+    <InvalidReturnStatement>
+      <code><![CDATA[[$this->index->get(IndexNames::Locations->value, $uriVariables['id'])['_source']]]]></code>
+    </InvalidReturnStatement>
+    <MissingTemplateParam>
+      <code>ProviderInterface</code>
+    </MissingTemplateParam>
+    <PossiblyNullArrayAccess>
+      <code><![CDATA[$this->index->get(IndexNames::Locations->value, $uriVariables['id'])['_source']]]></code>
+    </PossiblyNullArrayAccess>
+  </file>
+  <file src="src/Api/State/OccurrenceRepresentationProvider.php">
+    <InvalidReturnStatement>
+      <code><![CDATA[[$this->index->get(IndexNames::Occurrences->value, $uriVariables['id'])['_source']]]]></code>
+    </InvalidReturnStatement>
+    <MissingTemplateParam>
+      <code>ProviderInterface</code>
+    </MissingTemplateParam>
+    <PossiblyNullArrayAccess>
+      <code><![CDATA[$this->index->get(IndexNames::Occurrences->value, $uriVariables['id'])['_source']]]></code>
+    </PossiblyNullArrayAccess>
+  </file>
+  <file src="src/Api/State/OrganizationRepresentationProvider.php">
+    <InvalidReturnStatement>
+      <code><![CDATA[[$this->index->get(IndexNames::Organizations->value, $uriVariables['id'])['_source']]]]></code>
+    </InvalidReturnStatement>
+    <MissingTemplateParam>
+      <code>ProviderInterface</code>
+    </MissingTemplateParam>
+    <PossiblyNullArrayAccess>
+      <code><![CDATA[$this->index->get(IndexNames::Organizations->value, $uriVariables['id'])['_source']]]></code>
+    </PossiblyNullArrayAccess>
+  </file>
+  <file src="src/Api/State/TagRepresentationProvider.php">
+    <MissingTemplateParam>
+      <code>ProviderInterface</code>
+    </MissingTemplateParam>
+    <PossiblyNullArgument>
+      <code><![CDATA[$hit['name']]]></code>
+    </PossiblyNullArgument>
+    <PossiblyNullArrayAccess>
+      <code><![CDATA[$hit['name']]]></code>
+      <code><![CDATA[$this->index->get(IndexNames::Tags->value, $uriVariables['name'], 'name')['_source']]]></code>
+    </PossiblyNullArrayAccess>
+  </file>
+  <file src="src/Api/State/VocabularyRepresentationProvider.php">
+    <MissingTemplateParam>
+      <code>ProviderInterface</code>
+    </MissingTemplateParam>
+    <PossiblyNullArgument>
+      <code><![CDATA[$hit['description']]]></code>
+      <code><![CDATA[$hit['name']]]></code>
+      <code><![CDATA[$hit['tags']]]></code>
+    </PossiblyNullArgument>
+    <PossiblyNullArrayAccess>
+      <code><![CDATA[$hit['description']]]></code>
+      <code><![CDATA[$hit['name']]]></code>
+      <code><![CDATA[$hit['tags']]]></code>
+      <code><![CDATA[$this->index->get(IndexNames::Vocabularies->value, $uriVariables['name'], 'name')['_source']]]></code>
+    </PossiblyNullArrayAccess>
+  </file>
+  <file src="src/Command/FixturesLoadCommand.php">
+    <UndefinedDocblockClass>
+      <code>\HttpException</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="src/Fixtures/FixtureLoader.php">
+    <InvalidArgument>
+      <code><![CDATA[[
+                'index' => $indexName,
+                'body' => [
+                    'settings' => [
+                        'number_of_shards' => 5,
+                        'number_of_replicas' => 0,
+                    ],
+                ],
+            ]]]></code>
+    </InvalidArgument>
+    <PossiblyUndefinedMethod>
+      <code>getStatusCode</code>
+      <code>getStatusCode</code>
+    </PossiblyUndefinedMethod>
+    <UndefinedClass>
+      <code>\HttpException</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass>
+      <code>\HttpException</code>
+      <code>\HttpException</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="src/Service/ElasticSearch/ElasticSearchIndex.php">
+    <ArgumentTypeCoercion>
+      <code>$params</code>
+    </ArgumentTypeCoercion>
+    <InvalidArgument>
+      <code>$params</code>
+      <code><![CDATA[['name' => $indexName]]]></code>
+    </InvalidArgument>
+  </file>
+  <file src="src/Service/ElasticSearch/ElasticSearchPaginator.php">
+    <MissingTemplateParam>
+      <code>PaginatorInterface</code>
+      <code>\IteratorAggregate</code>
+    </MissingTemplateParam>
+  </file>
+</files>

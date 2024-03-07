@@ -8,6 +8,7 @@
     "require": {
         "php": ">=8.2",
         "ext-ctype": "*",
+        "ext-http": "*",
         "ext-iconv": "*",
         "api-platform/core": "^3.2",
         "doctrine/doctrine-bundle": "^2.11",

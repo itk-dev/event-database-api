@@ -36,7 +36,16 @@ class ElasticSearchIndex implements IndexInterface
         }
     }
 
-    public function get(string $indexName, int $id): array
+    public function get(string $indexName, int|string $id, string $indexField = 'id'): array
+    {
+        if ('id' === $indexField) {
+            return $this->getById($indexName, $id);
+        } else {
+            return $this->getByCustomIdField($indexName, $id, $indexField);
+        }
+    }
+
+    private function getById(string $indexName, int|string $id): array
     {
         $params = [
             'index' => $indexName,
@@ -55,6 +64,50 @@ class ElasticSearchIndex implements IndexInterface
         }
 
         return $result;
+    }
+
+    /**
+     * Simulate get for indexes where the "id" field has a different name.
+     *
+     * The ES client get() requires a 'id' field. To get items from indexes where
+     * we have to use search() with a term query.
+     *
+     * @throws IndexException
+     */
+    private function getByCustomIdField(string $indexName, int|string $id, string $indexField = 'id'): array
+    {
+        $params = [
+            'index' => $indexName,
+            'body' => [
+                'query' => [
+                    'term' => [
+                        $indexField => $id,
+                    ],
+                ],
+            ],
+        ];
+
+        try {
+            /** @var Elasticsearch $response */
+            $response = $this->client->search($params);
+            if (Response::HTTP_OK !== $response->getStatusCode()) {
+                throw new IndexException('Failed to get document from Elasticsearch', $response->getStatusCode());
+            }
+            $result = $this->parseResponse($response);
+        } catch (ClientResponseException|ServerResponseException|\JsonException $e) {
+            throw new IndexException($e->getMessage(), $e->getCode(), $e);
+        }
+
+        if (0 === $result['hits']['total']['value']) {
+            // The ES client get() will throw a 404 exception when no document was found.
+            throw new IndexException('Not found', 404);
+        }
+
+        if (1 < $result['hits']['total']['value']) {
+            throw new IndexException('ID search returned multiple hits', 500);
+        }
+
+        return $result['hits']['hits'][0];
     }
 
     public function getAll(string $indexName, array $filters = [], int $from = 0, int $size = 10): SearchResults

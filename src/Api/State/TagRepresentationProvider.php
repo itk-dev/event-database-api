@@ -5,13 +5,15 @@ namespace App\Api\State;
 use ApiPlatform\Metadata\CollectionOperationInterface;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
+use App\Api\Dto\Tag;
 use App\Exception\IndexException;
 use App\Model\IndexNames;
+use App\Model\SearchResults;
 use App\Service\ElasticSearch\ElasticSearchPaginator;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
-final class OrganizationRepresentationProvider extends AbstractProvider implements ProviderInterface
+final class TagRepresentationProvider extends AbstractProvider implements ProviderInterface
 {
     /**
      * @throws ContainerExceptionInterface
@@ -24,13 +26,20 @@ final class OrganizationRepresentationProvider extends AbstractProvider implemen
             $filters = $this->getFilters($operation, $context);
             $offset = $this->calculatePageOffset($context);
             $limit = $this->getImagesPerPage($context);
-            $results = $this->index->getAll(IndexNames::Organizations->value, $filters, $offset, $limit);
+            $results = $this->index->getAll(IndexNames::Tags->value, $filters, $offset, $limit);
+
+            $tags = [];
+            foreach ($results->hits as $hit) {
+                $tags[] = new Tag(name: $hit['name']);
+            }
+
+            $results = new SearchResults(hits: $tags, total: $results->total);
 
             return new ElasticSearchPaginator($results, $limit, $offset);
         }
 
         try {
-            return [$this->index->get(IndexNames::Organizations->value, $uriVariables['id'])['_source']];
+            $hit = $this->index->get(IndexNames::Tags->value, $uriVariables['name'], 'name')['_source'];
         } catch (IndexException $e) {
             if (404 === $e->getCode()) {
                 return null;
@@ -38,5 +47,7 @@ final class OrganizationRepresentationProvider extends AbstractProvider implemen
 
             throw $e;
         }
+
+        return new Tag(name: $hit['name']);
     }
 }

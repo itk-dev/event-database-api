@@ -25,15 +25,17 @@ interface IndexInterface
      *
      * @param string $indexName
      *   The name of the index to retrieve information from
-     * @param int $id
+     * @param int|string $id
      *   The ID of the document to retrieve
+     * @param string $indexField
+     *   The id field in the index
      *
-     * @return array
-     *   The retrieved document as an array
+     * @return ?array
+     *   The retrieved document as an array or null if id not found
      *
      * @throws IndexException
      */
-    public function get(string $indexName, int $id): array;
+    public function get(string $indexName, int|string $id, string $indexField = 'id'): ?array;
 
     /**
      * Retrieves documents from the specified index with optional filters and pagination.

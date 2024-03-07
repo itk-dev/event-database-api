@@ -2,13 +2,17 @@
 
 namespace App\Model;
 
-/**
- * Represents an enumeration of index names.
- */
 enum IndexNames: string
 {
     case Events = 'events';
-    case Organization = 'organization';
+    case Organizations = 'organizations';
+    case Occurrences = 'occurrences';
+    case DailyOccurrences = 'daily_occurrences';
+    case Tags = 'tags';
+    case Vocabularies = 'vocabularies';
+    case Locations = 'locations';
+    // @todo add apikeys index
+    // case ApiKeys = 'api_keys';
 
     public static function values(): array
     {

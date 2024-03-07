@@ -27,7 +27,6 @@ class FixtureLoader
     /**
      * @throws RedirectionExceptionInterface
      * @throws ClientExceptionInterface
-     * @throws \JsonException
      * @throws TransportExceptionInterface
      * @throws ClientResponseException
      * @throws ServerExceptionInterface

@@ -17,7 +17,7 @@ use App\Api\State\TagRepresentationProvider;
                 'summary' => 'Get single tag',
                 'parameters' => [
                     [
-                        'name' => 'name',
+                        'name' => 'slug',
                         'in' => 'path',
                         'required' => true,
                         'schema' => [
@@ -27,7 +27,7 @@ use App\Api\State\TagRepresentationProvider;
                 ],
                 'responses' => [
                     '200' => [
-                        'description' => 'Single tag',
+                        'description' => 'Get single tag',
                     ],
                 ],
             ],
@@ -56,13 +56,14 @@ readonly class Tag
     #[ApiProperty(identifier: false)]
     private ?int $id;
 
-    #[ApiProperty(
-        identifier: true,
-    )]
+    #[ApiProperty(identifier: true)]
+    public string $slug;
+
     public string $name;
 
-    public function __construct(string $name)
+    public function __construct(string $name, string $slug)
     {
         $this->name = $name;
+        $this->slug = $slug;
     }
 }

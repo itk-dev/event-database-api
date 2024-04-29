@@ -17,7 +17,7 @@ use App\Api\State\VocabularyRepresentationProvider;
                 'summary' => 'Get a vocabulary based on name',
                 'parameters' => [
                     [
-                        'name' => 'name',
+                        'name' => 'slug',
                         'in' => 'path',
                         'required' => true,
                         'schema' => [
@@ -27,7 +27,7 @@ use App\Api\State\VocabularyRepresentationProvider;
                 ],
                 'responses' => [
                     '200' => [
-                        'description' => 'Single vocabulary',
+                        'description' => 'Get single vocabulary',
                     ],
                 ],
             ],
@@ -56,15 +56,18 @@ readonly class Vocabulary
     #[ApiProperty(
         identifier: true,
     )]
+    public string $slug;
+
     public string $name;
 
     public string $description;
 
     public array $tags;
 
-    public function __construct(string $name, string $description, array $tags)
+    public function __construct(string $name, string $slug, string $description, array $tags)
     {
         $this->name = $name;
+        $this->slug = $slug;
         $this->description = $description;
         $this->tags = $tags;
     }

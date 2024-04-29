@@ -108,11 +108,11 @@ class FixtureLoader
      * @param string $indexName
      *   The name of the index
      *
-     * @throws clientResponseException
+     * @throws ClientResponseException
      *   If an error occurs during the Elasticsearch client request
-     * @throws missingParameterException
+     * @throws MissingParameterException
      *   If the required parameter is missing
-     * @throws serverResponseException
+     * @throws ServerResponseException
      *   If the server returns an error during the Elasticsearch request
      */
     private function createIndex(string $indexName): void

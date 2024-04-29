@@ -206,7 +206,7 @@ class ElasticSearchIndex implements IndexInterface
     /**
      * Parses the response from Elasticsearch and returns it as an array.
      *
-     * @param elasticsearch $response
+     * @param Elasticsearch $response
      *   The Elasticsearch response object
      *
      * @return array

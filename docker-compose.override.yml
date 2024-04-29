@@ -18,20 +18,20 @@ services:
       - RABBITMQ_DEFAULT_PASS=password
       - RABBITMQ_ERLANG_COOKIE='d53f319cd7376f8f840aaf9889f315ab
 
-#  elasticsearch:
-#    image: elasticsearch:8.10.2
-#    networks:
-#      - app
-#      - frontend
-#    ports:
-#      - "9200"
-#    deploy:
-#      resources:
-#        limits:
-#          memory: 1096M
-#        reservations:
-#          memory: 1096M
-#    environment:
-#      - discovery.type=single-node
-#      - xpack.security.enabled=false
+  elasticsearch:
+    image: elasticsearch:8.13.0
+    networks:
+      - app
+      - frontend
+    ports:
+      - "9200"
+    deploy:
+      resources:
+        limits:
+          memory: 1096M
+        reservations:
+          memory: 1096M
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
 

@@ -4,6 +4,7 @@ namespace App\Service\ElasticSearch;
 
 use App\Exception\IndexException;
 use App\Model\FilterTypes;
+use App\Model\IndexNames;
 use App\Model\SearchResults;
 use App\Service\IndexInterface;
 use Elastic\Elasticsearch\Client;
@@ -156,8 +157,8 @@ class ElasticSearchIndex implements IndexInterface
                 ],
                 'size' => $size,
                 'from' => $from,
-                // @TODO: add order filters to sort results
-                'sort' => [],
+                // @TODO: make a proper sort filter to allow client to set sort direction
+                'sort' => $this->getSort($indexName),
             ],
         ];
 
@@ -250,5 +251,46 @@ class ElasticSearchIndex implements IndexInterface
     private function getTotalHits(array $data): int
     {
         return $data['hits']['total']['value'] ?? 0;
+    }
+
+    /**
+     * Get the sorting configuration for a specific index.
+     *
+     * This method returns an array containing the sorting configuration based on the given index name.
+     * If the index name matches one of the predefined index names, a specific sorting configuration will be returned.
+     * Otherwise, an empty array will be returned indicating no sorting is required.
+     *
+     * @param string $indexName the name of the index
+     *
+     * @return array the sorting configuration
+     */
+    private function getSort(string $indexName): array
+    {
+        $indexName = IndexNames::tryFrom($indexName);
+
+        return match ($indexName) {
+            IndexNames::Events => [
+                'title.keyword' => [
+                    'order' => 'asc',
+                ],
+            ],
+            IndexNames::DailyOccurrences, IndexNames::Occurrences => [
+                'start' => [
+                    'order' => 'asc',
+                    'format' => 'strict_date_optional_time_nanos',
+                ],
+            ],
+            IndexNames::Locations, IndexNames::Organizations => [
+                'name.keyword' => [
+                    'order' => 'asc',
+                ],
+            ],
+            IndexNames::Tags, IndexNames::Vocabularies => [
+                'name' => [
+                    'order' => 'asc',
+                ],
+            ],
+            default => []
+        };
     }
 }

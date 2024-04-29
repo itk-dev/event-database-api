@@ -30,7 +30,7 @@ final class TagRepresentationProvider extends AbstractProvider implements Provid
 
             $tags = [];
             foreach ($results->hits as $hit) {
-                $tags[] = new Tag(name: $hit['name']);
+                $tags[] = new Tag(name: $hit['name'], slug: $hit['slug']);
             }
 
             $results = new SearchResults(hits: $tags, total: $results->total);
@@ -39,7 +39,8 @@ final class TagRepresentationProvider extends AbstractProvider implements Provid
         }
 
         try {
-            $hit = $this->index->get(IndexNames::Tags->value, $uriVariables['name'], 'name')['_source'];
+            $data = $this->index->get(IndexNames::Tags->value, $uriVariables['slug'], 'slug');
+            $hit = $data['_source'] ?? null;
         } catch (IndexException $e) {
             if (404 === $e->getCode()) {
                 return null;
@@ -48,6 +49,6 @@ final class TagRepresentationProvider extends AbstractProvider implements Provid
             throw $e;
         }
 
-        return new Tag(name: $hit['name']);
+        return is_null($hit) ? $hit : new Tag(name: $hit['name'], slug: $hit['slug']);
     }
 }

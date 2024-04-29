@@ -30,7 +30,7 @@ final class VocabularyRepresentationProvider extends AbstractProvider implements
 
             $vocabularies = [];
             foreach ($results->hits as $hit) {
-                $vocabularies[] = new Vocabulary(name: $hit['name'], description: $hit['description'], tags: $hit['tags']);
+                $vocabularies[] = new Vocabulary(name: $hit['name'], slug: $hit['slug'], description: $hit['description'], tags: $hit['tags']);
             }
 
             $results = new SearchResults(hits: $vocabularies, total: $results->total);
@@ -39,7 +39,8 @@ final class VocabularyRepresentationProvider extends AbstractProvider implements
         }
 
         try {
-            $hit = $this->index->get(IndexNames::Vocabularies->value, $uriVariables['name'], 'name')['_source'];
+            $data = $this->index->get(IndexNames::Vocabularies->value, $uriVariables['slug'], 'slug');
+            $hit = $data['_source'] ?? null;
         } catch (IndexException $e) {
             if (404 === $e->getCode()) {
                 return null;
@@ -48,6 +49,6 @@ final class VocabularyRepresentationProvider extends AbstractProvider implements
             throw $e;
         }
 
-        return new Vocabulary(name: $hit['name'], description: $hit['description'], tags: $hit['tags']);
+        return is_null($hit) ? $hit : new Vocabulary(name: $hit['name'], slug: $hit['slug'], description: $hit['description'], tags: $hit['tags']);
     }
 }

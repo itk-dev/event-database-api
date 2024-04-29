@@ -64,29 +64,11 @@
     <MissingTemplateParam>
       <code>ProviderInterface</code>
     </MissingTemplateParam>
-    <PossiblyNullArgument>
-      <code><![CDATA[$hit['name']]]></code>
-    </PossiblyNullArgument>
-    <PossiblyNullArrayAccess>
-      <code><![CDATA[$hit['name']]]></code>
-      <code><![CDATA[$this->index->get(IndexNames::Tags->value, $uriVariables['name'], 'name')['_source']]]></code>
-    </PossiblyNullArrayAccess>
   </file>
   <file src="src/Api/State/VocabularyRepresentationProvider.php">
     <MissingTemplateParam>
       <code>ProviderInterface</code>
     </MissingTemplateParam>
-    <PossiblyNullArgument>
-      <code><![CDATA[$hit['description']]]></code>
-      <code><![CDATA[$hit['name']]]></code>
-      <code><![CDATA[$hit['tags']]]></code>
-    </PossiblyNullArgument>
-    <PossiblyNullArrayAccess>
-      <code><![CDATA[$hit['description']]]></code>
-      <code><![CDATA[$hit['name']]]></code>
-      <code><![CDATA[$hit['tags']]]></code>
-      <code><![CDATA[$this->index->get(IndexNames::Vocabularies->value, $uriVariables['name'], 'name')['_source']]]></code>
-    </PossiblyNullArrayAccess>
   </file>
   <file src="src/Command/FixturesLoadCommand.php">
     <UndefinedDocblockClass>

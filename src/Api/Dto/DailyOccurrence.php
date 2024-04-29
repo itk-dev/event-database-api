@@ -2,7 +2,6 @@
 
 namespace App\Api\Dto;
 
-use ApiPlatform\Elasticsearch\Filter\OrderFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;

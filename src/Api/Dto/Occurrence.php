@@ -7,6 +7,9 @@ use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\OpenApi\Model\Operation;
+use ApiPlatform\OpenApi\Model\Parameter;
+use ApiPlatform\OpenApi\Model\Response;
 use App\Api\Filter\ElasticSearch\BooleanFilter;
 use App\Api\Filter\ElasticSearch\DateFilter;
 use App\Api\Filter\ElasticSearch\EventTagFilter;
@@ -17,23 +20,24 @@ use App\Model\DateLimits;
 #[ApiResource(
     operations: [
         new Get(
-            openapiContext: [
-                'parameters' => [
-                    [
-                        'name' => 'id',
-                        'in' => 'path',
-                        'required' => true,
-                        'schema' => [
+            openapi: new Operation(
+                responses: [
+                    '200' => new Response(
+                        description: 'Single occurrence'
+                    ),
+                ],
+                summary: 'Get single occurrence based on identifier',
+                parameters: [
+                    new Parameter(
+                        name: 'id',
+                        in: 'path',
+                        required: true,
+                        schema: [
                             'type' => 'integer',
                         ],
-                    ],
-                ],
-                'responses' => [
-                    '200' => [
-                        'description' => 'Single occurrence',
-                    ],
-                ],
-            ],
+                    ),
+                ]
+            ),
             output: OccurrenceRepresentationProvider::class,
             provider: OccurrenceRepresentationProvider::class,
         ),

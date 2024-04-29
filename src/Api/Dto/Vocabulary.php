@@ -7,30 +7,33 @@ use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\OpenApi\Model\Operation;
+use ApiPlatform\OpenApi\Model\Parameter;
+use ApiPlatform\OpenApi\Model\Response;
 use App\Api\Filter\ElasticSearch\MatchFilter;
 use App\Api\State\VocabularyRepresentationProvider;
 
 #[ApiResource(
     operations: [
         new Get(
-            openapiContext: [
-                'summary' => 'Get a vocabulary based on name',
-                'parameters' => [
-                    [
-                        'name' => 'slug',
-                        'in' => 'path',
-                        'required' => true,
-                        'schema' => [
+            openapi: new Operation(
+                responses: [
+                    '200' => new Response(
+                        description: 'Get single vocabulary'
+                    ),
+                ],
+                summary: 'Get a vocabulary based on slug',
+                parameters: [
+                    new Parameter(
+                        name: 'slug',
+                        in: 'path',
+                        required: true,
+                        schema: [
                             'type' => 'string',
                         ],
-                    ],
-                ],
-                'responses' => [
-                    '200' => [
-                        'description' => 'Get single vocabulary',
-                    ],
-                ],
-            ],
+                    ),
+                ]
+            ),
             output: Vocabulary::class,
             provider: VocabularyRepresentationProvider::class,
         ),

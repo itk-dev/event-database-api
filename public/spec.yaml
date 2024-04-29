@@ -178,6 +178,8 @@ paths:
       responses:
         200:
           description: 'Single daily occurrence'
+        404:
+          description: 'Resource not found'
       summary: 'Retrieves a DailyOccurrence resource.'
       description: 'Retrieves a DailyOccurrence resource.'
       parameters:
@@ -365,6 +367,8 @@ paths:
       responses:
         200:
           description: 'Single event'
+        404:
+          description: 'Resource not found'
       summary: 'Retrieves a Event resource.'
       description: 'Retrieves a Event resource.'
       parameters:
@@ -466,6 +470,8 @@ paths:
       responses:
         200:
           description: 'Single location'
+        404:
+          description: 'Resource not found'
       summary: 'Get single location based on identifier'
       description: 'Retrieves a Location resource.'
       parameters:
@@ -653,7 +659,9 @@ paths:
       responses:
         200:
           description: 'Single occurrence'
-      summary: 'Retrieves a Occurrence resource.'
+        404:
+          description: 'Resource not found'
+      summary: 'Get single occurrence based on identifier'
       description: 'Retrieves a Occurrence resource.'
       parameters:
         -
@@ -742,6 +750,8 @@ paths:
       responses:
         200:
           description: 'Single organization'
+        404:
+          description: 'Resource not found'
       summary: 'Get single organization based on identifier'
       description: 'Retrieves a Organization resource.'
       parameters:
@@ -823,19 +833,21 @@ paths:
           allowReserved: false
       deprecated: false
     parameters: []
-  '/api/v2/tags/{name}':
+  '/api/v2/tags/{slug}':
     get:
-      operationId: api_tags_name_get
+      operationId: api_tags_slug_get
       tags:
         - Tag
       responses:
         200:
-          description: 'Single tag'
+          description: 'Get single tag'
+        404:
+          description: 'Resource not found'
       summary: 'Get single tag'
       description: 'Retrieves a Tag resource.'
       parameters:
         -
-          name: name
+          name: slug
           in: path
           description: ''
           required: true
@@ -912,19 +924,21 @@ paths:
           allowReserved: false
       deprecated: false
     parameters: []
-  '/api/v2/vocabularies/{name}':
+  '/api/v2/vocabularies/{slug}':
     get:
-      operationId: api_vocabularies_name_get
+      operationId: api_vocabularies_slug_get
       tags:
         - Vocabulary
       responses:
         200:
-          description: 'Single vocabulary'
-      summary: 'Get a vocabulary based on name'
+          description: 'Get single vocabulary'
+        404:
+          description: 'Resource not found'
+      summary: 'Get a vocabulary based on slug'
       description: 'Retrieves a Vocabulary resource.'
       parameters:
         -
-          name: name
+          name: slug
           in: path
           description: ''
           required: true
@@ -1107,6 +1121,8 @@ components:
                 - '@vocab'
                 - hydra
               additionalProperties: true
+        slug:
+          type: string
         name:
           type: string
     Vocabulary.jsonld:
@@ -1137,6 +1153,8 @@ components:
                 - '@vocab'
                 - hydra
               additionalProperties: true
+        slug:
+          type: string
         name:
           type: string
         description:

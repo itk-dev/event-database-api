@@ -26,7 +26,7 @@ abstract class AbstractProvider
     /**
      * Retrieves the filters to be applied to the operation.
      *
-     * @param operation $operation
+     * @param Operation $operation
      *   The operation to retrieve the filters for
      * @param array $context
      *   Additional context for filter application

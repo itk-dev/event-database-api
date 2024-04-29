@@ -11,7 +11,7 @@ use Symfony\Component\PropertyInfo\Type;
  */
 final class MatchFilter extends AbstractFilter
 {
-    public function apply(array $clauseBody, string $resourceClass, Operation $operation = null, array $context = []): array
+    public function apply(array $clauseBody, string $resourceClass, ?Operation $operation = null, array $context = []): array
     {
         $properties = $this->getProperties($resourceClass);
         $matches = [];

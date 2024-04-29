@@ -185,7 +185,9 @@ class ElasticSearchIndex implements IndexInterface
         $combined = (bool) count($filters[FilterTypes::Filters->value]);
         foreach ($filters[FilterTypes::Filters->value] as $filter) {
             if ($combined) {
-                $body['bool'] ??= ['must' => []];
+                if (!array_key_exists('bool', $body)) {
+                    $body['bool'] = ['must' => []];
+                }
                 // Ensure that associative arrays and lists are not combined with keys "0","1" etc. in the final json.
                 // So we need to loop over lists to ensure keys are "reset" in the final body statement.
                 if (array_is_list($filter)) {
@@ -206,7 +208,7 @@ class ElasticSearchIndex implements IndexInterface
     /**
      * Parses the response from Elasticsearch and returns it as an array.
      *
-     * @param elasticsearch $response
+     * @param Elasticsearch $response
      *   The Elasticsearch response object
      *
      * @return array

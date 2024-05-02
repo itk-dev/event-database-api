@@ -21,6 +21,7 @@ See [keep a changelog] for information about writing changes to this log.
 - Added api endpoinst for occurrences, location, tags, vocabularies and filters
 - Sort response
 - Update composer dependencies
+- Added api-key auth
 
 [keep a changelog]: https://keepachangelog.com/en/1.1.0/
 [unreleased]: https://github.com/itk-dev/event-database-imports/compare/main...develop

@@ -17,6 +17,12 @@ api_platform:
     doctrine:
         enabled: false
 
+    swagger:
+        api_keys:
+            ApiKeyAuth:
+                name: 'X-Api-Key'
+                type: header
+
     elasticsearch:
         hosts: ['%env(INDEXING_URL)%']
 

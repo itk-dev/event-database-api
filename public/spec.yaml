@@ -1168,6 +1168,13 @@ components:
   examples: {  }
   requestBodies: {  }
   headers: {  }
-  securitySchemes: {  }
-security: []
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      description: 'Value for the X-Api-Key header parameter.'
+      name: X-Api-Key
+      in: header
+security:
+  -
+    ApiKeyAuth: []
 tags: []

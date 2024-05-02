@@ -61,6 +61,10 @@ services:
         arguments:
             $appEnv: '%env(string:APP_ENV)%'
 
+    App\Security\ApiUserProvider:
+        arguments:
+            $apikeys: '%env(json:APP_API_KEYS)%'
+
     Elastic\Elasticsearch\Client:
         factory: [ '@Elastic\Elasticsearch\ClientBuilder', fromConfig ]
         arguments:

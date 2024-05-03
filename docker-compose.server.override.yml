@@ -1,0 +1,17 @@
+# itk-version: 3.2.0
+
+networks:
+  frontend:
+    external: true
+  app:
+    driver: bridge
+    internal: false
+
+services:
+  nginx:
+    labels:
+      # Scope hosting by path prefix to allow shared hosting with legacy EventDB
+      # 'https://api.detskeriaarhus.dk/api/' -> Legacy EventDB
+      # 'https://api.detskeriaarhus.dk/api/v2/' -> EventDB v2
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.rule=Host(`${COMPOSE_SERVER_DOMAIN}`) && PathPrefix(`${APP_PATH_PREFIX}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${COMPOSE_SERVER_DOMAIN}`) && PathPrefix(`${APP_PATH_PREFIX}`)"

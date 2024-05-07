@@ -9,6 +9,8 @@ networks:
 
 services:
   nginx:
+    environment:
+      APP_PATH_PREFIX: ${APP_PATH_PREFIX}
     labels:
       # Scope hosting by path prefix to allow shared hosting with legacy EventDB
       # 'https://api.detskeriaarhus.dk/api/' -> Legacy EventDB

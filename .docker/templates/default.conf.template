@@ -5,6 +5,11 @@ server {
     root ${NGINX_WEB_ROOT};
 
     location / {
+        # We are co-hosting with the legacy EventDB, so this app is hosted under '/api/v2/' (.env::APP_PATH_PREFIX)
+        # This is configured for Symfony in both 'api_platform.prefix' and 'framework.assets.base_path'. However
+        # Symfony still installs assets in the root path so we need to rewrite the uri to remove '/api/v2/'.
+        rewrite ^${APP_PATH_PREFIX}/(.*) /$1 break;
+
         # try to serve file directly, fallback to index.php
         try_files $uri /index.php$is_args$args;
     }

@@ -74,7 +74,7 @@ final class DateFilter extends AbstractFilter
                 'property' => $filterParameterName,
                 'type' => Type::BUILTIN_TYPE_STRING,
                 'required' => false,
-                'description' => 'Filter base on date ('.$this->config[$value]->limit->value.')',
+                'description' => 'Filter base on ISO 8601 datetime (yyyy-MM-dd\'T\'HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" ('.$this->config[$value]->limit->value.')',
                 'openapi' => [
                     'allowReserved' => false,
                     'allowEmptyValue' => true,

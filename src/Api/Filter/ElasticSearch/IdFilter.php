@@ -6,7 +6,7 @@ use ApiPlatform\Elasticsearch\Filter\AbstractFilter;
 use ApiPlatform\Metadata\Operation;
 use Symfony\Component\PropertyInfo\Type;
 
-final class EventTagFilter extends AbstractFilter
+final class IdFilter extends AbstractFilter
 {
     public function apply(array $clauseBody, string $resourceClass, ?Operation $operation = null, array $context = []): array
     {
@@ -37,7 +37,7 @@ final class EventTagFilter extends AbstractFilter
                 'property' => $filterParameterName,
                 'type' => Type::BUILTIN_TYPE_ARRAY,
                 'required' => false,
-                'description' => 'Filter based on given tags',
+                'description' => 'Filter based on given entity ids',
                 'is_collection' => true,
                 'openapi' => [
                     'allowReserved' => false,

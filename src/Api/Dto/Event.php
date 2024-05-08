@@ -12,8 +12,9 @@ use ApiPlatform\OpenApi\Model\Parameter;
 use ApiPlatform\OpenApi\Model\Response;
 use App\Api\Filter\ElasticSearch\BooleanFilter;
 use App\Api\Filter\ElasticSearch\DateFilter;
-use App\Api\Filter\ElasticSearch\EventTagFilter;
+use App\Api\Filter\ElasticSearch\IdFilter;
 use App\Api\Filter\ElasticSearch\MatchFilter;
+use App\Api\Filter\ElasticSearch\TagFilter;
 use App\Api\State\EventRepresentationProvider;
 use App\Model\DateLimits;
 
@@ -51,14 +52,18 @@ use App\Model\DateLimits;
 )]
 #[ApiFilter(
     MatchFilter::class,
-    properties: ['title', 'organizer.name', 'organizer.entityId', 'location.name', 'location.entityId']
+    properties: ['title', 'organizer.name', 'location.name']
+)]
+#[ApiFilter(
+    IdFilter::class,
+    properties: ['organizer.entityId', 'location.entityId']
 )]
 #[ApiFilter(
     BooleanFilter::class,
     properties: ['publicAccess']
 )]
 #[ApiFilter(
-    EventTagFilter::class,
+    TagFilter::class,
     properties: ['tags']
 )]
 #[ApiFilter(

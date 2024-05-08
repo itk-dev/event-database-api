@@ -83,18 +83,6 @@ paths:
           explode: false
           allowReserved: false
         -
-          name: event.organizer.entityId
-          in: query
-          description: 'Search field based on value given'
-          required: false
-          deprecated: false
-          allowEmptyValue: true
-          schema:
-            type: string
-          style: form
-          explode: false
-          allowReserved: false
-        -
           name: event.location.name
           in: query
           description: 'Search field based on value given'
@@ -107,15 +95,31 @@ paths:
           explode: false
           allowReserved: false
         -
-          name: event.location.entityId
+          name: event.organizer.entityId
           in: query
-          description: 'Search field based on value given'
+          description: 'Filter based on given entity ids'
           required: false
           deprecated: false
           allowEmptyValue: true
           schema:
-            type: string
-          style: form
+            type: array
+            items:
+              type: string
+          style: deepObject
+          explode: false
+          allowReserved: false
+        -
+          name: event.location.entityId
+          in: query
+          description: 'Filter based on given entity ids'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: array
+            items:
+              type: string
+          style: deepObject
           explode: false
           allowReserved: false
         -
@@ -147,7 +151,7 @@ paths:
         -
           name: start
           in: query
-          description: 'Filter base on date (greater then or equal to)'
+          description: 'Filter base on ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (greater then or equal to)'
           required: false
           deprecated: false
           allowEmptyValue: true
@@ -159,7 +163,7 @@ paths:
         -
           name: end
           in: query
-          description: 'Filter base on date (less then or equal to)'
+          description: 'Filter base on ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (less then or equal to)'
           required: false
           deprecated: false
           allowEmptyValue: true
@@ -272,18 +276,6 @@ paths:
           explode: false
           allowReserved: false
         -
-          name: organizer.entityId
-          in: query
-          description: 'Search field based on value given'
-          required: false
-          deprecated: false
-          allowEmptyValue: true
-          schema:
-            type: string
-          style: form
-          explode: false
-          allowReserved: false
-        -
           name: location.name
           in: query
           description: 'Search field based on value given'
@@ -296,15 +288,31 @@ paths:
           explode: false
           allowReserved: false
         -
-          name: location.entityId
+          name: organizer.entityId
           in: query
-          description: 'Search field based on value given'
+          description: 'Filter based on given entity ids'
           required: false
           deprecated: false
           allowEmptyValue: true
           schema:
-            type: string
-          style: form
+            type: array
+            items:
+              type: string
+          style: deepObject
+          explode: false
+          allowReserved: false
+        -
+          name: location.entityId
+          in: query
+          description: 'Filter based on given entity ids'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: array
+            items:
+              type: string
+          style: deepObject
           explode: false
           allowReserved: false
         -
@@ -336,7 +344,7 @@ paths:
         -
           name: occurrences.start
           in: query
-          description: 'Filter base on date (greater then or equal to)'
+          description: 'Filter base on ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (greater then or equal to)'
           required: false
           deprecated: false
           allowEmptyValue: true
@@ -348,7 +356,7 @@ paths:
         -
           name: occurrences.end
           in: query
-          description: 'Filter base on date (less then or equal to)'
+          description: 'Filter base on ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (less then or equal to)'
           required: false
           deprecated: false
           allowEmptyValue: true
@@ -564,18 +572,6 @@ paths:
           explode: false
           allowReserved: false
         -
-          name: event.organizer.entityId
-          in: query
-          description: 'Search field based on value given'
-          required: false
-          deprecated: false
-          allowEmptyValue: true
-          schema:
-            type: string
-          style: form
-          explode: false
-          allowReserved: false
-        -
           name: event.location.name
           in: query
           description: 'Search field based on value given'
@@ -588,27 +584,31 @@ paths:
           explode: false
           allowReserved: false
         -
-          name: event.location.entityId
+          name: event.organizer.entityId
           in: query
-          description: 'Search field based on value given'
+          description: 'Filter based on given entity ids'
           required: false
           deprecated: false
           allowEmptyValue: true
           schema:
-            type: string
-          style: form
+            type: array
+            items:
+              type: string
+          style: deepObject
           explode: false
           allowReserved: false
         -
-          name: event.publicAccess
+          name: event.location.entityId
           in: query
-          description: 'Is this a public event'
+          description: 'Filter based on given entity ids'
           required: false
           deprecated: false
           allowEmptyValue: true
           schema:
-            type: boolean
-          style: form
+            type: array
+            items:
+              type: string
+          style: deepObject
           explode: false
           allowReserved: false
         -
@@ -628,7 +628,7 @@ paths:
         -
           name: start
           in: query
-          description: 'Filter base on date (greater then or equal to)'
+          description: 'Filter base on ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (greater then or equal to)'
           required: false
           deprecated: false
           allowEmptyValue: true
@@ -640,7 +640,7 @@ paths:
         -
           name: end
           in: query
-          description: 'Filter base on date (less then or equal to)'
+          description: 'Filter base on ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (less then or equal to)'
           required: false
           deprecated: false
           allowEmptyValue: true

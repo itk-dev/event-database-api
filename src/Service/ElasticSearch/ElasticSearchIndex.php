@@ -268,12 +268,17 @@ class ElasticSearchIndex implements IndexInterface
      */
     private function getSort(string $indexName): array
     {
+        // Translates a string or int into the corresponding Enum case, if any.
+        // If there is no matching case defined, it will return null.
         $indexName = IndexNames::tryFrom($indexName);
 
         return match ($indexName) {
             IndexNames::Events => [
-                'title.keyword' => [
-                    'order' => 'asc',
+                '_score',
+                [
+                    'title.keyword' => [
+                        'order' => 'asc',
+                    ],
                 ],
             ],
             IndexNames::DailyOccurrences, IndexNames::Occurrences => [
@@ -282,17 +287,17 @@ class ElasticSearchIndex implements IndexInterface
                     'format' => 'strict_date_optional_time_nanos',
                 ],
             ],
-            IndexNames::Locations, IndexNames::Organizations => [
-                'name.keyword' => [
-                    'order' => 'asc',
+            IndexNames::Tags, IndexNames::Vocabularies,IndexNames::Locations, IndexNames::Organizations => [
+                '_score',
+                [
+                    'name.keyword' => [
+                        'order' => 'asc',
+                    ],
                 ],
             ],
-            IndexNames::Tags, IndexNames::Vocabularies => [
-                'name' => [
-                    'order' => 'asc',
-                ],
-            ],
-            default => []
+            default => [
+                '_score',
+            ]
         };
     }
 }

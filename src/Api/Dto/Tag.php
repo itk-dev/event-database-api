@@ -48,11 +48,7 @@ use App\Api\State\TagRepresentationProvider;
 )]
 #[ApiFilter(
     MatchFilter::class,
-    properties: ['name']
-)]
-#[ApiFilter(
-    MatchFilter::class,
-    properties: ['vocabulary']
+    properties: ['name', 'vocabulary']
 )]
 readonly class Tag
 {

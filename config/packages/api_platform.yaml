@@ -28,7 +28,10 @@ api_platform:
 
     defaults:
         stateless: true
+        pagination_maximum_items_per_page: 20
         cache_headers:
+            max_age: 3600
+            shared_max_age: 3600
             vary: ['Content-Type', 'Authorization', 'Origin']
         extra_properties:
             standard_put: true

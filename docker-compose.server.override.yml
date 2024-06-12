@@ -8,6 +8,10 @@ networks:
     internal: false
 
 services:
+  phpfpm:
+    environment:
+      - PHP_MEMORY_LIMIT=256M
+
   nginx:
     environment:
       APP_PATH_PREFIX: ${APP_PATH_PREFIX}

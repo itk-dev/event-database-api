@@ -24,11 +24,12 @@ api_platform:
                 type: header
 
     elasticsearch:
-        hosts: ['%env(INDEXING_URL)%']
+        hosts: ['%env(INDEX_URL)%']
 
     defaults:
         stateless: true
-        pagination_maximum_items_per_page: 20
+        pagination_items_per_page: '%env(int:PAGINATION_ITEMS_PER_PAGE)%'
+        pagination_maximum_items_per_page: '%env(int:PAGINATION_MAXIMUM_ITEMS_PER_PAGE)%'
         cache_headers:
             max_age: 3600
             shared_max_age: 3600

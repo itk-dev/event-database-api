@@ -25,7 +25,7 @@ final class TagRepresentationProvider extends AbstractProvider implements Provid
         if ($operation instanceof CollectionOperationInterface) {
             $filters = $this->getFilters($operation, $context);
             $offset = $this->calculatePageOffset($context);
-            $limit = $this->getImagesPerPage($context);
+            $limit = $this->getItemsPerPage($context);
             $results = $this->index->getAll(IndexNames::Tags->value, $filters, $offset, $limit);
 
             $tags = [];

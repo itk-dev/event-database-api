@@ -5,6 +5,7 @@ namespace App\Api\State;
 use ApiPlatform\Elasticsearch\Filter\FilterInterface;
 use ApiPlatform\Elasticsearch\Filter\SortFilterInterface;
 use ApiPlatform\Metadata\Operation;
+use ApiPlatform\State\Pagination\PaginationOptions;
 use App\Model\FilterTypes;
 use App\Model\IndexNames;
 use App\Service\IndexInterface;
@@ -15,11 +16,12 @@ use Psr\Container\ContainerInterface;
  */
 abstract class AbstractProvider
 {
-    protected const PAGE_SIZE_FALLBACK = 10;
+    protected const int MAX_PAGE_SIZE_FALLBACK = 20;
 
     public function __construct(
         protected readonly IndexInterface $index,
         protected readonly ContainerInterface $filterLocator,
+        protected readonly PaginationOptions $paginationOptions,
     ) {
     }
 
@@ -77,7 +79,7 @@ abstract class AbstractProvider
      */
     protected function calculatePageOffset(array $context): int
     {
-        return (($context['filters']['page'] ?? 1) - 1) * $this->getImagesPerPage($context);
+        return (($context['filters']['page'] ?? 1) - 1) * $this->getItemsPerPage($context);
     }
 
     /**
@@ -89,9 +91,12 @@ abstract class AbstractProvider
      * @return int
      *   The number of items per page as determined by the context
      */
-    protected function getImagesPerPage(array $context): int
+    protected function getItemsPerPage(array $context): int
     {
-        return $context['filters']['itemsPerPage'] ?? self::PAGE_SIZE_FALLBACK;
+        $itemsPerPage = $context['filters']['itemsPerPage'] ?? $this->paginationOptions->getItemsPerPage();
+        $maxItemsPerPage = $this->paginationOptions->getMaximumItemsPerPage() ?? self::MAX_PAGE_SIZE_FALLBACK;
+
+        return min($itemsPerPage, $maxItemsPerPage);
     }
 
     /**

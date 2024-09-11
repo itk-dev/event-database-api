@@ -23,7 +23,7 @@ final class OrganizationRepresentationProvider extends AbstractProvider implemen
         if ($operation instanceof CollectionOperationInterface) {
             $filters = $this->getFilters($operation, $context);
             $offset = $this->calculatePageOffset($context);
-            $limit = $this->getImagesPerPage($context);
+            $limit = $this->getItemsPerPage($context);
             $results = $this->index->getAll(IndexNames::Organizations->value, $filters, $offset, $limit);
 
             return new ElasticSearchPaginator($results, $limit, $offset);

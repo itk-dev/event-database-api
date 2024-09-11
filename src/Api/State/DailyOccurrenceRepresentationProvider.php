@@ -23,7 +23,7 @@ final class DailyOccurrenceRepresentationProvider extends AbstractProvider imple
         if ($operation instanceof CollectionOperationInterface) {
             $filters = $this->getFilters($operation, $context);
             $offset = $this->calculatePageOffset($context);
-            $limit = $this->getImagesPerPage($context);
+            $limit = $this->getItemsPerPage($context);
             $results = $this->index->getAll(IndexNames::DailyOccurrences->value, $filters, $offset, $limit);
 
             return new ElasticSearchPaginator($results, $limit, $offset);

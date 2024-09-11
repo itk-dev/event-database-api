@@ -25,7 +25,7 @@ final class VocabularyRepresentationProvider extends AbstractProvider implements
         if ($operation instanceof CollectionOperationInterface) {
             $filters = $this->getFilters($operation, $context);
             $offset = $this->calculatePageOffset($context);
-            $limit = $this->getImagesPerPage($context);
+            $limit = $this->getItemsPerPage($context);
             $results = $this->index->getAll(IndexNames::Vocabularies->value, $filters, $offset, $limit);
 
             $vocabularies = [];

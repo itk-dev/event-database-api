@@ -11,7 +11,7 @@ final class IdFilter extends AbstractFilter
     public function apply(array $clauseBody, string $resourceClass, ?Operation $operation = null, array $context = []): array
     {
         $properties = $this->getProperties($resourceClass);
-        $terms = [];
+        $result = [];
 
         /** @var string $property */
         foreach ($properties as $property) {
@@ -19,10 +19,13 @@ final class IdFilter extends AbstractFilter
                 // If no value or empty value is set, skip it.
                 continue;
             }
+            $terms = [];
             $terms[$property] = explode(',', $context['filters'][$property]);
+            $terms['boost'] = 1.0;
+            $result[]['terms'] = $terms;
         }
 
-        return empty($terms) ? $terms : ['terms' => $terms + ['boost' => 1.0]];
+        return $result;
     }
 
     public function getDescription(string $resourceClass): array

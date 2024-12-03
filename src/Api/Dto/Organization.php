@@ -10,8 +10,10 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\OpenApi\Model\Operation;
 use ApiPlatform\OpenApi\Model\Parameter;
 use ApiPlatform\OpenApi\Model\Response;
+use App\Api\Filter\ElasticSearch\DateFilter;
 use App\Api\Filter\ElasticSearch\MatchFilter;
 use App\Api\State\OrganizationRepresentationProvider;
+use App\Model\DateLimits;
 
 #[ApiResource(
     operations: [
@@ -49,6 +51,20 @@ use App\Api\State\OrganizationRepresentationProvider;
 #[ApiFilter(
     MatchFilter::class,
     properties: ['name']
+)]
+#[ApiFilter(
+    DateFilter::class,
+    properties: [
+        'updated' => 'start',
+    ],
+    arguments: [
+        'config' => [
+            'start' => [
+                'limit' => DateLimits::GreaterThanOrEqual,
+                'throwOnInvalid' => true,
+            ],
+        ],
+    ]
 )]
 class Organization
 {

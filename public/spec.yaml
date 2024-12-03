@@ -1,7 +1,12 @@
 openapi: 3.1.0
 info:
-  title: 'Event database API'
-  description: ''
+  title: 'Event Database'
+  description: 'API for the Event Database'
+  termsOfService: 'https://example.org'
+  contact:
+    name: 'Contact Name'
+    url: 'https://github.com/itk-dev/event-database-api/'
+    email: contact@example.org
   version: 2.0.0
 servers:
   -
@@ -14,7 +19,7 @@ paths:
       tags:
         - DailyOccurrence
       responses:
-        200:
+        '200':
           description: 'DailyOccurrence collection'
           content:
             application/ld+json:
@@ -172,17 +177,28 @@ paths:
           style: form
           explode: false
           allowReserved: false
+        -
+          name: updated
+          in: query
+          description: 'Filter base on ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (greater then or equal to)'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
       deprecated: false
-    parameters: []
   '/api/v2/daily_occurrences/{id}':
     get:
       operationId: api_daily_occurrences_id_get
       tags:
         - DailyOccurrence
       responses:
-        200:
+        '200':
           description: 'Single daily occurrence'
-        404:
+        '404':
           description: 'Resource not found'
       summary: 'Retrieves a DailyOccurrence resource.'
       description: 'Retrieves a DailyOccurrence resource.'
@@ -200,14 +216,13 @@ paths:
           explode: false
           allowReserved: false
       deprecated: false
-    parameters: []
   /api/v2/events:
     get:
       operationId: api_events_get_collection
       tags:
         - Event
       responses:
-        200:
+        '200':
           description: 'Event collection'
           content:
             application/ld+json:
@@ -365,17 +380,28 @@ paths:
           style: form
           explode: false
           allowReserved: false
+        -
+          name: updated
+          in: query
+          description: 'Filter base on ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (greater then or equal to)'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
       deprecated: false
-    parameters: []
   '/api/v2/events/{id}':
     get:
       operationId: api_events_id_get
       tags:
         - Event
       responses:
-        200:
+        '200':
           description: 'Single event'
-        404:
+        '404':
           description: 'Resource not found'
       summary: 'Retrieves a Event resource.'
       description: 'Retrieves a Event resource.'
@@ -393,14 +419,13 @@ paths:
           explode: false
           allowReserved: false
       deprecated: false
-    parameters: []
   /api/v2/locations:
     get:
       operationId: api_locations_get_collection
       tags:
         - Location
       responses:
-        200:
+        '200':
           description: 'Location collection'
           content:
             application/ld+json:
@@ -468,17 +493,28 @@ paths:
           style: form
           explode: false
           allowReserved: false
+        -
+          name: updated
+          in: query
+          description: 'Filter base on ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (greater then or equal to)'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
       deprecated: false
-    parameters: []
   '/api/v2/locations/{id}':
     get:
       operationId: api_locations_id_get
       tags:
         - Location
       responses:
-        200:
+        '200':
           description: 'Single location'
-        404:
+        '404':
           description: 'Resource not found'
       summary: 'Get single location based on identifier'
       description: 'Retrieves a Location resource.'
@@ -496,14 +532,13 @@ paths:
           explode: false
           allowReserved: false
       deprecated: false
-    parameters: []
   /api/v2/occurrences:
     get:
       operationId: api_occurrences_get_collection
       tags:
         - Occurrence
       responses:
-        200:
+        '200':
           description: 'Occurrence collection'
           content:
             application/ld+json:
@@ -649,17 +684,28 @@ paths:
           style: form
           explode: false
           allowReserved: false
+        -
+          name: updated
+          in: query
+          description: 'Filter base on ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (greater then or equal to)'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
       deprecated: false
-    parameters: []
   '/api/v2/occurrences/{id}':
     get:
       operationId: api_occurrences_id_get
       tags:
         - Occurrence
       responses:
-        200:
+        '200':
           description: 'Single occurrence'
-        404:
+        '404':
           description: 'Resource not found'
       summary: 'Get single occurrence based on identifier'
       description: 'Retrieves a Occurrence resource.'
@@ -677,14 +723,13 @@ paths:
           explode: false
           allowReserved: false
       deprecated: false
-    parameters: []
   /api/v2/organizations:
     get:
       operationId: api_organizations_get_collection
       tags:
         - Organization
       responses:
-        200:
+        '200':
           description: 'Organization collection'
           content:
             application/ld+json:
@@ -740,17 +785,28 @@ paths:
           style: form
           explode: false
           allowReserved: false
+        -
+          name: updated
+          in: query
+          description: 'Filter base on ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (greater then or equal to)'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
       deprecated: false
-    parameters: []
   '/api/v2/organizations/{id}':
     get:
       operationId: api_organizations_id_get
       tags:
         - Organization
       responses:
-        200:
+        '200':
           description: 'Single organization'
-        404:
+        '404':
           description: 'Resource not found'
       summary: 'Get single organization based on identifier'
       description: 'Retrieves a Organization resource.'
@@ -768,14 +824,13 @@ paths:
           explode: false
           allowReserved: false
       deprecated: false
-    parameters: []
   /api/v2/tags:
     get:
       operationId: api_tags_get_collection
       tags:
         - Tag
       responses:
-        200:
+        '200':
           description: 'Tag collection'
           content:
             application/ld+json:
@@ -820,6 +875,18 @@ paths:
           explode: false
           allowReserved: false
         -
+          name: name
+          in: query
+          description: 'Search field based on value given'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
           name: vocabulary
           in: query
           description: 'Search field based on value given'
@@ -832,16 +899,15 @@ paths:
           explode: false
           allowReserved: false
       deprecated: false
-    parameters: []
   '/api/v2/tags/{slug}':
     get:
       operationId: api_tags_slug_get
       tags:
         - Tag
       responses:
-        200:
+        '200':
           description: 'Get single tag'
-        404:
+        '404':
           description: 'Resource not found'
       summary: 'Get single tag'
       description: 'Retrieves a Tag resource.'
@@ -859,14 +925,13 @@ paths:
           explode: false
           allowReserved: false
       deprecated: false
-    parameters: []
   /api/v2/vocabularies:
     get:
       operationId: api_vocabularies_get_collection
       tags:
         - Vocabulary
       responses:
-        200:
+        '200':
           description: 'Vocabulary collection'
           content:
             application/ld+json:
@@ -911,6 +976,18 @@ paths:
           explode: false
           allowReserved: false
         -
+          name: name
+          in: query
+          description: 'Search field based on value given'
+          required: false
+          deprecated: false
+          allowEmptyValue: true
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
           name: tags
           in: query
           description: 'Search field based on value given'
@@ -923,16 +1000,15 @@ paths:
           explode: false
           allowReserved: false
       deprecated: false
-    parameters: []
   '/api/v2/vocabularies/{slug}':
     get:
       operationId: api_vocabularies_slug_get
       tags:
         - Vocabulary
       responses:
-        200:
+        '200':
           description: 'Get single vocabulary'
-        404:
+        '404':
           description: 'Resource not found'
       summary: 'Get a vocabulary based on slug'
       description: 'Retrieves a Vocabulary resource.'
@@ -950,7 +1026,6 @@ paths:
           explode: false
           allowReserved: false
       deprecated: false
-    parameters: []
 components:
   schemas:
     DailyOccurrence.DailyOccurrenceRepresentationProvider.jsonld:
@@ -1178,3 +1253,4 @@ security:
   -
     ApiKeyAuth: []
 tags: []
+webhooks: {  }

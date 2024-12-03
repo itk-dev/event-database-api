@@ -25,8 +25,8 @@ services:
       # Scope hosting by path prefix to allow shared hosting with legacy EventDB
       # 'https://api.detskeriaarhus.dk/api/' -> Legacy EventDB
       # 'https://api.detskeriaarhus.dk/api/v2/' -> EventDB v2
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.rule=Host(`${COMPOSE_DOMAIN}`) && PathPrefix(`${APP_PATH_PREFIX}`)"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${COMPOSE_DOMAIN}`) && PathPrefix(`${APP_PATH_PREFIX}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.rule=Host(`${COMPOSE_DOMAIN}`) && (PathPrefix(`${APP_PATH_PREFIX}`) || PathPrefix(`/_wdt`) || PathPrefix(`/_profiler`))"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${COMPOSE_DOMAIN}`) && (PathPrefix(`${APP_PATH_PREFIX}`) || PathPrefix(`/_wdt`) || PathPrefix(`/_profiler`))"
 
   elasticsearch:
     image: elasticsearch:8.13.0

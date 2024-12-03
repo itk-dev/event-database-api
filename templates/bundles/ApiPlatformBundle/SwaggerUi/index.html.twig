@@ -1,0 +1,14 @@
+{% extends "@!ApiPlatform/SwaggerUi/index.html.twig" %}
+
+{% block stylesheet %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('/api/v2/styles/swagger-ui.css', assetPackage) }}">
+{% endblock %}
+
+{% block header %}
+    <header>
+        <a id="logo" href="{{ app_project_uri }}">
+            <img src="{{ asset('/api/v2/styles/aak-logo-1.svg', assetPackage) }}" alt="API Platform">
+        </a>
+    </header>
+{% endblock %}

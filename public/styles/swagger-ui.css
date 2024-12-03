@@ -1,0 +1,85 @@
+/** HEADER **/
+
+header:before {
+    background: white;
+    box-shadow: none;
+    z-index: -100;
+}
+
+header {
+    margin-bottom: -60px;
+
+    #logo {
+        right: 60px;
+        top: 40px;
+        position: absolute;
+
+        img {
+            background: none;
+        }
+    }
+}
+
+.swagger-ui .info a {
+    font-family: "Arial", "Helvetica", sans-serif;
+    color: rgb(0, 156, 220);
+}
+
+#swagger-ui.api-platform .info .title {
+    font-family: "Arial", "Helvetica", sans-serif;
+    color: rgb(66, 66, 66);
+}
+
+.swagger-ui .info p {
+    font-family: "Arial", "Helvetica", sans-serif;
+    color: rgb(66, 66, 66);
+}
+
+.swagger-ui .info > div.info__tos {
+    position: absolute;
+}
+
+.swagger-ui .info > div.info__contact {
+    position: absolute;
+    left: 200px;
+}
+
+#swagger-ui.api-platform .information-container.wrapper {
+    height: 140px;
+}
+
+.swagger-ui .info > div.info__contact > a.link {
+    position: absolute;
+    top: 0;
+    left: 200px;
+    width: 200px;
+}
+
+#swagger-ui.api-platform .opblock.opblock-get .opblock-summary-method {
+    background-color: rgb(31, 161, 56);
+}
+
+#swagger-ui.api-platform .opblock-section-header, #swagger-ui.api-platform .opblock.opblock-get .opblock-section-header {
+    background-color: rgb(31, 161, 56, .1);
+}
+
+.swagger-ui .btn.authorize {
+    border-color: rgb(31, 161, 56);
+    color: rgb(31, 161, 56);
+}
+
+#swagger-ui.api-platform .btn.authorize {
+    background-color: rgb(31, 161, 56, .1);
+}
+
+.swagger-ui .btn.authorize svg {
+    fill: rgb(31, 161, 56);
+}
+
+.swagger-ui .info .title small {
+    background-color: rgb(0, 156, 220);
+}
+
+.swagger-ui .info .title small.version-stamp {
+    background-color: rgb(31, 161, 56);
+}

@@ -1,7 +1,15 @@
 api_platform:
-    title: Event database API
+    title: '%env(OPENAPI_TITLE)%'
+    description: '%env(OPENAPI_DESCRIPTION)%'
     version: 2.0.0
     show_webby: false
+
+    openapi:
+        contact:
+            name: '%env(OPENAPI_CONTACT_NAME)%'
+            url: '%env(OPENAPI_CONTACT_URL)%'
+            email: '%env(OPENAPI_CONTACT_EMAIL)%'
+        termsOfService: '%env(OPENAPI_TERMS_OF_SERVICE)%'
 
     formats:
         jsonld: ['application/ld+json']

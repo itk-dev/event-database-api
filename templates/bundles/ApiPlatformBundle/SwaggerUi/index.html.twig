@@ -3,6 +3,7 @@
 {% block stylesheet %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('/api/v2/styles/swagger-ui.css', assetPackage) }}">
+    <link rel="shortcut icon" type="image/svg" href="{{ asset('/api/v2/styles/logo.svg', assetPackage) }}" />
 {% endblock %}
 
 {% block header %}

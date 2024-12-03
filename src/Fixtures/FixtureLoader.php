@@ -20,7 +20,7 @@ class FixtureLoader
     public function __construct(
         private readonly HttpClientInterface $httpClient,
         private readonly IndexInterface $index,
-        private readonly Client $client
+        private readonly Client $client,
     ) {
     }
 

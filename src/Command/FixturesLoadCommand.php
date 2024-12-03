@@ -28,7 +28,7 @@ class FixturesLoadCommand extends Command
 {
     public function __construct(
         private readonly string $appEnv,
-        private readonly FixtureLoader $loader
+        private readonly FixtureLoader $loader,
     ) {
         parent::__construct();
     }

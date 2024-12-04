@@ -20,5 +20,6 @@ services:
       # 'https://api.detskeriaarhus.dk/api/' -> Legacy EventDB
       # 'https://api.detskeriaarhus.dk/api/v2/' -> EventDB v2
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.rule=Host(`${COMPOSE_SERVER_DOMAIN}`) && PathPrefix(`${APP_PATH_PREFIX}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.priority=200"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${COMPOSE_SERVER_DOMAIN}`) && PathPrefix(`${APP_PATH_PREFIX}`)"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.priority=200"

@@ -11,6 +11,8 @@ services:
   phpfpm:
     environment:
       - PHP_MEMORY_LIMIT=256M
+    volumes:
+      - ../../shared/.env.local:/app/.env.local
 
   nginx:
     environment:

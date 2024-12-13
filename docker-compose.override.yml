@@ -1,0 +1,46 @@
+services:
+  phpfpm:
+    networks:
+      - frontend
+    depends_on:
+#      - elasticsearch
+      - rabbit
+
+  rabbit:
+    image: rabbitmq:3.12.4-management-alpine
+    networks:
+      - app
+      - frontend
+    ports:
+      - "15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=password
+      - RABBITMQ_ERLANG_COOKIE='d53f319cd7376f8f840aaf9889f315ab
+
+  nginx:
+    environment:
+      APP_PATH_PREFIX: ${APP_PATH_PREFIX}
+    labels:
+      # Scope hosting by path prefix to allow shared hosting with legacy EventDB
+      # 'https://api.detskeriaarhus.dk/api/' -> Legacy EventDB
+      # 'https://api.detskeriaarhus.dk/api/v2/' -> EventDB v2
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.rule=Host(`${COMPOSE_DOMAIN}`) && (PathPrefix(`${APP_PATH_PREFIX}`) || PathPrefix(`/_wdt`) || PathPrefix(`/_profiler`))"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${COMPOSE_DOMAIN}`) && (PathPrefix(`${APP_PATH_PREFIX}`) || PathPrefix(`/_wdt`) || PathPrefix(`/_profiler`))"
+
+  elasticsearch:
+    image: elasticsearch:8.13.0
+    networks:
+      - app
+      - frontend
+    ports:
+      - "9200"
+    deploy:
+      resources:
+        limits:
+          memory: 1096M
+        reservations:
+          memory: 1096M
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false

@@ -1,15 +1,46 @@
 api_platform:
-    title: Hello API Platform
-    version: 1.0.0
+    title: '%env(OPENAPI_TITLE)%'
+    description: '%env(OPENAPI_DESCRIPTION)%'
+    version: 2.0.0
+    show_webby: false
+
+    openapi:
+        contact:
+            name: '%env(OPENAPI_CONTACT_NAME)%'
+            url: '%env(OPENAPI_CONTACT_URL)%'
+            email: '%env(OPENAPI_CONTACT_EMAIL)%'
+        termsOfService: '%env(OPENAPI_TERMS_OF_SERVICE)%'
+
     formats:
         jsonld: ['application/ld+json']
+
     docs_formats:
         jsonld: ['application/ld+json']
-        jsonopenapi: ['application/vnd.openapi+json']
         html: ['text/html']
+
+    mapping:
+        paths:
+            - '%kernel.project_dir%/src/Api/Dto'
+
+    doctrine:
+        enabled: false
+
+    swagger:
+        api_keys:
+            ApiKeyAuth:
+                name: 'X-Api-Key'
+                type: header
+
+    elasticsearch:
+        hosts: ['%env(INDEX_URL)%']
+
     defaults:
         stateless: true
+        pagination_items_per_page: '%env(int:PAGINATION_ITEMS_PER_PAGE)%'
+        pagination_maximum_items_per_page: '%env(int:PAGINATION_MAXIMUM_ITEMS_PER_PAGE)%'
         cache_headers:
+            max_age: 3600
+            shared_max_age: 3600
             vary: ['Content-Type', 'Authorization', 'Origin']
         extra_properties:
             standard_put: true

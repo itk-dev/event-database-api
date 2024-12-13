@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+## [1.0.0] - 2024-09-11
+
 ### Added
 
 - Symfony core.

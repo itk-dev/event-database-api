@@ -8,12 +8,12 @@ use App\Model\SearchResults;
 /**
  * Paginator for Elasticsearch.
  */
-final class ElasticSearchPaginator implements \IteratorAggregate, PaginatorInterface
+final readonly class ElasticSearchPaginator implements \IteratorAggregate, PaginatorInterface
 {
     public function __construct(
-        private readonly SearchResults $results,
-        private readonly int $limit,
-        private readonly int $offset,
+        private SearchResults $results,
+        private int $limit,
+        private int $offset,
     ) {
     }
 

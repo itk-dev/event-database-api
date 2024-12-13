@@ -71,6 +71,7 @@ use App\Model\DateLimits;
     properties: [
         'start' => 'start',
         'end' => 'end',
+        'updated' => 'start',
     ],
     arguments: [
         'config' => [

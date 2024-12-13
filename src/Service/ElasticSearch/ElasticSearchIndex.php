@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ElasticSearchIndex implements IndexInterface
 {
     public function __construct(
-        private readonly Client $client
+        private readonly Client $client,
     ) {
     }
 
@@ -297,7 +297,7 @@ class ElasticSearchIndex implements IndexInterface
             ],
             default => [
                 '_score',
-            ]
+            ],
         };
     }
 }

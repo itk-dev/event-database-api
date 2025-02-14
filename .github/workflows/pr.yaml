@@ -78,7 +78,7 @@ jobs:
           flags: unittests, ${{ matrix.php }}
 
   php-cs-fixer:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
@@ -167,7 +167,7 @@ jobs:
       - name: Yarn install
         uses: actions/setup-node@v2
         with:
-          node-version: '18'
+          node-version: '22'
       - run: yarn install
       - name: markdownlint
         run: yarn run coding-standards-check

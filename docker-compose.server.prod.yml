@@ -1,0 +1,4 @@
+services:
+  phpfpm:
+    volumes:
+      - ../../shared/.env.local:/app/.env.local

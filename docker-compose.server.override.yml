@@ -1,18 +1,7 @@
-# itk-version: 3.2.0
-
-networks:
-  frontend:
-    external: true
-  app:
-    driver: bridge
-    internal: false
-
 services:
   phpfpm:
     environment:
       - PHP_MEMORY_LIMIT=256M
-    volumes:
-      - ../../shared/.env.local:/app/.env.local
 
   nginx:
     environment:

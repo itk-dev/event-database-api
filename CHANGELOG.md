@@ -18,7 +18,7 @@ See [keep a changelog] for information about writing changes to this log.
 
 ### Changed
 
-- Updated GitHub workflow images. 
+- Updated GitHub workflow images.
 
 ## [1.0.0] - 2024-12-13
 

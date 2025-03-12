@@ -8,6 +8,16 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+## [1.0.1] - 2025-03-12
+
+### Added
+
+- Add labels to Woodpecker workflow
+- Add stg Woodpecker workflow
+- Add missing license
+
+### Changed
+
 - Updated GitHub workflow images.
 
 ## [1.0.0] - 2024-12-13
@@ -30,5 +40,6 @@ See [keep a changelog] for information about writing changes to this log.
 - Added multi-value filtering for Lactions and Organizations
 
 [keep a changelog]: https://keepachangelog.com/en/1.1.0/
-[unreleased]: https://github.com/itk-dev/event-database-api/compare/main...develop
+[unreleased]: https://github.com/itk-dev/event-database-api/compare/1.0.1...HEAD
+[1.0.1]: https://github.com/itk-dev/event-database-api/releases/tag/1.0.1
 [1.0.0]: https://github.com/itk-dev/event-database-api/releases/tag/1.0.0

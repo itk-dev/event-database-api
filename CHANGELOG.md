@@ -8,6 +8,16 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+## [1.1.0] - 2025-03-20
+
+### Added
+
+- Implemented and switched to date range filter, 
+
+### Changed
+
+- Deprecate date filter
+
 ## [1.0.1] - 2025-03-12
 
 ### Added
@@ -19,7 +29,6 @@ See [keep a changelog] for information about writing changes to this log.
 ### Changed
 
 - Updated GitHub workflow images.
-- Implement and switch to date range filter, deprecate date filter
 
 ## [1.0.0] - 2024-12-13
 
@@ -41,6 +50,7 @@ See [keep a changelog] for information about writing changes to this log.
 - Added multi-value filtering for Lactions and Organizations
 
 [keep a changelog]: https://keepachangelog.com/en/1.1.0/
-[unreleased]: https://github.com/itk-dev/event-database-api/compare/1.0.1...HEAD
+[unreleased]: https://github.com/itk-dev/event-database-api/compare/1.1.0...HEAD
+[1.1.0]: https://github.com/itk-dev/event-database-api/releases/tag/1.1.0
 [1.0.1]: https://github.com/itk-dev/event-database-api/releases/tag/1.0.1
 [1.0.0]: https://github.com/itk-dev/event-database-api/releases/tag/1.0.0

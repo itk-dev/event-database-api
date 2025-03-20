@@ -94,7 +94,7 @@ final class DateRangeFilter extends AbstractFilter
             case DateLimit::between:
                 $values = explode('..', $value);
 
-                if (count($values) !== 2) {
+                if (2 !== count($values)) {
                     throw new \InvalidArgumentException('Invalid date range');
                 }
 

@@ -6,7 +6,7 @@ use ApiPlatform\Metadata\CollectionOperationInterface;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
 use App\Exception\IndexException;
-use App\Model\IndexNames;
+use App\Model\IndexName;
 use App\Service\ElasticSearch\ElasticSearchPaginator;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -24,13 +24,13 @@ final class EventRepresentationProvider extends AbstractProvider implements Prov
             $filters = $this->getFilters($operation, $context);
             $offset = $this->calculatePageOffset($context);
             $limit = $this->getItemsPerPage($context);
-            $results = $this->index->getAll(IndexNames::Events->value, $filters, $offset, $limit);
+            $results = $this->index->getAll(IndexName::Events->value, $filters, $offset, $limit);
 
             return new ElasticSearchPaginator($results, $limit, $offset);
         }
 
         try {
-            return [$this->index->get(IndexNames::Events->value, $uriVariables['id'])['_source']];
+            return [$this->index->get(IndexName::Events->value, $uriVariables['id'])['_source']];
         } catch (IndexException $e) {
             if (404 === $e->getCode()) {
                 return null;

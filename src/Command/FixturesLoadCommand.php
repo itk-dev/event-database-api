@@ -3,7 +3,7 @@
 namespace App\Command;
 
 use App\Fixtures\FixtureLoader;
-use App\Model\IndexNames;
+use App\Model\IndexName;
 use Elastic\Elasticsearch\Exception\ClientResponseException;
 use Elastic\Elasticsearch\Exception\MissingParameterException;
 use Elastic\Elasticsearch\Exception\ServerResponseException;
@@ -38,10 +38,10 @@ class FixturesLoadCommand extends Command
         $this->addArgument(
             'index',
             InputArgument::REQUIRED,
-            sprintf('Index to populate with fixture data (one of %s)', implode(', ', IndexNames::values())),
+            sprintf('Index to populate with fixture data (one of %s)', implode(', ', IndexName::values())),
             null,
             function (CompletionInput $input): array {
-                return array_filter(IndexNames::values(), fn ($item) => str_starts_with($item, $input->getCompletionValue()));
+                return array_filter(IndexName::values(), fn ($item) => str_starts_with($item, $input->getCompletionValue()));
             }
         )
         ->addOption('url', null, InputOption::VALUE_OPTIONAL, 'Remote url to read fixture data from', 'https://raw.githubusercontent.com/itk-dev/event-database-imports/develop/src/DataFixtures/indexes/[index].json');
@@ -70,7 +70,7 @@ class FixturesLoadCommand extends Command
             return Command::FAILURE;
         }
 
-        if (!in_array($indexName, IndexNames::values())) {
+        if (!in_array($indexName, IndexName::values())) {
             $io->error(sprintf('Index %s does not exist', $indexName));
 
             return Command::FAILURE;

@@ -12,7 +12,7 @@ See [keep a changelog] for information about writing changes to this log.
 
 ### Added
 
-- Implemented and switched to date range filter, 
+- Implemented and switched to date range filter, compatible with deprecated date filter  
 
 ### Changed
 

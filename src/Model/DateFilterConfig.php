@@ -2,30 +2,25 @@
 
 namespace App\Model;
 
-class DateFilterConfig
+readonly class DateFilterConfig
 {
     public function __construct(
-        public readonly DateLimits $limit,
-        public readonly bool $throwOnInvalid,
+        public DateLimit $limit,
+        public bool $throwOnInvalid,
     ) {
     }
 
     /**
      * Returns the comparison operator based on the given DateLimits.
      *
-     * @param DateLimits $dateLimit
+     * @param DateLimit $dateLimit
      *   The DateLimit Enum to determine the comparison operator
      *
      * @return string
      *   The comparison operator
      */
-    public function getCompareOperator(DateLimits $dateLimit): string
+    public function getCompareOperator(DateLimit $dateLimit): string
     {
-        return match ($dateLimit) {
-            DateLimits::GreaterThanOrEqual => 'gte',
-            DateLimits::GreaterThan => 'gt',
-            DateLimits::LessThan => 'lt',
-            DateLimits::LessThanOrEqual => 'lte',
-        };
+        return $dateLimit->name;
     }
 }

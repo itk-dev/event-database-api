@@ -156,10 +156,70 @@ paths:
         -
           name: start
           in: query
-          description: 'Filter base on ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (greater then or equal to)'
+          description: 'Filter based on start greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. start[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
-          allowEmptyValue: true
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'start[between]'
+          in: query
+          description: "Filter based on start between two ISO 8601 datetime (yyyy-MM-dd'T'HH:mm:ssz) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'start[gt]'
+          in: query
+          description: 'Filter based on start greater than ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'start[gte]'
+          in: query
+          description: 'Filter based on start greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'start[lt]'
+          in: query
+          description: 'Filter based on start less then ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'start[lte]'
+          in: query
+          description: 'Filter based on start less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
           schema:
             type: string
           style: form
@@ -168,10 +228,70 @@ paths:
         -
           name: end
           in: query
-          description: 'Filter base on ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (less then or equal to)'
+          description: 'Filter based on end less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. end[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
-          allowEmptyValue: true
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'end[between]'
+          in: query
+          description: "Filter based on end between two ISO 8601 datetime (yyyy-MM-dd'T'HH:mm:ssz) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'end[gt]'
+          in: query
+          description: 'Filter based on end greater than ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'end[gte]'
+          in: query
+          description: 'Filter based on end greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'end[lt]'
+          in: query
+          description: 'Filter based on end less then ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'end[lte]'
+          in: query
+          description: 'Filter based on end less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
           schema:
             type: string
           style: form
@@ -180,10 +300,70 @@ paths:
         -
           name: updated
           in: query
-          description: 'Filter base on ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (greater then or equal to)'
+          description: 'Filter based on updated greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. updated[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
-          allowEmptyValue: true
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[between]'
+          in: query
+          description: "Filter based on updated between two ISO 8601 datetime (yyyy-MM-dd'T'HH:mm:ssz) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[gt]'
+          in: query
+          description: 'Filter based on updated greater than ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[gte]'
+          in: query
+          description: 'Filter based on updated greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[lt]'
+          in: query
+          description: 'Filter based on updated less then ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[lte]'
+          in: query
+          description: 'Filter based on updated less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
           schema:
             type: string
           style: form
@@ -359,10 +539,70 @@ paths:
         -
           name: occurrences.start
           in: query
-          description: 'Filter base on ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (greater then or equal to)'
+          description: 'Filter based on occurrences.start greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. occurrences.start[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
-          allowEmptyValue: true
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'occurrences.start[between]'
+          in: query
+          description: "Filter based on occurrences.start between two ISO 8601 datetime (yyyy-MM-dd'T'HH:mm:ssz) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'occurrences.start[gt]'
+          in: query
+          description: 'Filter based on occurrences.start greater than ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'occurrences.start[gte]'
+          in: query
+          description: 'Filter based on occurrences.start greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'occurrences.start[lt]'
+          in: query
+          description: 'Filter based on occurrences.start less then ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'occurrences.start[lte]'
+          in: query
+          description: 'Filter based on occurrences.start less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
           schema:
             type: string
           style: form
@@ -371,10 +611,70 @@ paths:
         -
           name: occurrences.end
           in: query
-          description: 'Filter base on ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (less then or equal to)'
+          description: 'Filter based on occurrences.end less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. occurrences.end[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
-          allowEmptyValue: true
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'occurrences.end[between]'
+          in: query
+          description: "Filter based on occurrences.end between two ISO 8601 datetime (yyyy-MM-dd'T'HH:mm:ssz) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'occurrences.end[gt]'
+          in: query
+          description: 'Filter based on occurrences.end greater than ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'occurrences.end[gte]'
+          in: query
+          description: 'Filter based on occurrences.end greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'occurrences.end[lt]'
+          in: query
+          description: 'Filter based on occurrences.end less then ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'occurrences.end[lte]'
+          in: query
+          description: 'Filter based on occurrences.end less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
           schema:
             type: string
           style: form
@@ -383,10 +683,70 @@ paths:
         -
           name: updated
           in: query
-          description: 'Filter base on ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (greater then or equal to)'
+          description: 'Filter based on updated greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. updated[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
-          allowEmptyValue: true
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[between]'
+          in: query
+          description: "Filter based on updated between two ISO 8601 datetime (yyyy-MM-dd'T'HH:mm:ssz) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[gt]'
+          in: query
+          description: 'Filter based on updated greater than ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[gte]'
+          in: query
+          description: 'Filter based on updated greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[lt]'
+          in: query
+          description: 'Filter based on updated less then ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[lte]'
+          in: query
+          description: 'Filter based on updated less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
           schema:
             type: string
           style: form
@@ -496,10 +856,70 @@ paths:
         -
           name: updated
           in: query
-          description: 'Filter base on ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (greater then or equal to)'
+          description: 'Filter based on updated greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. updated[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
-          allowEmptyValue: true
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[between]'
+          in: query
+          description: "Filter based on updated between two ISO 8601 datetime (yyyy-MM-dd'T'HH:mm:ssz) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[gt]'
+          in: query
+          description: 'Filter based on updated greater than ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[gte]'
+          in: query
+          description: 'Filter based on updated greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[lt]'
+          in: query
+          description: 'Filter based on updated less then ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[lte]'
+          in: query
+          description: 'Filter based on updated less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
           schema:
             type: string
           style: form
@@ -663,10 +1083,70 @@ paths:
         -
           name: start
           in: query
-          description: 'Filter base on ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (greater then or equal to)'
+          description: 'Filter based on start greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. start[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
-          allowEmptyValue: true
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'start[between]'
+          in: query
+          description: "Filter based on start between two ISO 8601 datetime (yyyy-MM-dd'T'HH:mm:ssz) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'start[gt]'
+          in: query
+          description: 'Filter based on start greater than ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'start[gte]'
+          in: query
+          description: 'Filter based on start greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'start[lt]'
+          in: query
+          description: 'Filter based on start less then ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'start[lte]'
+          in: query
+          description: 'Filter based on start less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
           schema:
             type: string
           style: form
@@ -675,10 +1155,70 @@ paths:
         -
           name: end
           in: query
-          description: 'Filter base on ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (less then or equal to)'
+          description: 'Filter based on end less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. end[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
-          allowEmptyValue: true
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'end[between]'
+          in: query
+          description: "Filter based on end between two ISO 8601 datetime (yyyy-MM-dd'T'HH:mm:ssz) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'end[gt]'
+          in: query
+          description: 'Filter based on end greater than ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'end[gte]'
+          in: query
+          description: 'Filter based on end greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'end[lt]'
+          in: query
+          description: 'Filter based on end less then ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'end[lte]'
+          in: query
+          description: 'Filter based on end less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
           schema:
             type: string
           style: form
@@ -687,10 +1227,70 @@ paths:
         -
           name: updated
           in: query
-          description: 'Filter base on ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (greater then or equal to)'
+          description: 'Filter based on updated greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. updated[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
-          allowEmptyValue: true
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[between]'
+          in: query
+          description: "Filter based on updated between two ISO 8601 datetime (yyyy-MM-dd'T'HH:mm:ssz) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[gt]'
+          in: query
+          description: 'Filter based on updated greater than ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[gte]'
+          in: query
+          description: 'Filter based on updated greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[lt]'
+          in: query
+          description: 'Filter based on updated less then ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[lte]'
+          in: query
+          description: 'Filter based on updated less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
           schema:
             type: string
           style: form
@@ -788,10 +1388,70 @@ paths:
         -
           name: updated
           in: query
-          description: 'Filter base on ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (greater then or equal to)'
+          description: 'Filter based on updated greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. updated[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
-          allowEmptyValue: true
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[between]'
+          in: query
+          description: "Filter based on updated between two ISO 8601 datetime (yyyy-MM-dd'T'HH:mm:ssz) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[gt]'
+          in: query
+          description: 'Filter based on updated greater than ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[gte]'
+          in: query
+          description: 'Filter based on updated greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[lt]'
+          in: query
+          description: 'Filter based on updated less then ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
+          schema:
+            type: string
+          style: form
+          explode: false
+          allowReserved: false
+        -
+          name: 'updated[lte]'
+          in: query
+          description: 'Filter based on updated less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          required: false
+          deprecated: false
+          allowEmptyValue: false
           schema:
             type: string
           style: form

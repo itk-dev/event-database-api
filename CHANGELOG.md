@@ -9,6 +9,7 @@ See [keep a changelog] for information about writing changes to this log.
 ## [Unreleased]
 
 - Updated GitHub workflow images.
+- Implement and switch to date range filter, deprecate date filter
 
 ## [1.0.0] - 2024-12-13
 

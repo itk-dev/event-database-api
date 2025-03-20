@@ -7,7 +7,7 @@ use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
 use App\Api\Dto\Tag;
 use App\Exception\IndexException;
-use App\Model\IndexNames;
+use App\Model\IndexName;
 use App\Model\SearchResults;
 use App\Service\ElasticSearch\ElasticSearchPaginator;
 use Psr\Container\ContainerExceptionInterface;
@@ -26,7 +26,7 @@ final class TagRepresentationProvider extends AbstractProvider implements Provid
             $filters = $this->getFilters($operation, $context);
             $offset = $this->calculatePageOffset($context);
             $limit = $this->getItemsPerPage($context);
-            $results = $this->index->getAll(IndexNames::Tags->value, $filters, $offset, $limit);
+            $results = $this->index->getAll(IndexName::Tags->value, $filters, $offset, $limit);
 
             $tags = [];
             foreach ($results->hits as $hit) {
@@ -39,7 +39,7 @@ final class TagRepresentationProvider extends AbstractProvider implements Provid
         }
 
         try {
-            $data = $this->index->get(IndexNames::Tags->value, $uriVariables['slug'], 'slug');
+            $data = $this->index->get(IndexName::Tags->value, $uriVariables['slug'], 'slug');
             $hit = $data['_source'] ?? null;
         } catch (IndexException $e) {
             if (404 === $e->getCode()) {

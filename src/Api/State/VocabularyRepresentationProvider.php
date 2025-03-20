@@ -7,7 +7,7 @@ use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
 use App\Api\Dto\Vocabulary;
 use App\Exception\IndexException;
-use App\Model\IndexNames;
+use App\Model\IndexName;
 use App\Model\SearchResults;
 use App\Service\ElasticSearch\ElasticSearchPaginator;
 use Psr\Container\ContainerExceptionInterface;
@@ -26,7 +26,7 @@ final class VocabularyRepresentationProvider extends AbstractProvider implements
             $filters = $this->getFilters($operation, $context);
             $offset = $this->calculatePageOffset($context);
             $limit = $this->getItemsPerPage($context);
-            $results = $this->index->getAll(IndexNames::Vocabularies->value, $filters, $offset, $limit);
+            $results = $this->index->getAll(IndexName::Vocabularies->value, $filters, $offset, $limit);
 
             $vocabularies = [];
             foreach ($results->hits as $hit) {
@@ -39,7 +39,7 @@ final class VocabularyRepresentationProvider extends AbstractProvider implements
         }
 
         try {
-            $data = $this->index->get(IndexNames::Vocabularies->value, $uriVariables['slug'], 'slug');
+            $data = $this->index->get(IndexName::Vocabularies->value, $uriVariables['slug'], 'slug');
             $hit = $data['_source'] ?? null;
         } catch (IndexException $e) {
             if (404 === $e->getCode()) {

@@ -3,8 +3,8 @@
 namespace App\Service\ElasticSearch;
 
 use App\Exception\IndexException;
-use App\Model\FilterTypes;
-use App\Model\IndexNames;
+use App\Model\FilterType;
+use App\Model\IndexName;
 use App\Model\SearchResults;
 use App\Service\IndexInterface;
 use Elastic\Elasticsearch\Client;
@@ -182,8 +182,8 @@ class ElasticSearchIndex implements IndexInterface
     private function buildBody(array $filters): array
     {
         $body = [];
-        $combined = (bool) count($filters[FilterTypes::Filters->value]);
-        foreach ($filters[FilterTypes::Filters->value] as $filter) {
+        $combined = (bool) count($filters[FilterType::Filters->value]);
+        foreach ($filters[FilterType::Filters->value] as $filter) {
             if ($combined) {
                 if (!array_key_exists('bool', $body)) {
                     $body['bool'] = ['must' => []];
@@ -270,10 +270,10 @@ class ElasticSearchIndex implements IndexInterface
     {
         // Translates a string or int into the corresponding Enum case, if any.
         // If there is no matching case defined, it will return null.
-        $indexName = IndexNames::tryFrom($indexName);
+        $indexName = IndexName::tryFrom($indexName);
 
         return match ($indexName) {
-            IndexNames::Events => [
+            IndexName::Events => [
                 '_score',
                 [
                     'title.keyword' => [
@@ -281,13 +281,13 @@ class ElasticSearchIndex implements IndexInterface
                     ],
                 ],
             ],
-            IndexNames::DailyOccurrences, IndexNames::Occurrences => [
+            IndexName::DailyOccurrences, IndexName::Occurrences => [
                 'start' => [
                     'order' => 'asc',
                     'format' => 'strict_date_optional_time_nanos',
                 ],
             ],
-            IndexNames::Tags, IndexNames::Vocabularies,IndexNames::Locations, IndexNames::Organizations => [
+            IndexName::Tags, IndexName::Vocabularies,IndexName::Locations, IndexName::Organizations => [
                 '_score',
                 [
                     'name.keyword' => [

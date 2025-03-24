@@ -13,6 +13,8 @@ use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 
 /**
  * This class represents a filter that performs a search based on matching properties in a given resource.
+ *
+ * @deprecated please us DataRangeFilter
  */
 final class DateFilter extends AbstractFilter
 {

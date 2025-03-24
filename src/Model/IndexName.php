@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-enum IndexNames: string
+enum IndexName: string
 {
     case Events = 'events';
     case Organizations = 'organizations';
@@ -16,6 +16,6 @@ enum IndexNames: string
 
     public static function values(): array
     {
-        return array_column(IndexNames::cases(), 'value');
+        return array_column(IndexName::cases(), 'value');
     }
 }

@@ -6,8 +6,8 @@ use ApiPlatform\Elasticsearch\Filter\FilterInterface;
 use ApiPlatform\Elasticsearch\Filter\SortFilterInterface;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\Pagination\PaginationOptions;
-use App\Model\FilterTypes;
-use App\Model\IndexNames;
+use App\Model\FilterType;
+use App\Model\IndexName;
 use App\Service\IndexInterface;
 use Psr\Container\ContainerInterface;
 
@@ -43,8 +43,8 @@ abstract class AbstractProvider
     {
         $resourceFilters = $operation->getFilters();
         $outputFilters = [
-            FilterTypes::Filters->value => [],
-            FilterTypes::Sort->value => [],
+            FilterType::Filters->value => [],
+            FilterType::Sort->value => [],
         ];
 
         if (!is_null($resourceFilters)) {
@@ -52,13 +52,13 @@ abstract class AbstractProvider
                 $filter = $this->getFilterById($filterId);
 
                 if ($filter instanceof FilterInterface) {
-                    $data = $filter->apply([], IndexNames::Events->value, $operation, $context);
+                    $data = $filter->apply([], IndexName::Events->value, $operation, $context);
 
                     if (!empty($data)) {
                         if ($filter instanceof SortFilterInterface) {
-                            $outputFilters[FilterTypes::Sort->value][] = $data;
+                            $outputFilters[FilterType::Sort->value][] = $data;
                         } else {
-                            $outputFilters[FilterTypes::Filters->value][] = $data;
+                            $outputFilters[FilterType::Filters->value][] = $data;
                         }
                     }
                 }

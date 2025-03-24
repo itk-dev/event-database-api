@@ -11,9 +11,10 @@ use ApiPlatform\OpenApi\Model\Operation;
 use ApiPlatform\OpenApi\Model\Parameter;
 use ApiPlatform\OpenApi\Model\Response;
 use App\Api\Filter\ElasticSearch\DateFilter;
+use App\Api\Filter\ElasticSearch\DateRangeFilter;
 use App\Api\Filter\ElasticSearch\MatchFilter;
 use App\Api\State\LocationRepresentationProvider;
-use App\Model\DateLimits;
+use App\Model\DateLimit;
 
 #[ApiResource(
     operations: [
@@ -53,14 +54,15 @@ use App\Model\DateLimits;
     properties: ['name', 'postalCode']
 )]
 #[ApiFilter(
-    DateFilter::class,
+    DateRangeFilter::class,
     properties: [
         'updated' => 'start',
     ],
+    // Arguments only exist to provide backward compatibility with filters originally defined by the DateFilter
     arguments: [
         'config' => [
             'start' => [
-                'limit' => DateLimits::GreaterThanOrEqual,
+                'limit' => DateLimit::gte,
                 'throwOnInvalid' => true,
             ],
         ],

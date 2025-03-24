@@ -11,11 +11,12 @@ use ApiPlatform\OpenApi\Model\Operation;
 use ApiPlatform\OpenApi\Model\Parameter;
 use ApiPlatform\OpenApi\Model\Response;
 use App\Api\Filter\ElasticSearch\DateFilter;
+use App\Api\Filter\ElasticSearch\DateRangeFilter;
 use App\Api\Filter\ElasticSearch\IdFilter;
 use App\Api\Filter\ElasticSearch\MatchFilter;
 use App\Api\Filter\ElasticSearch\TagFilter;
 use App\Api\State\OccurrenceRepresentationProvider;
-use App\Model\DateLimits;
+use App\Model\DateLimit;
 
 #[ApiResource(
     operations: [
@@ -63,20 +64,21 @@ use App\Model\DateLimits;
     properties: ['event.tags']
 )]
 #[ApiFilter(
-    DateFilter::class,
+    DateRangeFilter::class,
     properties: [
         'start' => 'start',
         'end' => 'end',
         'updated' => 'start',
     ],
+    // Arguments only exist to provide backward compatibility with filters originally defined by the DateFilter
     arguments: [
         'config' => [
             'start' => [
-                'limit' => DateLimits::GreaterThanOrEqual,
+                'limit' => DateLimit::gte,
                 'throwOnInvalid' => true,
             ],
             'end' => [
-                'limit' => DateLimits::LessThanOrEqual,
+                'limit' => DateLimit::lte,
                 'throwOnInvalid' => true,
             ],
         ],

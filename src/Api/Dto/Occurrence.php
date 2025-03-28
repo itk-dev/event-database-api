@@ -66,18 +66,18 @@ use App\Model\DateLimit;
 #[ApiFilter(
     DateRangeFilter::class,
     properties: [
-        'start' => 'start',
-        'end' => 'end',
-        'updated' => 'start',
+        'start' => 'gte',
+        'end' => 'lte',
+        'updated' => 'gte',
     ],
     // Arguments only exist to provide backward compatibility with filters originally defined by the DateFilter
     arguments: [
         'config' => [
-            'start' => [
+            'gte' => [
                 'limit' => DateLimit::gte,
                 'throwOnInvalid' => true,
             ],
-            'end' => [
+            'lte' => [
                 'limit' => DateLimit::lte,
                 'throwOnInvalid' => true,
             ],

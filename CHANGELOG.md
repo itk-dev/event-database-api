@@ -8,6 +8,10 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+## [1.1.1] - 2025-03-28
+
+- Fix date range filter error for updated field
+
 ## [1.1.0] - 2025-03-20
 
 ### Added

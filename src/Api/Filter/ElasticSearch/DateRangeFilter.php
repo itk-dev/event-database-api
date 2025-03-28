@@ -82,6 +82,9 @@ final class DateRangeFilter extends AbstractFilter
 
     private function getElasticSearchQueryRanges($property, $filter): array
     {
+        if (null === $this->properties) {
+            throw new \InvalidArgumentException('The property must be defined in the filter.');
+        }
         if (!\is_array($filter)) {
             $fallbackOperator = $this->properties[$property];
             $operator = $this->config[$fallbackOperator]->limit;

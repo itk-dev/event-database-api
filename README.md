@@ -57,6 +57,9 @@ ElasticSearch.
 > [!TIP]
 > Use `task fixtures:load` to load all fixtures into Elasticsearch.
 
+<!-- Ignore MD028/no-blanks-blockquote Blank line inside blockquote (cf.
+https://github.com/DavidAnson/markdownlint/issues/263) -->
+
 > [!CAUTION]
 > If the `task fixtures:load` command (or any `bin/console app:fixtures:load` incantation) fails with an error like
 >

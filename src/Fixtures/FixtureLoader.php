@@ -8,6 +8,8 @@ use Elastic\Elasticsearch\Exception\ClientResponseException;
 use Elastic\Elasticsearch\Exception\MissingParameterException;
 use Elastic\Elasticsearch\Exception\ServerResponseException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -58,14 +60,28 @@ class FixtureLoader
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
-     * @throws \HttpException
+     * @throws HttpException
      */
     private function download(string $url): array
     {
+        // Load from local file if using "file" URL scheme.
+        if (preg_match('~^file://(?<path>/.+)$~', $url, $matches)) {
+            $path = $matches['path'];
+            if (!is_readable($path)) {
+                throw new NotFoundHttpException('Unable to download fixture data');
+            }
+            $data = json_decode(file_get_contents($path), true);
+            if (empty($data)) {
+                throw new NotFoundHttpException('Unable to download fixture data');
+            }
+
+            return $data;
+        }
+
         $response = $this->httpClient->request('GET', $url);
 
         if (Response::HTTP_OK !== $response->getStatusCode()) {
-            throw new \HttpException('Unable to download fixture data');
+            throw new NotFoundHttpException('Unable to download fixture data');
         }
 
         return $response->toArray();

@@ -54,6 +54,9 @@ above command downloads the fixtures from
 [GitHub](https://github.com/itk-dev/event-database-imports/tree/develop/src/DataFixtures/indexes) and loads them into
 ElasticSearch.
 
+> [!TIP]
+> Use `task fixtures:load` to load all fixtures into Elasticsearch.
+
 ## Accessing the API
 
 To access the API, a valid API key must be presented in the `X-Api-Key` header, e.g.

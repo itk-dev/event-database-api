@@ -39,6 +39,7 @@ class FixtureLoader
     {
         $items = $this->download($url);
 
+        $this->deleteIndex($indexName);
         $this->createIndex($indexName);
         $this->indexItems($indexName, $items);
     }
@@ -128,6 +129,30 @@ class FixtureLoader
                         'number_of_replicas' => 0,
                     ],
                 ],
+            ]);
+        }
+    }
+
+    /**
+     * Deletes an index with the given name if it exists.
+     *
+     * @param string $indexName
+     *   The name of the index
+     *
+     * @throws ClientResponseException
+     *   If an error occurs during the Elasticsearch client request
+     * @throws MissingParameterException
+     *   If the required parameter is missing
+     * @throws ServerResponseException
+     *   If the server returns an error during the Elasticsearch request
+     */
+    private function deleteIndex(string $indexName): void
+    {
+        if ($this->index->indexExists($indexName)) {
+            // This creation of the index is not in den index service as this is the only place it should be used. In
+            // production and in many cases, you should connect to the index managed by the backend (imports).
+            $this->client->indices()->delete([
+                'index' => $indexName,
             ]);
         }
     }

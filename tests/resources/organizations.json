@@ -1,0 +1,22 @@
+[{
+    "entityId": 9,
+    "name": "ITKDev",
+    "email": "info@itkdev.dk",
+    "url": "https:\/\/github.com\/itk-dev",
+    "created": "2024-03-07T00:31:22+01:00",
+    "updated": "2024-03-07T00:31:22+01:00"
+},{
+    "entityId": 11,
+    "name": "Dokk1",
+    "email": "info@dokk1.dk",
+    "url": "https:\/\/dokk1.dk\/",
+    "created": "2024-03-07T00:31:22+01:00",
+    "updated": "2024-03-07T00:31:22+01:00"
+},{
+    "entityId": 10,
+    "name": "Aakb",
+    "email": "info@aakb.dk",
+    "url": "https:\/\/aakb.dk\/",
+    "created": "2024-03-07T00:31:22+01:00",
+    "updated": "2024-03-07T00:31:22+01:00"
+}]

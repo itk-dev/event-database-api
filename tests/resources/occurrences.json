@@ -1,0 +1,276 @@
+[{
+    "entityId": 11,
+    "start": "2024-11-08T10:30:00+01:00",
+    "end": "2024-11-08T16:30:00+01:00",
+    "ticketPriceRange": "Free or 100",
+    "room": "M2-6",
+    "event": {
+        "created": "2024-03-07T00:31:22+01:00",
+        "updated": "2024-03-07T00:31:22+01:00",
+        "entityId": 8,
+        "title": "ITKDev test event 2",
+        "excerpt": "Quis vel eros donec ac odio tempor orci dapibus ultrices. Velit dignissim sodales ut eu sem integer. Massa tincidunt dui ut ornare lectus sit amet est placerat.",
+        "description": "<p>Quam vulputate dignissim suspendisse in est ante. Libero enim sed faucibus turpis in eu mi bibendum. Gravida rutrum quisque non tellus orci. Eget nunc lobortis mattis aliquam faucibus purus in massa. Tortor posuere ac ut consequat semper viverra nam. Sapien et ligula ullamcorper malesuada. Et molestie ac feugiat sed lectus vestibulum mattis ullamcorper. At consectetur lorem donec massa sapien faucibus et. Ut consequat semper viverra nam libero. Hendrerit gravida rutrum quisque non tellus orci ac.<\/p>",
+        "url": "https:\/\/itk.aarhus.dk\/nyheder\/",
+        "ticketUrl": "https:\/\/www.aakb.dk\/arrangementer\/born\/kreavaerksted-monsterboger-0",
+        "publicAccess": true,
+        "organizer": {
+            "created": "2024-03-07T00:31:22+01:00",
+            "updated": "2024-03-07T00:31:22+01:00",
+            "entityId": 9,
+            "name": "ITKDev",
+            "email": "info@itkdev.dk",
+            "url": "https:\/\/github.com\/itk-dev"
+        },
+        "partners": [],
+        "occurrences": [
+            {
+                "entityId": 10,
+                "start": "2024-12-07T14:30:00+01:00",
+                "end": "2024-12-07T15:30:00+01:00",
+                "ticketPriceRange": "10.000 Kr.",
+                "room": "M2-5",
+                "status": null
+            },
+            {
+                "entityId": 11,
+                "start": "2024-11-08T10:30:00+01:00",
+                "end": "2024-11-08T16:30:00+01:00",
+                "ticketPriceRange": "Free or 100",
+                "room": "M2-6",
+                "status": null
+            }
+        ],
+        "dailyOccurrences": [
+            {
+                "entityId": 10,
+                "start": "2024-12-07T14:30:00+01:00",
+                "end": "2024-12-07T15:30:00+01:00",
+                "ticketPriceRange": "10.000 Kr.",
+                "room": "M2-5",
+                "status": null
+            },
+            {
+                "entityId": 11,
+                "start": "2024-11-08T10:30:00+01:00",
+                "end": "2024-11-08T16:30:00+01:00",
+                "ticketPriceRange": "Free or 100",
+                "room": "M2-6",
+                "status": null
+            }
+        ],
+        "tags": [
+            "aros",
+            "Koncert"
+        ],
+        "imageUrls": {
+            "small": "media\/cache\/resolve\/small\/438d0b1f\/50856725020664f9161133a2396cfddacd9aec930c259e4403837f55f4cb3cab.png",
+            "medium": "media\/cache\/resolve\/medium\/438d0b1f\/50856725020664f9161133a2396cfddacd9aec930c259e4403837f55f4cb3cab.png",
+            "large": "media\/cache\/resolve\/large\/438d0b1f\/50856725020664f9161133a2396cfddacd9aec930c259e4403837f55f4cb3cab.png"
+        },
+        "location": {
+            "entityId": 4,
+            "name": "ITK Development",
+            "image": null,
+            "url": "https:\/\/itk.aarhus.dk\/om-itk\/afdelinger\/development\/",
+            "telephone": null,
+            "disabilityAccess": true,
+            "mail": "itkdev@mkb.aarhus.dk",
+            "street": "Hack Kampmanns Plads 2",
+            "suite": "2.2",
+            "region": "Jylland",
+            "city": "Aarhus",
+            "country": "Danmark",
+            "postalCode": "8000",
+            "coordinates": [
+                56.1507645,
+                10.2112699
+            ]
+        }
+    },
+    "status": null
+},{
+    "entityId": 10,
+    "start": "2024-12-07T14:30:00+01:00",
+    "end": "2024-12-07T15:30:00+01:00",
+    "ticketPriceRange": "10.000 Kr.",
+    "room": "M2-5",
+    "event": {
+        "created": "2024-03-07T00:31:22+01:00",
+        "updated": "2024-03-07T00:31:22+01:00",
+        "entityId": 8,
+        "title": "ITKDev test event 2",
+        "excerpt": "Quis vel eros donec ac odio tempor orci dapibus ultrices. Velit dignissim sodales ut eu sem integer. Massa tincidunt dui ut ornare lectus sit amet est placerat.",
+        "description": "<p>Quam vulputate dignissim suspendisse in est ante. Libero enim sed faucibus turpis in eu mi bibendum. Gravida rutrum quisque non tellus orci. Eget nunc lobortis mattis aliquam faucibus purus in massa. Tortor posuere ac ut consequat semper viverra nam. Sapien et ligula ullamcorper malesuada. Et molestie ac feugiat sed lectus vestibulum mattis ullamcorper. At consectetur lorem donec massa sapien faucibus et. Ut consequat semper viverra nam libero. Hendrerit gravida rutrum quisque non tellus orci ac.<\/p>",
+        "url": "https:\/\/itk.aarhus.dk\/nyheder\/",
+        "ticketUrl": "https:\/\/www.aakb.dk\/arrangementer\/born\/kreavaerksted-monsterboger-0",
+        "publicAccess": true,
+        "organizer": {
+            "created": "2024-03-07T00:31:22+01:00",
+            "updated": "2024-03-07T00:31:22+01:00",
+            "entityId": 9,
+            "name": "ITKDev",
+            "email": "info@itkdev.dk",
+            "url": "https:\/\/github.com\/itk-dev"
+        },
+        "partners": [],
+        "occurrences": [
+            {
+                "entityId": 10,
+                "start": "2024-12-07T14:30:00+01:00",
+                "end": "2024-12-07T15:30:00+01:00",
+                "ticketPriceRange": "10.000 Kr.",
+                "room": "M2-5",
+                "status": null
+            },
+            {
+                "entityId": 11,
+                "start": "2024-11-08T10:30:00+01:00",
+                "end": "2024-11-08T16:30:00+01:00",
+                "ticketPriceRange": "Free or 100",
+                "room": "M2-6",
+                "status": null
+            }
+        ],
+        "dailyOccurrences": [
+            {
+                "entityId": 10,
+                "start": "2024-12-07T14:30:00+01:00",
+                "end": "2024-12-07T15:30:00+01:00",
+                "ticketPriceRange": "10.000 Kr.",
+                "room": "M2-5",
+                "status": null
+            },
+            {
+                "entityId": 11,
+                "start": "2024-11-08T10:30:00+01:00",
+                "end": "2024-11-08T16:30:00+01:00",
+                "ticketPriceRange": "Free or 100",
+                "room": "M2-6",
+                "status": null
+            }
+        ],
+        "tags": [
+            "aros",
+            "Koncert"
+        ],
+        "imageUrls": {
+            "small": "media\/cache\/resolve\/small\/438d0b1f\/50856725020664f9161133a2396cfddacd9aec930c259e4403837f55f4cb3cab.png",
+            "medium": "media\/cache\/resolve\/medium\/438d0b1f\/50856725020664f9161133a2396cfddacd9aec930c259e4403837f55f4cb3cab.png",
+            "large": "media\/cache\/resolve\/large\/438d0b1f\/50856725020664f9161133a2396cfddacd9aec930c259e4403837f55f4cb3cab.png"
+        },
+        "location": {
+            "entityId": 4,
+            "name": "ITK Development",
+            "image": null,
+            "url": "https:\/\/itk.aarhus.dk\/om-itk\/afdelinger\/development\/",
+            "telephone": null,
+            "disabilityAccess": true,
+            "mail": "itkdev@mkb.aarhus.dk",
+            "street": "Hack Kampmanns Plads 2",
+            "suite": "2.2",
+            "region": "Jylland",
+            "city": "Aarhus",
+            "country": "Danmark",
+            "postalCode": "8000",
+            "coordinates": [
+                56.1507645,
+                10.2112699
+            ]
+        }
+    },
+    "status": null
+},{
+    "entityId": 12,
+    "start": "2024-12-08T12:30:00+01:00",
+    "end": "2024-12-08T14:30:00+01:00",
+    "ticketPriceRange": "Free in December",
+    "room": "M2-5",
+    "event": {
+        "created": "2024-03-07T00:31:22+01:00",
+        "updated": "2024-03-07T00:31:22+01:00",
+        "entityId": 7,
+        "title": "ITKDev test event 1",
+        "excerpt": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "description": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis blandit turpis cursus in. Nisl suscipit adipiscing bibendum est ultricies integer quis auctor. Diam donec adipiscing tristique risus nec feugiat. Tincidunt eget nullam non nisi est. Consectetur a erat nam at lectus urna. Vulputate sapien nec sagittis aliquam. Luctus venenatis lectus magna fringilla. Sit amet consectetur adipiscing elit duis tristique. Bibendum enim facilisis gravida neque convallis a.<\/p><p>Cursus eget nunc scelerisque viverra mauris in aliquam sem. Euismod elementum nisi quis eleifend quam adipiscing vitae proin sagittis.<br \/>Sodales ut eu sem integer vitae justo eget. Lacus sed viverra tellus in.<\/p>",
+        "url": "https:\/\/itk.aarhus.dk\/nyheder\/projektnyheder\/robotternes-bidrag-til-den-groenne-omstilling\/",
+        "ticketUrl": "https:\/\/www.aakb.dk\/arrangementer\/boern\/skak-nu-eller-aldrig-18",
+        "publicAccess": true,
+        "organizer": {
+            "created": "2024-03-07T00:31:22+01:00",
+            "updated": "2024-03-07T00:31:22+01:00",
+            "entityId": 9,
+            "name": "ITKDev",
+            "email": "info@itkdev.dk",
+            "url": "https:\/\/github.com\/itk-dev"
+        },
+        "partners": [
+            {
+                "entityId": 10,
+                "name": "Aakb",
+                "email": "info@aakb.dk",
+                "url": "https:\/\/aakb.dk\/",
+                "created": "2024-03-07T00:31:22+01:00",
+                "updated": "2024-03-07T00:31:22+01:00"
+            },
+            {
+                "entityId": 11,
+                "name": "Dokk1",
+                "email": "info@dokk1.dk",
+                "url": "https:\/\/dokk1.dk\/",
+                "created": "2024-03-07T00:31:22+01:00",
+                "updated": "2024-03-07T00:31:22+01:00"
+            }
+        ],
+        "occurrences": [
+            {
+                "entityId": 12,
+                "start": "2024-12-08T12:30:00+01:00",
+                "end": "2024-12-08T14:30:00+01:00",
+                "ticketPriceRange": "Free in December",
+                "room": "M2-5",
+                "status": null
+            }
+        ],
+        "dailyOccurrences": [
+            {
+                "entityId": 12,
+                "start": "2024-12-08T12:30:00+01:00",
+                "end": "2024-12-08T14:30:00+01:00",
+                "ticketPriceRange": "Free in December",
+                "room": "M2-5",
+                "status": null
+            }
+        ],
+        "tags": [
+            "aros",
+            "theoceanraceaarhus",
+            "ITKDev"
+        ],
+        "imageUrls": {
+            "small": "media\/cache\/resolve\/small\/438d0b1f\/00bae8ff00e64832de73422f17a605ba391edc05b2458a786d4e8a11243e2162.png",
+            "medium": "media\/cache\/resolve\/medium\/438d0b1f\/00bae8ff00e64832de73422f17a605ba391edc05b2458a786d4e8a11243e2162.png",
+            "large": "media\/cache\/resolve\/large\/438d0b1f\/00bae8ff00e64832de73422f17a605ba391edc05b2458a786d4e8a11243e2162.png"
+        },
+        "location": {
+            "entityId": 4,
+            "name": "ITK Development",
+            "image": null,
+            "url": "https:\/\/itk.aarhus.dk\/om-itk\/afdelinger\/development\/",
+            "telephone": null,
+            "disabilityAccess": true,
+            "mail": "itkdev@mkb.aarhus.dk",
+            "street": "Hack Kampmanns Plads 2",
+            "suite": "2.2",
+            "region": "Jylland",
+            "city": "Aarhus",
+            "country": "Danmark",
+            "postalCode": "8000",
+            "coordinates": [
+                56.1507645,
+                10.2112699
+            ]
+        }
+    },
+    "status": null
+}]

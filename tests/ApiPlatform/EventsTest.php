@@ -23,5 +23,27 @@ class EventsTest extends AbstractApiTestCase
         $data = $response->toArray();
         $this->assertArrayHasKey('hydra:member', $data);
         $this->assertCount(2, $data['hydra:member']);
+
+        $response = static::createAuthenticatedClient()
+            ->request('GET', '/api/v2/events?'.http_build_query(['publicAccess' => 'true']));
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
+        $this->assertJson($response->getContent());
+
+        $data = $response->toArray();
+        $this->assertArrayHasKey('hydra:member', $data);
+        $this->assertCount(1, $data['hydra:member']);
+
+        $response = static::createAuthenticatedClient()
+            ->request('GET', '/api/v2/events?'.http_build_query(['publicAccess' => 'false']));
+
+        $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+        $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
+        $this->assertJson($response->getContent());
+
+        $data = $response->toArray();
+        $this->assertArrayHasKey('hydra:member', $data);
+        $this->assertCount(1, $data['hydra:member']);
     }
 }

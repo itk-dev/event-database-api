@@ -1,0 +1,19 @@
+[{
+    "entityId": 4,
+    "name": "ITK Development",
+    "image": null,
+    "url": "https:\/\/itk.aarhus.dk\/om-itk\/afdelinger\/development\/",
+    "telephone": null,
+    "disabilityAccess": true,
+    "mail": "itkdev@mkb.aarhus.dk",
+    "street": "Hack Kampmanns Plads 2",
+    "suite": "2.2",
+    "region": "Jylland",
+    "city": "Aarhus",
+    "country": "Danmark",
+    "postalCode": "8000",
+    "coordinates": [
+        56.1507645,
+        10.2112699
+    ]
+}]

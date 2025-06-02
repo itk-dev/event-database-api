@@ -47,11 +47,25 @@ tasks:
 
   api:test:
     desc: Run API tests
-    prompt: Make sure to load fixtures before running tests (`task fixtures:load`)
+    prompt: This will reset your local data. Continue?
     cmds:
+      # Load local fixtures.
+      - for:
+          - events
+          - organizations
+          - occurrences
+          - daily_occurrences
+          - tags
+          - vocabularies
+          - locations
+        task: compose
+        vars:
+          COMPOSE_ARGS: exec phpfpm bin/console app:fixtures:load {{.ITEM}} --url=file:///app/tests/resources/{{.ITEM}}.json
       - task: compose
         vars:
           COMPOSE_ARGS: exec phpfpm bin/phpunit
+    # Loading some fixtures generates an 'Warning: Undefined array key "entityId"' error.
+    ignore_error: true
 
   composer:
     desc: "Run `composer` command. Example: task composer -- normalize"

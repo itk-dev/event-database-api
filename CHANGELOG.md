@@ -8,6 +8,9 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-18](https://github.com/itk-dev/event-database-api/pull/18)
+  Updated docker compose setup
+
 ## [1.1.1] - 2025-03-28
 
 - Fix date range filter error for updated field
@@ -16,7 +19,7 @@ See [keep a changelog] for information about writing changes to this log.
 
 ### Added
 
-- Implemented and switched to date range filter, compatible with deprecated date filter  
+- Implemented and switched to date range filter, compatible with deprecated date filter
 
 ### Changed
 

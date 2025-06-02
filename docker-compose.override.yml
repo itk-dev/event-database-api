@@ -44,3 +44,10 @@ services:
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
+
+  markdownlint:
+    image: itkdev/markdownlint
+    profiles:
+      - dev
+    volumes:
+      - ./:/md

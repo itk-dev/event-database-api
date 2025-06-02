@@ -43,7 +43,11 @@ api_platform:
             shared_max_age: 3600
             vary: ['Content-Type', 'Authorization', 'Origin']
         extra_properties:
-            standard_put: true
+            # https://api-platform.com/docs/core/upgrade-guide/#api-platform-34
             rfc_7807_compliant_errors: true
-    event_listeners_backward_compatibility_layer: false
     keep_legacy_inflector: false
+    use_symfony_listeners: false
+
+    # https://api-platform.com/docs/core/upgrade-guide/#upgrade-guide
+    serializer:
+        hydra_prefix: true

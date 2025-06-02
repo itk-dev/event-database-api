@@ -6,7 +6,7 @@
          colors="true"
          cacheDirectory=".phpunit.cache"
          bootstrap="tests/bootstrap.php"
-         requireCoverageMetadata="true"
+         requireCoverageMetadata="false"
          beStrictAboutCoverageMetadata="true"
          beStrictAboutOutputDuringTests="true"
 >

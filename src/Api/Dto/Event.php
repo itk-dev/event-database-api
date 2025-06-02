@@ -11,7 +11,6 @@ use ApiPlatform\OpenApi\Model\Operation;
 use ApiPlatform\OpenApi\Model\Parameter;
 use ApiPlatform\OpenApi\Model\Response;
 use App\Api\Filter\ElasticSearch\BooleanFilter;
-use App\Api\Filter\ElasticSearch\DateFilter;
 use App\Api\Filter\ElasticSearch\DateRangeFilter;
 use App\Api\Filter\ElasticSearch\IdFilter;
 use App\Api\Filter\ElasticSearch\MatchFilter;

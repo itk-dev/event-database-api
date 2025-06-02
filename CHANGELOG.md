@@ -9,7 +9,8 @@ See [keep a changelog] for information about writing changes to this log.
 ## [Unreleased]
 
 - [PR-18](https://github.com/itk-dev/event-database-api/pull/18)
-  Updated docker compose setup
+  - Updated docker compose setup
+  - Added simple API tests and resolved some deprecations
 
 ## [1.1.1] - 2025-03-28
 

@@ -57,6 +57,25 @@ ElasticSearch.
 > [!TIP]
 > Use `task fixtures:load` to load all fixtures into Elasticsearch.
 
+> [!CAUTION]
+> If the `task fixtures:load` command (or any `bin/console app:fixtures:load` incantation) fails with an error like
+>
+> ``` shell
+> No alive nodes. All the 1 nodes seem to be down.
+> ```
+>
+> you must reset the Elasticsearch service to be ready for requests, e.g. by running
+>
+> ``` shell
+> docker compose exec elasticsearch curl 'http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=5s' --verbose
+> ```
+>
+> until it returns `HTTP/1.1 200 OK` (cf. [How to Implement Elasticsearch Health Check in Docker
+> Compose](https://www.baeldung.com/ops/elasticsearch-docker-compose)).
+>
+> Alternatively, you can run `docker compose up --detach --wait` to recreate all services and
+> (automatically) wait for Elasticsearch to be ready – it takes a while …
+
 ## Accessing the API
 
 To access the API, a valid API key must be presented in the `X-Api-Key` header, e.g.

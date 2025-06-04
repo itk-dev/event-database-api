@@ -379,7 +379,18 @@ paths:
         '200':
           description: 'Single daily occurrence'
         '404':
-          description: 'Resource not found'
+          description: 'Not found'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
       summary: 'Retrieves a DailyOccurrence resource.'
       description: 'Retrieves a DailyOccurrence resource.'
       parameters:
@@ -762,7 +773,18 @@ paths:
         '200':
           description: 'Single event'
         '404':
-          description: 'Resource not found'
+          description: 'Not found'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
       summary: 'Retrieves a Event resource.'
       description: 'Retrieves a Event resource.'
       parameters:
@@ -935,7 +957,18 @@ paths:
         '200':
           description: 'Single location'
         '404':
-          description: 'Resource not found'
+          description: 'Not found'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
       summary: 'Get single location based on identifier'
       description: 'Retrieves a Location resource.'
       parameters:
@@ -1306,7 +1339,18 @@ paths:
         '200':
           description: 'Single occurrence'
         '404':
-          description: 'Resource not found'
+          description: 'Not found'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
       summary: 'Get single occurrence based on identifier'
       description: 'Retrieves a Occurrence resource.'
       parameters:
@@ -1467,7 +1511,18 @@ paths:
         '200':
           description: 'Single organization'
         '404':
-          description: 'Resource not found'
+          description: 'Not found'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
       summary: 'Get single organization based on identifier'
       description: 'Retrieves a Organization resource.'
       parameters:
@@ -1568,7 +1623,18 @@ paths:
         '200':
           description: 'Get single tag'
         '404':
-          description: 'Resource not found'
+          description: 'Not found'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
       summary: 'Get single tag'
       description: 'Retrieves a Tag resource.'
       parameters:
@@ -1669,7 +1735,18 @@ paths:
         '200':
           description: 'Get single vocabulary'
         '404':
-          description: 'Resource not found'
+          description: 'Not found'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Error.jsonld'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          links: {  }
       summary: 'Get a vocabulary based on slug'
       description: 'Retrieves a Vocabulary resource.'
       parameters:
@@ -1716,6 +1793,98 @@ components:
                 - '@vocab'
                 - hydra
               additionalProperties: true
+    Error:
+      type: object
+      description: 'A representation of common errors.'
+      deprecated: false
+      properties:
+        title:
+          readOnly: true
+          description: 'A short, human-readable summary of the problem.'
+          type:
+            - string
+            - 'null'
+        detail:
+          readOnly: true
+          description: 'A human-readable explanation specific to this occurrence of the problem.'
+          type:
+            - string
+            - 'null'
+        status:
+          type: number
+          examples:
+            - 404
+          default: 400
+        instance:
+          readOnly: true
+          description: 'A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.'
+          type:
+            - string
+            - 'null'
+        type:
+          readOnly: true
+          description: 'A URI reference that identifies the problem type'
+          type: string
+    Error.jsonld:
+      type: object
+      description: 'A representation of common errors.'
+      deprecated: false
+      properties:
+        '@context':
+          readOnly: true
+          oneOf:
+            -
+              type: string
+            -
+              type: object
+              properties:
+                '@vocab':
+                  type: string
+                hydra:
+                  type: string
+                  enum: ['http://www.w3.org/ns/hydra/core#']
+              required:
+                - '@vocab'
+                - hydra
+              additionalProperties: true
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        title:
+          readOnly: true
+          description: 'A short, human-readable summary of the problem.'
+          type:
+            - string
+            - 'null'
+        detail:
+          readOnly: true
+          description: 'A human-readable explanation specific to this occurrence of the problem.'
+          type:
+            - string
+            - 'null'
+        status:
+          type: number
+          examples:
+            - 404
+          default: 400
+        instance:
+          readOnly: true
+          description: 'A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.'
+          type:
+            - string
+            - 'null'
+        type:
+          readOnly: true
+          description: 'A URI reference that identifies the problem type'
+          type: string
+        description:
+          readOnly: true
+          type:
+            - string
+            - 'null'
     Event.EventRepresentationProvider.jsonld:
       type: object
       description: ''
@@ -1912,5 +2081,19 @@ components:
 security:
   -
     ApiKeyAuth: []
-tags: []
+tags:
+  -
+    name: DailyOccurrence
+  -
+    name: Event
+  -
+    name: Location
+  -
+    name: Occurrence
+  -
+    name: Organization
+  -
+    name: Tag
+  -
+    name: Vocabulary
 webhooks: {  }

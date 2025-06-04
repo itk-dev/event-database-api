@@ -8,6 +8,8 @@ use ApiPlatform\Symfony\Bundle\Test\Response;
 
 abstract class AbstractApiTestCase extends ApiTestCase
 {
+    protected static ?bool $alwaysBootKernel = false;
+
     protected static string $requestPath;
 
     protected static function createAuthenticatedClient(): Client

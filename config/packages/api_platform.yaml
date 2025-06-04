@@ -50,7 +50,6 @@ api_platform:
             # standard_put: true
             # https://api-platform.com/docs/core/upgrade-guide/#api-platform-34
             rfc_7807_compliant_errors: true
-    keep_legacy_inflector: false
     # Note: The api-platform/core 3.4 recipe wants `use_symfony_listeners` to be true
     use_symfony_listeners: false
 

@@ -6,3 +6,12 @@ parameters:
         - public/
         - src/
         - tests/
+
+    ignoreErrors:
+        - messages:
+              - "#Method .+ has parameter .+ with no value type specified in iterable type array.#"
+              - "#Method .+ return type has no value type specified in iterable type array.#"
+              - "#Method .+ return type has no value type specified in iterable type iterable.#"
+              - "#Property .+ type has no value type specified in iterable type array.#"
+        - messages:
+              - "#Class .+ implements generic interface .+ but does not specify its types: #"

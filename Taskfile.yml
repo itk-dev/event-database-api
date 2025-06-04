@@ -10,7 +10,7 @@ vars:
   DOCKER_COMPOSE: '{{.TASK_DOCKER_COMPOSE | default "docker compose"}}'
 
   # We're not yet ready to normalize config files …
-  YAML_FILES_GLOB: "Taskfile.yml .github/workflows/**.{yml,yaml}"
+  YAML_FILES_GLOB: "Taskfile.yml .github/workflows/**.{yml,yaml} phpstan.dist.neon"
 
 tasks:
   site:update:
@@ -163,7 +163,7 @@ tasks:
     cmds:
       - task: compose
         vars:
-          COMPOSE_ARGS: run --rm prettier {{.YAML_FILES_GLOB}} --write
+          COMPOSE_ARGS: run --rm prettier --parser yaml {{.YAML_FILES_GLOB}} --write
     silent: true
 
   coding-standards:yaml:check:
@@ -172,7 +172,7 @@ tasks:
       - task: coding-standards:yaml:apply
       - task: compose
         vars:
-          COMPOSE_ARGS: run --rm prettier {{.YAML_FILES_GLOB}} --check
+          COMPOSE_ARGS: run --rm prettier --parser yaml {{.YAML_FILES_GLOB}} --check
     silent: true
 
   code-analysis:

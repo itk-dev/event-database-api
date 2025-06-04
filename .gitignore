@@ -28,3 +28,7 @@
 ###< vincentlanglet/twig-cs-fixer ###
 
 .phpunit.cache
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###

@@ -175,12 +175,18 @@ tasks:
           COMPOSE_ARGS: run --rm prettier {{.YAML_FILES_GLOB}} --check
     silent: true
 
-  code-analysis:psalm:
-    desc: "Run PSalm"
+  code-analysis:
+    desc: "Run code analysis"
+    cmds:
+      - task: code-analysis:phpstan
+    silent: true
+
+  code-analysis:phpstan:
+    desc: "Run PHPStan"
     cmds:
       - task: compose
         vars:
-          COMPOSE_ARGS: exec phpfpm vendor/bin/psalm --no-cache
+          COMPOSE_ARGS: exec phpfpm vendor/bin/phpstan
     silent: true
 
   apispec:export:

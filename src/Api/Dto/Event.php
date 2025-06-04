@@ -73,7 +73,7 @@ use App\Model\DateLimit;
         'occurrences.end' => 'lte',
         'updated' => 'gte',
     ],
-    // Arguments only exist to provide backward compatibility with filters originally defined by the DateFilter
+    // Arguments only exist to provide backward compatibility with filters originally defined by the Date filter
     arguments: [
         'config' => [
             'gte' => [

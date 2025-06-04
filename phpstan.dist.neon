@@ -18,3 +18,6 @@ parameters:
               - "#Property .+ type has no value type specified in iterable type array.#"
         - messages:
               - "#Class .+ implements generic interface .+ but does not specify its types: #"
+        - messages:
+              # The ID properties are set by API Platform.
+              - "#Property App\\\\Api\\\\Dto\\\\[^\\\\]+::\\$id is unused#"

@@ -52,9 +52,6 @@ use App\Api\State\TagRepresentationProvider;
 )]
 readonly class Tag
 {
-    #[ApiProperty(identifier: false)]
-    private ?int $id;
-
     #[ApiProperty(identifier: true)]
     public string $slug;
 

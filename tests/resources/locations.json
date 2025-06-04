@@ -16,4 +16,22 @@
         56.1507645,
         10.2112699
     ]
+},{
+    "entityId": 5,
+    "name": "Somewhere",
+    "image": null,
+    "url": "https:\/\/example.com/somewhere",
+    "telephone": null,
+    "disabilityAccess": true,
+    "mail": "somewhere#example.com",
+    "street": "",
+    "suite": "",
+    "region": "",
+    "city": "",
+    "country": "",
+    "postalCode": "",
+    "coordinates": [
+        0.0000000,
+        0.0000000
+    ]
 }]

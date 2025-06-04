@@ -121,3 +121,20 @@ curl --silent --header "X-Api-Key: api_key_1" "http://$(docker compose port ngin
 task fixtures:load:test --yes
 task api:test
 ```
+
+You can pass additional arguments to filter tests, e.g.
+
+``` shell
+task api:test -- --filter Event
+```
+
+> [!TIP]
+> Use Task's [Dry run mode](https://taskfile.dev/usage/#dry-run-mode) (`task --dry`) to see the commands that are
+> actually run, e.g.
+>
+> ``` shell
+> $ task --dry api:test -- --filter Event
+> task: [compose] docker compose exec phpfpm bin/phpunit --filter Event
+> ```
+>
+> This is useful to tweak a (test) command without changing `Taskfile.yml`.

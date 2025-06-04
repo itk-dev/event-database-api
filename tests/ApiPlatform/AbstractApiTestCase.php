@@ -28,4 +28,9 @@ abstract class AbstractApiTestCase extends ApiTestCase
 
         return $client->request('GET', $path.(str_contains($path, '?') ? '&' : '?').http_build_query($query));
     }
+
+    protected static function formatDateTime(string $datetime): string
+    {
+        return (new \DateTimeImmutable($datetime))->format(\DateTimeImmutable::ATOM);
+    }
 }

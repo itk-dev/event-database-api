@@ -12,6 +12,7 @@ See [keep a changelog] for information about writing changes to this log.
   - Updated docker compose setup
   - Added simple API tests and resolved some deprecations
   - Upgraded to API platform v4
+  - Updated composer packages (security update)
 
 ## [1.1.1] - 2025-03-28
 

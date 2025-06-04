@@ -83,6 +83,14 @@ tasks:
       # Run docker compose with both arguments passed via var plus any cli args.
       - "{{.DOCKER_COMPOSE}} {{.COMPOSE_ARGS}} {{.CLI_ARGS}}"
 
+  console:
+    desc: "Run Symfony console command. Example: task console -- cache:clear"
+    cmds:
+      # Run docker compose with both arguments passed via var plus any cli args.
+      - task: compose
+        vars:
+          COMPOSE_ARGS: exec phpfpm bin/console {{.CONSOLE_ARGS}}
+
   coding-standards:apply:
     desc: "Apply coding standards"
     cmds:
@@ -167,12 +175,20 @@ tasks:
           COMPOSE_ARGS: run --rm prettier {{.YAML_FILES_GLOB}} --check
     silent: true
 
-  code-analysis:
-    desc: "Run code analysis"
+  code-analysis:psalm:
+    desc: "Run PSalm"
     cmds:
       - task: compose
         vars:
           COMPOSE_ARGS: exec phpfpm vendor/bin/psalm --no-cache
+    silent: true
+
+  apispec:export:
+    desc: Export API spec
+    cmds:
+      - task: console
+        vars:
+          CONSOLE_ARGS: api:openapi:export --yaml --output=public/spec.yaml --no-interaction
     silent: true
 
   default:

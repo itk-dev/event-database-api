@@ -41,7 +41,7 @@ jobs:
       - run: |
           docker network create frontend
 
-      - name: Load fixtures
+      - name: Check YAML coding standards
         run: |
           task --yes coding-standards:yaml:check
 
@@ -50,75 +50,40 @@ jobs:
 
   psalm:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        php: ["8.3"]
-    name: Psalm static analysis (${{ matrix.php}})
+    name: Psalm static analysis
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup PHP, with composer and extensions
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php}}
-          extensions: http, ctype, iconv
-          coverage: none
+      # https://taskfile.dev/installation/#github-actions
+      - uses: arduino/setup-task@v2
 
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - run: |
+          docker network create frontend
+          task --yes site:update
 
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}-${{ matrix.dependency-version }}-
-          restore-keys: ${{ runner.os }}-composer-${{ matrix.dependency-version }}-
-
-      - name: Install Dependencies
+      - name: Run code analysis
         run: |
-          composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
-          bin/console cache:clear
-      - name: Psalm
-        run: ./vendor/bin/psalm --no-cache
+          task --yes code-analysis:psalm
 
   apispec:
     runs-on: ubuntu-latest
-    name: API Specification validation
-    strategy:
-      fail-fast: false
-      matrix:
-        php: ["8.3"]
+    name: API specification validation
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 2
 
-      - name: Setup PHP, with composer and extensions
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php}}
-          extensions: http, ctype, iconv
-          coverage: none
+      # https://taskfile.dev/installation/#github-actions
+      - uses: arduino/setup-task@v2
 
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      - run: |
+          docker network create frontend
+          task --yes site:update
 
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
+      - name: Export API specification
+        run: |
+          task --yes apispec:export
 
-      - name: Install Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
-
-      - name: Export specifications
-        run: bin/console api:openapi:export --yaml --output=public/spec.yaml --no-interaction
-
-      - name: Check for changes in specifications
+      - name: Check for changes in specification
         run: git diff --diff-filter=ACMRT --exit-code public/spec.yaml

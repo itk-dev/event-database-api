@@ -3,6 +3,7 @@
 namespace App\Security;
 
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserInterface as TUser;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -13,16 +14,16 @@ class ApiUserProvider implements UserProviderInterface
 {
     private array $users = [];
 
-    public function __construct(private array $apikeys = [])
+    public function __construct(array $apikeys = [])
     {
         foreach ($apikeys as $apikey) {
             $this->users[$apikey['apikey']] = new ApiUser($apikey['username']);
         }
     }
 
-    public function refreshUser(TUser $user): void
+    public function refreshUser(TUser $user): UserInterface
     {
-        // Do nothing
+        return $user;
     }
 
     public function supportsClass(string $class): bool

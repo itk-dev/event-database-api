@@ -1,5 +1,6 @@
 [{
     "name": "aarhusguiden",
+    "slug": "aarhusguiden",
     "tags": [
         "aros",
         "theoceanraceaarhus",
@@ -10,6 +11,7 @@
     "description": "Managed tags vocabulary for aarhusguiden.dk"
 },{
     "name": "feeds",
+    "slug": "feeds",
     "tags": [],
     "description": "Free tags from feeds"
 }]

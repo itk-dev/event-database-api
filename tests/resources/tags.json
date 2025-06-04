@@ -1,25 +1,30 @@
 [{
     "name": "aros",
+    "slug": "aros",
     "vocabulary": [
         "aarhusguiden"
     ]
 },{
     "name": "theoceanraceaarhus",
+    "slug": "theoceanraceaarhus",
     "vocabulary": [
         "aarhusguiden"
     ]
 },{
     "name": "Koncert",
+    "slug": "koncert",
     "vocabulary": [
         "aarhusguiden"
     ]
 },{
     "name": "For b\u00f8rn",
+    "slug": "for-boern",
     "vocabulary": [
         "aarhusguiden"
     ]
 },{
     "name": "ITKDev",
+    "slug": "itkdev",
     "vocabulary": [
         "aarhusguiden"
     ]

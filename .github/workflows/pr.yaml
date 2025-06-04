@@ -21,9 +21,9 @@ jobs:
           docker network create frontend
           task --yes site:update
 
-      - name: Load fixtures
+      - name: Load test fixtures
         run: |
-          task --yes fixtures:load
+          task --yes fixtures:load:test
 
       - name: Run API tests
         run: |

@@ -117,7 +117,7 @@ curl --silent --header "X-Api-Key: api_key_1" "http://$(docker compose port ngin
 
 ## Test
 
-``` shell
-task fixtures:load --yes
-task api:test --yes
+``` shell name=run-tests
+task fixtures:load:test --yes
+task api:test
 ```

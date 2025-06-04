@@ -103,9 +103,11 @@ class FixtureLoader
         foreach ($items as $item) {
             $params = [
                 'index' => $indexName,
-                'id' => $item['entityId'],
                 'body' => $item,
             ];
+            if (isset($item['entityId'])) {
+                $params['id'] = $item['entityId'];
+            }
             try {
                 // No other places in this part of the frontend should index data, hence it's not in the index service.
                 $response = $this->client->index($params);

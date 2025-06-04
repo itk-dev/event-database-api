@@ -4,7 +4,7 @@ namespace App\Tests\ApiPlatform;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
 use ApiPlatform\Symfony\Bundle\Test\Client;
-use ApiPlatform\Symfony\Bundle\Test\Response;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 abstract class AbstractApiTestCase extends ApiTestCase
 {
@@ -22,7 +22,7 @@ abstract class AbstractApiTestCase extends ApiTestCase
         ]);
     }
 
-    protected function get(array $query, ?string $path = null, bool $authenticated = true): Response
+    protected function get(array $query, ?string $path = null, bool $authenticated = true): ResponseInterface
     {
         $path ??= static::$requestPath;
 

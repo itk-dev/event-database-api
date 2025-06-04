@@ -7,6 +7,9 @@ parameters:
         - src/
         - tests/
 
+    excludePaths:
+        - tests/bootstrap.php
+
     ignoreErrors:
         - messages:
               - "#Method .+ has parameter .+ with no value type specified in iterable type array.#"

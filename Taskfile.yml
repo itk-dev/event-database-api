@@ -167,6 +167,14 @@ tasks:
           COMPOSE_ARGS: run --rm prettier {{.YAML_FILES_GLOB}} --check
     silent: true
 
+  code-analysis:
+    desc: "Run code analysis"
+    cmds:
+      - task: compose
+        vars:
+          COMPOSE_ARGS: exec phpfpm vendor/bin/psalm --no-cache
+    silent: true
+
   default:
     cmds:
       - task --list

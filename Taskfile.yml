@@ -63,13 +63,6 @@ tasks:
     # Loading some fixtures generates an 'Warning: Undefined array key "entityId"' error.
     ignore_error: true
 
-  api:test:
-    desc: Run API tests
-    cmds:
-      - task: compose
-        vars:
-          COMPOSE_ARGS: exec phpfpm bin/phpunit
-
   composer:
     desc: "Run `composer` command. Example: task composer -- normalize"
     cmds:
@@ -189,7 +182,14 @@ tasks:
           COMPOSE_ARGS: exec phpfpm vendor/bin/phpstan
     silent: true
 
-  apispec:export:
+  api:test:
+    desc: Run API tests
+    cmds:
+      - task: compose
+        vars:
+          COMPOSE_ARGS: exec phpfpm bin/phpunit
+
+  api:spec:export:
     desc: Export API spec
     cmds:
       - task: console

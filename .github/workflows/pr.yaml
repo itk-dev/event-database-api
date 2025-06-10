@@ -83,7 +83,7 @@ jobs:
 
       - name: Export API specification
         run: |
-          task --yes apispec:export
+          task --yes api:spec:export
 
       - name: Check for changes in specification
         run: git diff --diff-filter=ACMRT --exit-code public/spec.yaml

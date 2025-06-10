@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-20](https://github.com/itk-dev/event-database-api/pull/20)
+  - Used built-in match filter
 - [PR-21](https://github.com/itk-dev/event-database-api/pull/21)
   Linted YAML
 - [PR-18](https://github.com/itk-dev/event-database-api/pull/18)

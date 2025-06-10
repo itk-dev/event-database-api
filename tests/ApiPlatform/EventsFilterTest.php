@@ -104,17 +104,32 @@ class EventsFilterTest extends AbstractApiTestCase
         ];
 
         // @todo Does tags filtering use the tag slug or name?
-        //        yield [
-        //            ['tags' => 'for børn'],
-        //            0,
-        //            'Events tagged with "for børn"',
-        //        ];
+        // yield [
+        //   ['tags' => 'for børn'],
+        //   0,
+        //   'Events tagged with "for børn"',
+        // ];
         //
-        //        yield [
-        //            ['tags' => 'for-boern'],
-        //            1,
-        //            'Events tagged with "for-boern"',
-        //        ];
+        // yield [
+        //   ['tags' => 'for-boern'],
+        //   1,
+        //   'Events tagged with "for-boern"',
+        // ];
+
+        // @todo It seems that filtering in tags use som sort of "contains word"
+        // stuff, i.e. we can match the tag "for-boern" by filtering on "boern"
+        // or on "for" – but not on "for-boern" …
+        yield [
+            ['tags' => 'boern'],
+            1,
+            'Events tagged with "boern"',
+        ];
+
+        yield [
+            ['tags' => 'for'],
+            2,
+            'Events tagged with "for"',
+        ];
 
         // Combined filters.
         yield [

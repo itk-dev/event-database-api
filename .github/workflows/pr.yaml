@@ -48,9 +48,9 @@ jobs:
       - name: Check that nothing has changed
         run: git diff --exit-code
 
-  psalm:
+  code-analysis-phpstan:
     runs-on: ubuntu-latest
-    name: Psalm static analysis
+    name: PHPStan static analysis
     steps:
       - uses: actions/checkout@v4
 
@@ -63,7 +63,7 @@ jobs:
 
       - name: Run code analysis
         run: |
-          task --yes code-analysis:psalm
+          task --yes code-analysis:phpstan
 
   apispec:
     runs-on: ubuntu-latest

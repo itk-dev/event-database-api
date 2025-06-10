@@ -4,6 +4,7 @@ namespace App\Api\Filter\ElasticSearch;
 
 use ApiPlatform\Elasticsearch\Filter\AbstractFilter;
 use ApiPlatform\Metadata\Operation;
+use ApiPlatform\OpenApi\Model\Parameter;
 use Symfony\Component\PropertyInfo\Type;
 
 final class BooleanFilter extends AbstractFilter
@@ -39,11 +40,13 @@ final class BooleanFilter extends AbstractFilter
                 'required' => false,
                 'description' => 'Is this a public event',
                 'is_collection' => false,
-                'openapi' => [
-                    'allowReserved' => false,
-                    'allowEmptyValue' => true,
-                    'explode' => false,
-                ],
+                'openapi' => new Parameter(
+                    name: $filterParameterName,
+                    in: 'query',
+                    allowEmptyValue: true,
+                    explode: false,
+                    allowReserved: false,
+                ),
             ];
         }
 

@@ -2,6 +2,7 @@
 
 namespace App\Api\Dto;
 
+use ApiPlatform\Elasticsearch\Filter\MatchFilter;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
@@ -13,7 +14,6 @@ use ApiPlatform\OpenApi\Model\Response;
 use App\Api\Filter\ElasticSearch\BooleanFilter;
 use App\Api\Filter\ElasticSearch\DateRangeFilter;
 use App\Api\Filter\ElasticSearch\IdFilter;
-use App\Api\Filter\ElasticSearch\MatchFilter;
 use App\Api\Filter\ElasticSearch\TagFilter;
 use App\Api\State\EventRepresentationProvider;
 use App\Model\DateLimit;

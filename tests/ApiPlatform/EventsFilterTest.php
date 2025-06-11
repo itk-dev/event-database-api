@@ -140,5 +140,19 @@ class EventsFilterTest extends AbstractApiTestCase
             1,
             'Events in 2026 tagged with "itkdev"',
         ];
+
+        yield [
+            [
+                'title' => 'cykel',
+            ],
+            0,
+        ];
+
+        yield [
+            [
+                'title' => 'bicycle',
+            ],
+            1,
+        ];
     }
 }

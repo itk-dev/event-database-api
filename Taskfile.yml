@@ -10,7 +10,7 @@ vars:
   DOCKER_COMPOSE: '{{.TASK_DOCKER_COMPOSE | default "docker compose"}}'
 
   # We're not yet ready to normalize config files …
-  YAML_FILES_GLOB: "Taskfile.yml .github/workflows/**.{yml,yaml} phpstan.dist.neon"
+  YAML_FILES_GLOB: "'.github/workflows/*.{yml,yaml}' 'config/**/*.{yml,yaml}' Taskfile.yml phpstan.dist.neon"
 
 tasks:
   site:update:

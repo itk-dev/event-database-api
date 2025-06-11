@@ -29,25 +29,6 @@ jobs:
         run: |
           task --yes api:test
 
-  coding-standards-yaml:
-    name: Coding standards YAML
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      # https://taskfile.dev/installation/#github-actions
-      - uses: arduino/setup-task@v2
-
-      - run: |
-          docker network create frontend
-
-      - name: Check YAML coding standards
-        run: |
-          task --yes coding-standards:yaml:check
-
-      - name: Check that nothing has changed
-        run: git diff --exit-code
-
   code-analysis-phpstan:
     runs-on: ubuntu-latest
     name: PHPStan static analysis

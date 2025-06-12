@@ -3,7 +3,7 @@ services:
     networks:
       - frontend
     depends_on:
-#      - elasticsearch
+      # - elasticsearch
       - rabbit
 
   rabbit:
@@ -47,7 +47,11 @@ services:
     # We need to be able to wait for Elasticsearch to be ready for requests
     # https://www.baeldung.com/ops/elasticsearch-docker-compose
     healthcheck:
-      test: ["CMD-SHELL", "curl -fs 'http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=5s' || exit 1"]
+      test:
+        [
+          "CMD-SHELL",
+          "curl -fs 'http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=5s' || exit 1",
+        ]
       interval: 10s
       timeout: 5s
       retries: 5

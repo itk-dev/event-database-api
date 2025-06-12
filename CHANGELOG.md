@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-23](https://github.com/itk-dev/event-database-api/pull/23)
+  Re-lint YAML files
 - [PR-21](https://github.com/itk-dev/event-database-api/pull/21)
   Linted YAML
 - [PR-18](https://github.com/itk-dev/event-database-api/pull/18)

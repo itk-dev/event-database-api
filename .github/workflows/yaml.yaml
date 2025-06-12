@@ -30,4 +30,4 @@ jobs:
           docker network create frontend
 
       - run: |
-          docker compose run --rm prettier '.github/workflows/*.{yml,yaml}' 'config/**/*.{yml,yaml}' --check
+          docker compose run --rm prettier '**/*.{yml,yaml}' --check

@@ -12,3 +12,7 @@ indent_size = 4
 
 [*.{yml,yaml}]
 indent_size = 2
+
+# Symfony uses 4 spaces for indent
+[config/**/*.{yml,yaml}]
+indent_size = 4

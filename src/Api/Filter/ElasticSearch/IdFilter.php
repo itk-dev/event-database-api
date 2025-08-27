@@ -4,6 +4,7 @@ namespace App\Api\Filter\ElasticSearch;
 
 use ApiPlatform\Elasticsearch\Filter\AbstractFilter;
 use ApiPlatform\Metadata\Operation;
+use ApiPlatform\OpenApi\Model\Parameter;
 use Symfony\Component\PropertyInfo\Type;
 
 final class IdFilter extends AbstractFilter
@@ -42,11 +43,14 @@ final class IdFilter extends AbstractFilter
                 'required' => false,
                 'description' => 'Filter based on given entity ids',
                 'is_collection' => true,
-                'openapi' => [
-                    'allowReserved' => false,
-                    'allowEmptyValue' => true,
-                    'explode' => false,
-                ],
+                'openapi' => new Parameter(
+                    name: $filterParameterName,
+                    in: 'query',
+                    allowEmptyValue: true,
+                    style: 'deepObject',
+                    explode: false,
+                    allowReserved: false,
+                ),
             ];
         }
 

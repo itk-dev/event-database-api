@@ -4,6 +4,7 @@ namespace App\Api\Filter\ElasticSearch;
 
 use ApiPlatform\Elasticsearch\Filter\AbstractFilter;
 use ApiPlatform\Metadata\Operation;
+use ApiPlatform\OpenApi\Model\Parameter;
 use Symfony\Component\PropertyInfo\Type;
 
 /**
@@ -39,11 +40,13 @@ final class MatchFilter extends AbstractFilter
                 'type' => Type::BUILTIN_TYPE_STRING,
                 'required' => false,
                 'description' => 'Search field based on value given',
-                'openapi' => [
-                    'allowReserved' => false,
-                    'allowEmptyValue' => true,
-                    'explode' => false,
-                ],
+                'openapi' => new Parameter(
+                    name: $filterParameterName,
+                    in: 'query',
+                    allowEmptyValue: true,
+                    explode: false,
+                    allowReserved: false,
+                ),
             ];
         }
 

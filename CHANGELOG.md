@@ -8,6 +8,18 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-23](https://github.com/itk-dev/event-database-api/pull/23)
+  Re-lint YAML files
+- [PR-21](https://github.com/itk-dev/event-database-api/pull/21)
+  Linted YAML
+- [PR-18](https://github.com/itk-dev/event-database-api/pull/18)
+  - Updated docker compose setup
+  - Added simple API tests and resolved some deprecations
+  - Upgraded to API platform v4
+  - Updated composer packages (security update) and recipes
+  - Replaces [Psalm](https://psalm.dev/) with [PHPStan](https://phpstan.org/) (via
+    <https://github.com/phpstan/phpstan-symfony>).
+
 ## [1.1.1] - 2025-03-28
 
 - Fix date range filter error for updated field
@@ -16,7 +28,7 @@ See [keep a changelog] for information about writing changes to this log.
 
 ### Added
 
-- Implemented and switched to date range filter, compatible with deprecated date filter  
+- Implemented and switched to date range filter, compatible with deprecated date filter
 
 ### Changed
 

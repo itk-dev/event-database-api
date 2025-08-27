@@ -10,7 +10,6 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\OpenApi\Model\Operation;
 use ApiPlatform\OpenApi\Model\Parameter;
 use ApiPlatform\OpenApi\Model\Response;
-use App\Api\Filter\ElasticSearch\DateFilter;
 use App\Api\Filter\ElasticSearch\DateRangeFilter;
 use App\Api\Filter\ElasticSearch\MatchFilter;
 use App\Api\State\LocationRepresentationProvider;
@@ -58,7 +57,7 @@ use App\Model\DateLimit;
     properties: [
         'updated' => 'start',
     ],
-    // Arguments only exist to provide backward compatibility with filters originally defined by the DateFilter
+    // Arguments only exist to provide backward compatibility with filters originally defined by the Date filter
     arguments: [
         'config' => [
             'start' => [

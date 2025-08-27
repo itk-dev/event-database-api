@@ -39,6 +39,7 @@ class FixtureLoader
     {
         $items = $this->download($url);
 
+        $this->deleteIndex($indexName);
         $this->createIndex($indexName);
         $this->indexItems($indexName, $items);
     }
@@ -61,6 +62,20 @@ class FixtureLoader
      */
     private function download(string $url): array
     {
+        // Load from local file if using "file" URL scheme.
+        if (preg_match('~^file://(?<path>/.+)$~', $url, $matches)) {
+            $path = $matches['path'];
+            if (!is_readable($path)) {
+                throw new \HttpException('Unable to load fixture data');
+            }
+            $data = json_decode(file_get_contents($path), true);
+            if (empty($data)) {
+                throw new \HttpException('Unable to load fixture data');
+            }
+
+            return $data;
+        }
+
         $response = $this->httpClient->request('GET', $url);
 
         if (Response::HTTP_OK !== $response->getStatusCode()) {
@@ -86,9 +101,11 @@ class FixtureLoader
         foreach ($items as $item) {
             $params = [
                 'index' => $indexName,
-                'id' => $item['entityId'],
                 'body' => $item,
             ];
+            if (isset($item['entityId'])) {
+                $params['id'] = $item['entityId'];
+            }
             try {
                 // No other places in this part of the frontend should index data, hence it's not in the index service.
                 $response = $this->client->index($params);
@@ -128,6 +145,30 @@ class FixtureLoader
                         'number_of_replicas' => 0,
                     ],
                 ],
+            ]);
+        }
+    }
+
+    /**
+     * Deletes an index with the given name if it exists.
+     *
+     * @param string $indexName
+     *   The name of the index
+     *
+     * @throws ClientResponseException
+     *   If an error occurs during the Elasticsearch client request
+     * @throws MissingParameterException
+     *   If the required parameter is missing
+     * @throws ServerResponseException
+     *   If the server returns an error during the Elasticsearch request
+     */
+    private function deleteIndex(string $indexName): void
+    {
+        if ($this->index->indexExists($indexName)) {
+            // This creation of the index is not in den index service as this is the only place it should be used. In
+            // production and in many cases, you should connect to the index managed by the backend (imports).
+            $this->client->indices()->delete([
+                'index' => $indexName,
             ]);
         }
     }

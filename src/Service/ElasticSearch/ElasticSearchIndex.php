@@ -21,11 +21,11 @@ class ElasticSearchIndex implements IndexInterface
     ) {
     }
 
-    public function indexExists($indexName): bool
+    public function indexExists(string $indexName): bool
     {
         try {
             /** @var Elasticsearch $response */
-            $response = $this->client->indices()->getAlias(['name' => $indexName]);
+            $response = $this->client->indices()->get(['index' => $indexName]);
 
             return Response::HTTP_OK === $response->getStatusCode();
         } catch (ClientResponseException|ServerResponseException $e) {

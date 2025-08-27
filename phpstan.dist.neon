@@ -1,0 +1,23 @@
+parameters:
+    level: 6
+    paths:
+        - bin/
+        - config/
+        - public/
+        - src/
+        - tests/
+
+    excludePaths:
+        - tests/bootstrap.php
+
+    ignoreErrors:
+        - messages:
+              - "#Method .+ has parameter .+ with no value type specified in iterable type array.#"
+              - "#Method .+ return type has no value type specified in iterable type array.#"
+              - "#Method .+ return type has no value type specified in iterable type iterable.#"
+              - "#Property .+ type has no value type specified in iterable type array.#"
+        - messages:
+              - "#Class .+ implements generic interface .+ but does not specify its types: #"
+        - messages:
+              # The ID properties are set by API Platform.
+              - "#Property App\\\\Api\\\\Dto\\\\[^\\\\]+::\\$id is unused#"

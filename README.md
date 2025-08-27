@@ -33,6 +33,7 @@ in this repository.
 ## Installation
 
 ```shell
+docker compose pull
 docker compose up --detach
 docker compose exec phpfpm composer install
 ```

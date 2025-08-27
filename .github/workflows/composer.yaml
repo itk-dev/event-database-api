@@ -42,8 +42,12 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v4
-      - run: |
+
+      - name: Create docker network
+        run: |
           docker network create frontend
+
+      - run: |
           docker compose run --rm phpfpm composer validate --strict
 
   composer-normalized:
@@ -52,8 +56,12 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v4
-      - run: |
+
+      - name: Create docker network
+        run: |
           docker network create frontend
+
+      - run: |
           docker compose run --rm phpfpm composer install
           docker compose run --rm phpfpm composer normalize --dry-run
 
@@ -63,6 +71,10 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v4
-      - run: |
+
+      - name: Create docker network
+        run: |
           docker network create frontend
+
+      - run: |
           docker compose run --rm phpfpm composer audit

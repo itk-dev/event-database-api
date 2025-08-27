@@ -10,8 +10,8 @@
 This is the next iteration of [the event database](https://github.com/itk-event-database/event-database-api) used by the
 municipality of Aarhus.
 
-This repository contains the frontend API, if you are looking for the event imports, the code is located
-[here](https://github.com/itk-dev/event-database-imports).
+This repository contains the frontend API, if you are looking for the event imports, the code is located at
+<https://github.com/itk-dev/event-database-imports>.
 
 The event database is an API platform for event aggregation from the public vendors throughout the cites. It gets data
 mainly from feeds (JSON/XML) or APIs provided by the vendors. It is highly configurable in doing custom feed mappings

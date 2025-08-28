@@ -23,7 +23,7 @@ services:
     environment:
       APP_PATH_PREFIX: ${APP_PATH_PREFIX}
     labels:
-      # HTTPS config - uncomment to enable redirect from :80 to :443
+      # HTTPS config
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.middlewares=redirect-to-https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       # Scope hosting by path prefix to allow shared hosting with legacy EventDB

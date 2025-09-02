@@ -9,8 +9,8 @@ use ApiPlatform\Metadata\Property\Factory\PropertyNameCollectionFactoryInterface
 use ApiPlatform\Metadata\ResourceClassResolverInterface;
 use App\Model\DateFilterConfig;
 use App\Model\DateLimit;
-use Symfony\Component\PropertyInfo\Type;
 use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
+use Symfony\Component\TypeInfo\TypeIdentifier;
 
 /**
  * DateRangeFilter allows for defining filters on datetime fields with operators e.g.
@@ -134,7 +134,7 @@ final class DateRangeFilter extends AbstractFilter
         return [
             $key => [
                 'property' => $propertyName,
-                'type' => 'string',
+                'type' => TypeIdentifier::STRING->value,
                 'required' => false,
                 'description' => $this->getFilterDescriptionBody($propertyName, $operator, $isDefault),
             ],

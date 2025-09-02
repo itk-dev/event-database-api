@@ -42,7 +42,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - run: |
+      - name: Create docker network
+        run: |
           docker network create frontend
+
+      - run: |
           docker compose run --rm phpfpm composer install
           docker compose run --rm phpfpm vendor/bin/twig-cs-fixer lint

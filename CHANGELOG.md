@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-24](https://github.com/itk-dev/event-database-api/pull/24)
+  Symfony 7.3 and PHP 8.4
 - [PR-23](https://github.com/itk-dev/event-database-api/pull/23)
   Re-lint YAML files
 - [PR-21](https://github.com/itk-dev/event-database-api/pull/21)

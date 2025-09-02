@@ -15,6 +15,7 @@ class ApiUser implements UserInterface
         return ['ROLE_USER'];
     }
 
+    #[\Deprecated]
     public function eraseCredentials(): void
     {
         // Do nothing

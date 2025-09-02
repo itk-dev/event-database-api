@@ -1801,15 +1801,11 @@ components:
         title:
           readOnly: true
           description: 'A short, human-readable summary of the problem.'
-          type:
-            - string
-            - 'null'
+          type: string
         detail:
           readOnly: true
           description: 'A human-readable explanation specific to this occurrence of the problem.'
-          type:
-            - string
-            - 'null'
+          type: string
         status:
           type: number
           examples:
@@ -1856,15 +1852,11 @@ components:
         title:
           readOnly: true
           description: 'A short, human-readable summary of the problem.'
-          type:
-            - string
-            - 'null'
+          type: string
         detail:
           readOnly: true
           description: 'A human-readable explanation specific to this occurrence of the problem.'
-          type:
-            - string
-            - 'null'
+          type: string
         status:
           type: number
           examples:

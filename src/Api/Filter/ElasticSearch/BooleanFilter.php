@@ -5,7 +5,7 @@ namespace App\Api\Filter\ElasticSearch;
 use ApiPlatform\Elasticsearch\Filter\AbstractFilter;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\OpenApi\Model\Parameter;
-use Symfony\Component\PropertyInfo\Type;
+use Symfony\Component\TypeInfo\TypeIdentifier;
 
 final class BooleanFilter extends AbstractFilter
 {
@@ -36,7 +36,7 @@ final class BooleanFilter extends AbstractFilter
         foreach ($this->properties as $filterParameterName => $value) {
             $description[$filterParameterName] = [
                 'property' => $filterParameterName,
-                'type' => Type::BUILTIN_TYPE_BOOL,
+                'type' => TypeIdentifier::BOOL->value,
                 'required' => false,
                 'description' => 'Is this a public event',
                 'is_collection' => false,

@@ -1,5 +1,6 @@
 services:
   phpfpm:
+    image: itkdev/php8.4-fpm:alpine
     environment:
       - PHP_MEMORY_LIMIT=256M
 

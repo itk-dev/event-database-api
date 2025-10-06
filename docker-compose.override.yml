@@ -26,9 +26,9 @@ services:
       # HTTPS config
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.middlewares=redirect-to-https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-      # Scope hosting by path prefix to allow shared hosting with legacy EventDB
-      # 'https://api.detskeriaarhus.dk/api/' -> Legacy EventDB
-      # 'https://api.detskeriaarhus.dk/api/v2/' -> EventDB v2
+      # Scope hosting by path prefix to allow shared hosting with EventDB importers/admin
+      # 'https://api.detskeriaarhus.dk/' -> EventDB Admin/Importers
+      # 'https://api.detskeriaarhus.dk/api/v2/' -> EventDB API v2
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.rule=Host(`${COMPOSE_DOMAIN}`) && (PathPrefix(`${APP_PATH_PREFIX}`) || PathPrefix(`/_wdt`) || PathPrefix(`/_profiler`))"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${COMPOSE_DOMAIN}`) && (PathPrefix(`${APP_PATH_PREFIX}`) || PathPrefix(`/_wdt`) || PathPrefix(`/_profiler`))"
 

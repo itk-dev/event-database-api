@@ -7,7 +7,7 @@
         "php": ">=8.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "api-platform/core": "^4.1",
+        "api-platform/core": "~4.1.0",
         "elasticsearch/elasticsearch": "^8.13",
         "nelmio/cors-bundle": "^2.4",
         "phpdocumentor/reflection-docblock": "^5.6",

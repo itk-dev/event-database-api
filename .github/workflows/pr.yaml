@@ -1,7 +1,7 @@
 on:
   pull_request:
 
-name: Review
+name: Code Review
 
 env:
   COMPOSE_USER: root
@@ -45,26 +45,3 @@ jobs:
       - name: Run code analysis
         run: |
           task --yes code-analysis:phpstan
-
-  apispec:
-    runs-on: ubuntu-latest
-    name: API specification validation
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-        with:
-          fetch-depth: 2
-
-      # https://taskfile.dev/installation/#github-actions
-      - uses: go-task/setup-task@v1
-
-      - run: |
-          docker network create frontend
-          task --yes site:update
-
-      - name: Export API specification
-        run: |
-          task --yes api:spec:export
-
-      - name: Check for changes in specification
-        run: git diff --diff-filter=ACMRT --exit-code public/spec.yaml

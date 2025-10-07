@@ -1,0 +1,114 @@
+on:
+  pull_request:
+
+name: API Spec review
+
+env:
+  COMPOSE_USER: root
+
+jobs:
+  api-spec:
+    runs-on: ubuntu-latest
+    name: Ensure committed API specification is up to date
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 2
+
+      # https://taskfile.dev/installation/#github-actions
+      - uses: go-task/setup-task@v1
+
+      - run: |
+          docker network create frontend
+          task --yes site:update
+
+      - name: Export API specification
+        run: |
+          task --yes api:spec:export
+
+      - name: Check for changes in specification
+        id: git-diff-spec
+        continue-on-error: true
+        run: git diff --diff-filter=ACMRT --exit-code public/spec.yaml
+
+      - name: Comment PR
+        if: steps.git-diff-spec.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo '## 🛑 Exported API specification file not up to date' > var/comment.md
+          echo '' >> var/comment.md
+          echo 'Please run `task api:spec:export` to export the API specification. Then commit and push the changes.' >> var/comment.md
+          gh pr comment ${{ github.event.pull_request.number }} --body-file var/comment.md --create-if-none --edit-last
+
+      - name: Fail job api spec is not up to date
+        if: steps.git-diff-spec.outcome == 'failure'
+        run: |
+          exit 1
+
+  detect-breaking-changes:
+    name: Detect breaking changes in API specification
+    runs-on: ubuntu-latest
+    needs: [api-spec]
+    steps:
+      - name: Check out BASE rev
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.base_ref }}
+          path: base
+
+      - name: Check out HEAD rev
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.head_ref }}
+          path: head
+
+      - name: Run OpenAPI Changed (from HEAD rev)
+        id: api-changed
+        continue-on-error: true
+        uses: docker://openapitools/openapi-diff:latest
+        with:
+          args: --fail-on-changed base/public/spec.yaml head/public/spec.yaml --markdown api-spec-changed.md
+
+      - name: Run OpenAPI Incompatible (from HEAD rev)
+        id: api-incompatible
+        continue-on-error: true
+        uses: docker://openapitools/openapi-diff:latest
+        with:
+          args: --fail-on-incompatible base/public/spec.yaml head/public/spec.yaml --markdown api-spec-incompatible.md
+
+      - name: Comment PR with no changes
+        if: steps.api-changed.outcome == 'success' && steps.api-incompatible.outcome == 'success'
+        working-directory: head
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr comment ${{ github.event.pull_request.number }} --body "✅ **No changes detected in API specification**" --create-if-none --edit-last
+
+      - name: Comment PR with non-breaking changes
+        if: steps.api-changed.outcome == 'failure' && steps.api-incompatible.outcome == 'success'
+        working-directory: head
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "## ⚠️ Non-Breaking changes detected in API specification" > ../comment.md
+          echo "" >> ../comment.md
+          cat ../api-spec-changed.md >> ../comment.md
+          gh pr comment ${{ github.event.pull_request.number }} --body-file ../comment.md --create-if-none --edit-last
+
+      - name: Comment PR with breaking changes
+        if: steps.api-incompatible.outcome == 'failure'
+        working-directory: head
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "## 🛑 Breaking changes detected in API specification" > ../comment.md
+          echo "" >> ../comment.md
+          cat ../api-spec-incompatible.md >> ../comment.md
+          gh pr comment ${{ github.event.pull_request.number }} --body-file ../comment.md --create-if-none --edit-last
+
+      - name: Fail if breaking changes detected
+        if: steps.api-incompatible.outcome == 'failure'
+        run: |
+          exit 1

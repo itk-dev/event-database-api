@@ -13,7 +13,8 @@ See [keep a changelog] for information about writing changes to this log.
 - [PR-25](https://github.com/itk-dev/event-database-api/pull/25)  
   - Lock api-platform to 4.1.* to avoid breaking API changes
   - Add github action to check and validate API changes
-  - Dependenciy updates
+  - Clarify date filter format in api spec
+  - Dependency updates
 - [PR-24](https://github.com/itk-dev/event-database-api/pull/24)
   Symfony 7.3 and PHP 8.4
 - [PR-23](https://github.com/itk-dev/event-database-api/pull/23)

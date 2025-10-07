@@ -4,7 +4,8 @@ namespace App\Api\Filter\ElasticSearch;
 
 use ApiPlatform\Elasticsearch\Filter\AbstractFilter;
 use ApiPlatform\Metadata\Operation;
-use Symfony\Component\PropertyInfo\Type;
+use ApiPlatform\OpenApi\Model\Parameter;
+use Symfony\Component\TypeInfo\TypeIdentifier;
 
 /**
  * This class represents a filter that performs a search based on matching properties in a given resource.
@@ -36,14 +37,16 @@ final class MatchFilter extends AbstractFilter
         foreach ($this->properties as $filterParameterName => $value) {
             $description[$filterParameterName] = [
                 'property' => $filterParameterName,
-                'type' => Type::BUILTIN_TYPE_STRING,
+                'type' => TypeIdentifier::STRING->value,
                 'required' => false,
                 'description' => 'Search field based on value given',
-                'openapi' => [
-                    'allowReserved' => false,
-                    'allowEmptyValue' => true,
-                    'explode' => false,
-                ],
+                'openapi' => new Parameter(
+                    name: $filterParameterName,
+                    in: 'query',
+                    allowEmptyValue: true,
+                    explode: false,
+                    allowReserved: false,
+                ),
             ];
         }
 

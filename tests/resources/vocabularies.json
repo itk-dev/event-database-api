@@ -1,0 +1,17 @@
+[{
+    "name": "aarhusguiden",
+    "slug": "aarhusguiden",
+    "tags": [
+        "aros",
+        "theoceanraceaarhus",
+        "For b\u00f8rn",
+        "Koncert",
+        "ITKDev"
+    ],
+    "description": "Managed tags vocabulary for aarhusguiden.dk"
+},{
+    "name": "feeds",
+    "slug": "feeds",
+    "tags": [],
+    "description": "Free tags from feeds"
+}]

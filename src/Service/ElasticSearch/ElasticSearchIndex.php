@@ -21,11 +21,11 @@ class ElasticSearchIndex implements IndexInterface
     ) {
     }
 
-    public function indexExists($indexName): bool
+    public function indexExists(string $indexName): bool
     {
         try {
             /** @var Elasticsearch $response */
-            $response = $this->client->indices()->getAlias(['name' => $indexName]);
+            $response = $this->client->indices()->get(['index' => $indexName]);
 
             return Response::HTTP_OK === $response->getStatusCode();
         } catch (ClientResponseException|ServerResponseException $e) {
@@ -33,7 +33,7 @@ class ElasticSearchIndex implements IndexInterface
                 return false;
             }
 
-            throw new IndexException($e->getMessage(), $e->getCode(), $e);
+            throw new ElasticIndexException($e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -57,11 +57,11 @@ class ElasticSearchIndex implements IndexInterface
             /** @var Elasticsearch $response */
             $response = $this->client->get($params);
             if (Response::HTTP_OK !== $response->getStatusCode()) {
-                throw new IndexException('Failed to get document from Elasticsearch', $response->getStatusCode());
+                throw new IndexException('Failed to get document from Elasticsearch', Response::HTTP_INTERNAL_SERVER_ERROR);
             }
             $result = $this->parseResponse($response);
         } catch (ClientResponseException|ServerResponseException|MissingParameterException|\JsonException $e) {
-            throw new IndexException($e->getMessage(), $e->getCode(), $e);
+            throw new ElasticIndexException($e->getMessage(), $e->getCode(), $e);
         }
 
         return $result;
@@ -92,11 +92,11 @@ class ElasticSearchIndex implements IndexInterface
             /** @var Elasticsearch $response */
             $response = $this->client->search($params);
             if (Response::HTTP_OK !== $response->getStatusCode()) {
-                throw new IndexException('Failed to get document from Elasticsearch', $response->getStatusCode());
+                throw new IndexException('Failed to get document from Elasticsearch', Response::HTTP_INTERNAL_SERVER_ERROR);
             }
             $result = $this->parseResponse($response);
         } catch (ClientResponseException|ServerResponseException|\JsonException $e) {
-            throw new IndexException($e->getMessage(), $e->getCode(), $e);
+            throw new ElasticIndexException($e->getMessage(), $e->getCode(), $e);
         }
 
         if (0 === $result['hits']['total']['value']) {
@@ -105,7 +105,7 @@ class ElasticSearchIndex implements IndexInterface
         }
 
         if (1 < $result['hits']['total']['value']) {
-            throw new IndexException('ID search returned multiple hits', 500);
+            throw new IndexException('ID search returned multiple hits', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return $result['hits']['hits'][0];
@@ -119,11 +119,11 @@ class ElasticSearchIndex implements IndexInterface
             /** @var Elasticsearch $response */
             $response = $this->client->search($params);
             if (Response::HTTP_OK !== $response->getStatusCode()) {
-                throw new IndexException('Failed to get document from Elasticsearch', $response->getStatusCode());
+                throw new IndexException('Failed to get document from Elasticsearch', Response::HTTP_INTERNAL_SERVER_ERROR);
             }
             $data = $this->parseResponse($response);
         } catch (ClientResponseException|ServerResponseException|\JsonException $e) {
-            throw new IndexException($e->getMessage(), $e->getCode(), $e);
+            throw new ElasticIndexException($e->getMessage(), $e->getCode(), $e);
         }
 
         return new SearchResults(

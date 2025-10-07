@@ -16,6 +16,7 @@ api_platform:
 
     docs_formats:
         jsonld: ['application/ld+json']
+        jsonopenapi: ['application/vnd.openapi+json']
         html: ['text/html']
 
     mapping:
@@ -43,7 +44,28 @@ api_platform:
             shared_max_age: 3600
             vary: ['Content-Type', 'Authorization', 'Origin']
         extra_properties:
-            standard_put: true
+            # Note: The api-platform/core 3.4 recipe sets `standard_put` eventhough
+            # https://api-platform.com/docs/core/upgrade-guide/#api-platform-34
+            # (probably) tells us to remove it
+            # standard_put: true
+            # https://api-platform.com/docs/core/upgrade-guide/#api-platform-34
             rfc_7807_compliant_errors: true
-    event_listeners_backward_compatibility_layer: false
-    keep_legacy_inflector: false
+    # Note: The api-platform/core 3.4 recipe wants `use_symfony_listeners` to be true
+    use_symfony_listeners: false
+
+    # https://api-platform.com/docs/core/upgrade-guide/#upgrade-guide
+    serializer:
+        hydra_prefix: true
+
+    exception_to_status:
+        # The 4 following handlers are registered by default, keep those lines to prevent unexpected side effects
+        Symfony\Component\Serializer\Exception\ExceptionInterface: 400 # Use a raw status code (recommended)
+        ApiPlatform\Exception\InvalidArgumentException: !php/const Symfony\Component\HttpFoundation\Response::HTTP_BAD_REQUEST
+        ApiPlatform\ParameterValidator\Exception\ValidationExceptionInterface: 400
+        Doctrine\ORM\OptimisticLockException: 409
+
+        # Validation exception
+        ApiPlatform\Validator\Exception\ValidationException: !php/const Symfony\Component\HttpFoundation\Response::HTTP_UNPROCESSABLE_ENTITY
+
+        # Custom mapping
+        App\Exception\IndexException: 400 # Here is the handler for our custom exception

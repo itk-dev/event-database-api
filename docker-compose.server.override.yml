@@ -1,5 +1,6 @@
 services:
   phpfpm:
+    image: itkdev/php8.4-fpm:alpine
     environment:
       - PHP_MEMORY_LIMIT=256M
 
@@ -7,8 +8,8 @@ services:
     environment:
       APP_PATH_PREFIX: ${APP_PATH_PREFIX}
     labels:
-      # Scope hosting by path prefix to allow shared hosting with legacy EventDB
-      # 'https://api.detskeriaarhus.dk/api/' -> Legacy EventDB
+      # Scope hosting by path prefix to allow shared hosting with importers/admin
+      # 'https://api.detskeriaarhus.dk/' -> Importers/Admin
       # 'https://api.detskeriaarhus.dk/api/v2/' -> EventDB v2
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.rule=Host(`${COMPOSE_SERVER_DOMAIN}`) && PathPrefix(`${APP_PATH_PREFIX}`)"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.priority=200"

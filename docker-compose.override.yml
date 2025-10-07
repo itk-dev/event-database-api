@@ -1,9 +1,10 @@
 services:
   phpfpm:
+    image: itkdev/php8.4-fpm:latest
     networks:
       - frontend
     depends_on:
-#      - elasticsearch
+      # - elasticsearch
       - rabbit
 
   rabbit:
@@ -22,9 +23,12 @@ services:
     environment:
       APP_PATH_PREFIX: ${APP_PATH_PREFIX}
     labels:
-      # Scope hosting by path prefix to allow shared hosting with legacy EventDB
-      # 'https://api.detskeriaarhus.dk/api/' -> Legacy EventDB
-      # 'https://api.detskeriaarhus.dk/api/v2/' -> EventDB v2
+      # HTTPS config
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      # Scope hosting by path prefix to allow shared hosting with EventDB importers/admin
+      # 'https://api.detskeriaarhus.dk/' -> EventDB Admin/Importers
+      # 'https://api.detskeriaarhus.dk/api/v2/' -> EventDB API v2
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.rule=Host(`${COMPOSE_DOMAIN}`) && (PathPrefix(`${APP_PATH_PREFIX}`) || PathPrefix(`/_wdt`) || PathPrefix(`/_profiler`))"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${COMPOSE_DOMAIN}`) && (PathPrefix(`${APP_PATH_PREFIX}`) || PathPrefix(`/_wdt`) || PathPrefix(`/_profiler`))"
 
@@ -44,3 +48,31 @@ services:
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
+    # We need to be able to wait for Elasticsearch to be ready for requests
+    # https://www.baeldung.com/ops/elasticsearch-docker-compose
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -fs 'http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=5s' || exit 1",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  markdownlint:
+    image: itkdev/markdownlint
+    profiles:
+      - dev
+    volumes:
+      - ./:/md
+
+  prettier:
+    # Prettier does not (yet, cf. https://github.com/prettier/prettier/issues/15206) have an official docker image.
+    # https://hub.docker.com/r/jauderho/prettier is good candidate (cf. https://hub.docker.com/search?q=prettier&sort=updated_at&order=desc)
+    image: jauderho/prettier
+    profiles:
+      - dev
+    volumes:
+      - ./:/work

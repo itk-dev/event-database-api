@@ -8,6 +8,27 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+## [1.2.0] - 2025-09-02
+
+- [PR-25](https://github.com/itk-dev/event-database-api/pull/25)  
+  - Lock api-platform to 4.1.* to avoid breaking API changes
+  - Add github action to check and validate API changes
+  - Clarify date filter format in api spec
+  - Dependency updates
+- [PR-24](https://github.com/itk-dev/event-database-api/pull/24)
+  Symfony 7.3 and PHP 8.4
+- [PR-23](https://github.com/itk-dev/event-database-api/pull/23)
+  Re-lint YAML files
+- [PR-21](https://github.com/itk-dev/event-database-api/pull/21)
+  Linted YAML
+- [PR-18](https://github.com/itk-dev/event-database-api/pull/18)
+  - Updated docker compose setup
+  - Added simple API tests and resolved some deprecations
+  - Upgraded to API platform v4
+  - Updated composer packages (security update) and recipes
+  - Replaces [Psalm](https://psalm.dev/) with [PHPStan](https://phpstan.org/) (via
+    <https://github.com/phpstan/phpstan-symfony>).
+
 ## [1.1.1] - 2025-03-28
 
 - Fix date range filter error for updated field
@@ -16,7 +37,7 @@ See [keep a changelog] for information about writing changes to this log.
 
 ### Added
 
-- Implemented and switched to date range filter, compatible with deprecated date filter  
+- Implemented and switched to date range filter, compatible with deprecated date filter
 
 ### Changed
 
@@ -54,7 +75,8 @@ See [keep a changelog] for information about writing changes to this log.
 - Added multi-value filtering for Lactions and Organizations
 
 [keep a changelog]: https://keepachangelog.com/en/1.1.0/
-[unreleased]: https://github.com/itk-dev/event-database-api/compare/1.1.0...HEAD
+[Unreleased]: https://github.com/itk-dev/event-database-api/compare/1.2.0...HEAD
+[1.2.0]: https://github.com/itk-dev/event-database-api/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/itk-dev/event-database-api/releases/tag/1.1.0
 [1.0.1]: https://github.com/itk-dev/event-database-api/releases/tag/1.0.1
 [1.0.0]: https://github.com/itk-dev/event-database-api/releases/tag/1.0.0

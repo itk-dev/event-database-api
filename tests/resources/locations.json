@@ -1,0 +1,37 @@
+[{
+    "entityId": 4,
+    "name": "ITK Development",
+    "image": null,
+    "url": "https:\/\/itk.aarhus.dk\/om-itk\/afdelinger\/development\/",
+    "telephone": null,
+    "disabilityAccess": true,
+    "mail": "itkdev@mkb.aarhus.dk",
+    "street": "Hack Kampmanns Plads 2",
+    "suite": "2.2",
+    "region": "Jylland",
+    "city": "Aarhus",
+    "country": "Danmark",
+    "postalCode": "8000",
+    "coordinates": [
+        56.1507645,
+        10.2112699
+    ]
+},{
+    "entityId": 5,
+    "name": "Somewhere",
+    "image": null,
+    "url": "https:\/\/example.com/somewhere",
+    "telephone": null,
+    "disabilityAccess": true,
+    "mail": "somewhere#example.com",
+    "street": "",
+    "suite": "",
+    "region": "",
+    "city": "",
+    "country": "",
+    "postalCode": "",
+    "coordinates": [
+        0.0000000,
+        0.0000000
+    ]
+}]

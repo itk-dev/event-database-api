@@ -1,0 +1,200 @@
+# https://taskfile.dev
+
+version: "3"
+
+# https://taskfile.dev/usage/#env-files
+dotenv: [".env.local", ".env"]
+
+vars:
+  # https://taskfile.dev/reference/templating/
+  DOCKER_COMPOSE: '{{.TASK_DOCKER_COMPOSE | default "docker compose"}}'
+
+tasks:
+  site:update:
+    desc: Update/install site
+    cmds:
+      - task: compose
+        vars:
+          COMPOSE_ARGS: pull
+      - task: compose
+        vars:
+          COMPOSE_ARGS: up --detach --wait
+      - task: composer
+        vars:
+          COMPOSER_ARGS: install
+
+  fixtures:load:
+    desc: Load all fixtures
+    prompt: Really load all fixtures?
+    cmds:
+      - for:
+          - events
+          - organizations
+          - occurrences
+          - daily_occurrences
+          - tags
+          - vocabularies
+          - locations
+        task: compose
+        vars:
+          COMPOSE_ARGS: exec phpfpm bin/console app:fixtures:load {{.ITEM}}
+    # Loading some fixtures generates an 'Warning: Undefined array key "entityId"' error.
+    ignore_error: true
+    silent: true
+
+  fixtures:load:test:
+    desc: Load local fixtures
+    prompt: Really load all local fixtures?
+    cmds:
+      - for:
+          - events
+          - organizations
+          - occurrences
+          - daily_occurrences
+          - tags
+          - vocabularies
+          - locations
+        task: compose
+        vars:
+          COMPOSE_ARGS: exec phpfpm bin/console app:fixtures:load {{.ITEM}} --url=file:///app/tests/resources/{{.ITEM}}.json
+    # Loading some fixtures generates an 'Warning: Undefined array key "entityId"' error.
+    ignore_error: true
+
+  composer:
+    desc: "Run `composer` command. Example: task composer -- normalize"
+    cmds:
+      - task: compose
+        vars:
+          COMPOSE_ARGS: exec phpfpm composer {{.COMPOSER_ARGS}}
+
+  compose:
+    desc: "Run `docker compose` command. Example: task compose -- ps"
+    cmds:
+      # Run docker compose with both arguments passed via var plus any cli args.
+      - "{{.DOCKER_COMPOSE}} {{.COMPOSE_ARGS}} {{.CLI_ARGS}}"
+
+  console:
+    desc: "Run Symfony console command. Example: task console -- cache:clear"
+    cmds:
+      # Run docker compose with both arguments passed via var plus any cli args.
+      - task: compose
+        vars:
+          COMPOSE_ARGS: exec phpfpm bin/console {{.CONSOLE_ARGS}}
+
+  coding-standards:apply:
+    desc: "Apply coding standards"
+    cmds:
+      - task: coding-standards:markdown:apply
+      - task: coding-standards:php:apply
+      - task: coding-standards:twig:apply
+      - task: coding-standards:yaml:apply
+    silent: true
+
+  coding-standards:check:
+    desc: "Apply coding standards"
+    cmds:
+      - task: coding-standards:markdown:check
+      - task: coding-standards:php:check
+      - task: coding-standards:twig:check
+      - task: coding-standards:yaml:check
+    silent: true
+
+  coding-standards:markdown:apply:
+    desc: "Apply coding standards for Markdown"
+    cmds:
+      - task: compose
+        vars:
+          COMPOSE_ARGS: run --rm markdownlint markdownlint '**/*.md' --fix
+
+  coding-standards:markdown:check:
+    desc: "Apply and check coding standards for Markdown"
+    cmds:
+      - task: coding-standards:markdown:apply
+      - task: compose
+        vars:
+          COMPOSE_ARGS: run --rm markdownlint markdownlint '**/*.md'
+
+  coding-standards:php:apply:
+    desc: "Apply coding standards for PHP"
+    cmds:
+      - task: compose
+        vars:
+          COMPOSE_ARGS: exec phpfpm vendor/bin/php-cs-fixer fix
+    silent: true
+
+  coding-standards:php:check:
+    desc: "Apply and check coding standards for PHP"
+    cmds:
+      - task: coding-standards:php:apply
+      - task: compose
+        vars:
+          COMPOSE_ARGS: exec phpfpm vendor/bin/php-cs-fixer check
+    silent: true
+
+  coding-standards:twig:apply:
+    desc: "Apply coding standards for Twig"
+    cmds:
+      - task: compose
+        vars:
+          COMPOSE_ARGS: exec phpfpm vendor/bin/php-cs-fixer fix --dry-run --diff
+    silent: true
+
+  coding-standards:twig:check:
+    desc: "Apply and check coding standards for Twig"
+    cmds:
+      - task: coding-standards:twig:apply
+      - task: compose
+        vars:
+          COMPOSE_ARGS: exec phpfpm vendor/bin/twig-cs-fixer lint
+    silent: true
+
+  coding-standards:yaml:apply:
+    desc: "Apply coding standards for YAML"
+    cmds:
+      - task: compose
+        vars:
+          COMPOSE_ARGS: run --rm prettier '**/*.{yml,yaml}' --write
+    silent: true
+
+  coding-standards:yaml:check:
+    desc: "Apply and check coding standards for YAML"
+    cmds:
+      - task: coding-standards:yaml:apply
+      - task: compose
+        vars:
+          COMPOSE_ARGS: run --rm prettier '**/*.{yml,yaml}' --check
+    silent: true
+
+  code-analysis:
+    desc: "Run code analysis"
+    cmds:
+      - task: code-analysis:phpstan
+    silent: true
+
+  code-analysis:phpstan:
+    desc: "Run PHPStan"
+    cmds:
+      - task: compose
+        vars:
+          COMPOSE_ARGS: exec phpfpm vendor/bin/phpstan
+    silent: true
+
+  api:test:
+    desc: Run API tests
+    cmds:
+      - task: compose
+        vars:
+          COMPOSE_ARGS: exec phpfpm bin/phpunit
+
+  api:spec:export:
+    desc: Export API spec
+    cmds:
+      - task: console
+        vars:
+          CONSOLE_ARGS: api:openapi:export --yaml --output=public/spec.yaml --no-interaction
+    silent: true
+
+  default:
+    cmds:
+      - task --list
+    silent: true

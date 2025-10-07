@@ -9,8 +9,8 @@ use ApiPlatform\Metadata\Property\Factory\PropertyNameCollectionFactoryInterface
 use ApiPlatform\Metadata\ResourceClassResolverInterface;
 use App\Model\DateFilterConfig;
 use App\Model\DateLimit;
-use Symfony\Component\PropertyInfo\Type;
 use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
+use Symfony\Component\TypeInfo\TypeIdentifier;
 
 /**
  * DateRangeFilter allows for defining filters on datetime fields with operators e.g.
@@ -80,7 +80,7 @@ final class DateRangeFilter extends AbstractFilter
         return $description;
     }
 
-    private function getElasticSearchQueryRanges($property, $filter): array
+    private function getElasticSearchQueryRanges(string $property, string|array $filter): array
     {
         if (null === $this->properties) {
             throw new \InvalidArgumentException('The property must be defined in the filter.');
@@ -134,7 +134,7 @@ final class DateRangeFilter extends AbstractFilter
         return [
             $key => [
                 'property' => $propertyName,
-                'type' => 'string',
+                'type' => TypeIdentifier::STRING->value,
                 'required' => false,
                 'description' => $this->getFilterDescriptionBody($propertyName, $operator, $isDefault),
             ],
@@ -151,8 +151,8 @@ final class DateRangeFilter extends AbstractFilter
         $deprecatedBody = $isDeprecated ? sprintf(' (DEPRECATED - please use a filter with an explicit operator, e.g. %s[gt]=2004-02-12T15:19:21+00:00) ', $propertyName) : '';
 
         return match ($operator) {
-            DateLimit::between => sprintf('Filter based on %s %s two ISO 8601 datetime (yyyy-MM-dd\'T\'HH:mm:ssz) seperated by \'..\', e.g. "2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00"', $propertyName, $operator->value),
-            default => sprintf('Filter based on %s %s ISO 8601 datetime (yyyy-MM-dd\'T\'HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"%s', $propertyName, $operator->value, $deprecatedBody),
+            DateLimit::between => sprintf('Filter based on %s %s two ISO 8601 datetime [(yyyy-MM-dd\'T\'HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns) seperated by \'..\', e.g. "2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00"', $propertyName, $operator->value),
+            default => sprintf('Filter based on %s %s ISO 8601 datetime [(yyyy-MM-dd\'T\'HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"%s', $propertyName, $operator->value, $deprecatedBody),
         };
     }
 

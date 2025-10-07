@@ -11,7 +11,6 @@ use ApiPlatform\OpenApi\Model\Operation;
 use ApiPlatform\OpenApi\Model\Parameter;
 use ApiPlatform\OpenApi\Model\Response;
 use App\Api\Filter\ElasticSearch\BooleanFilter;
-use App\Api\Filter\ElasticSearch\DateFilter;
 use App\Api\Filter\ElasticSearch\DateRangeFilter;
 use App\Api\Filter\ElasticSearch\IdFilter;
 use App\Api\Filter\ElasticSearch\MatchFilter;
@@ -74,7 +73,7 @@ use App\Model\DateLimit;
         'occurrences.end' => 'lte',
         'updated' => 'gte',
     ],
-    // Arguments only exist to provide backward compatibility with filters originally defined by the DateFilter
+    // Arguments only exist to provide backward compatibility with filters originally defined by the Date filter
     arguments: [
         'config' => [
             'gte' => [

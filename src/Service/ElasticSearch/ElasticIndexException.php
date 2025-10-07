@@ -7,7 +7,7 @@ use Symfony\Component\String\UnicodeString;
 
 class ElasticIndexException extends IndexException
 {
-    public function __construct(string $message = "", int $code = 0, ?\Throwable $previous = null)
+    public function __construct(string $message = '', int $code = 0, ?\Throwable $previous = null)
     {
         $message = $this->parseElasticErrorMessage($message, $code);
 
@@ -18,7 +18,7 @@ class ElasticIndexException extends IndexException
     {
         return match ($code) {
             400 => $this->parse400($message),
-            default => 'Bad Request'
+            default => 'Bad Request',
         };
     }
 
@@ -42,6 +42,6 @@ class ElasticIndexException extends IndexException
 
         $reason = explode(': ', $message->error->root_cause[0]->reason)[0];
 
-        return $type . ': ' . $reason;
+        return $type.': '.$reason;
     }
 }

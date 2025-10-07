@@ -156,7 +156,7 @@ paths:
         -
           name: start
           in: query
-          description: 'Filter based on start greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. start[gt]=2004-02-12T15:19:21+00:00) '
+          description: 'Filter based on start greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. start[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -168,7 +168,7 @@ paths:
         -
           name: 'start[between]'
           in: query
-          description: "Filter based on start between two ISO 8601 datetime (yyyy-MM-dd'T'HH:mm:ssz) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
+          description: "Filter based on start between two ISO 8601 datetime [(yyyy-MM-dd'T'HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -180,7 +180,7 @@ paths:
         -
           name: 'start[gt]'
           in: query
-          description: 'Filter based on start greater than ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on start greater than ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -192,7 +192,7 @@ paths:
         -
           name: 'start[gte]'
           in: query
-          description: 'Filter based on start greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on start greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -204,7 +204,7 @@ paths:
         -
           name: 'start[lt]'
           in: query
-          description: 'Filter based on start less then ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on start less then ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -216,7 +216,7 @@ paths:
         -
           name: 'start[lte]'
           in: query
-          description: 'Filter based on start less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on start less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -228,7 +228,7 @@ paths:
         -
           name: end
           in: query
-          description: 'Filter based on end less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. end[gt]=2004-02-12T15:19:21+00:00) '
+          description: 'Filter based on end less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. end[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -240,7 +240,7 @@ paths:
         -
           name: 'end[between]'
           in: query
-          description: "Filter based on end between two ISO 8601 datetime (yyyy-MM-dd'T'HH:mm:ssz) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
+          description: "Filter based on end between two ISO 8601 datetime [(yyyy-MM-dd'T'HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -252,7 +252,7 @@ paths:
         -
           name: 'end[gt]'
           in: query
-          description: 'Filter based on end greater than ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on end greater than ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -264,7 +264,7 @@ paths:
         -
           name: 'end[gte]'
           in: query
-          description: 'Filter based on end greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on end greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -276,7 +276,7 @@ paths:
         -
           name: 'end[lt]'
           in: query
-          description: 'Filter based on end less then ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on end less then ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -288,7 +288,7 @@ paths:
         -
           name: 'end[lte]'
           in: query
-          description: 'Filter based on end less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on end less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -300,7 +300,7 @@ paths:
         -
           name: updated
           in: query
-          description: 'Filter based on updated greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. updated[gt]=2004-02-12T15:19:21+00:00) '
+          description: 'Filter based on updated greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. updated[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -312,7 +312,7 @@ paths:
         -
           name: 'updated[between]'
           in: query
-          description: "Filter based on updated between two ISO 8601 datetime (yyyy-MM-dd'T'HH:mm:ssz) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
+          description: "Filter based on updated between two ISO 8601 datetime [(yyyy-MM-dd'T'HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -324,7 +324,7 @@ paths:
         -
           name: 'updated[gt]'
           in: query
-          description: 'Filter based on updated greater than ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on updated greater than ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -336,7 +336,7 @@ paths:
         -
           name: 'updated[gte]'
           in: query
-          description: 'Filter based on updated greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on updated greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -348,7 +348,7 @@ paths:
         -
           name: 'updated[lt]'
           in: query
-          description: 'Filter based on updated less then ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on updated less then ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -360,7 +360,7 @@ paths:
         -
           name: 'updated[lte]'
           in: query
-          description: 'Filter based on updated less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on updated less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -550,7 +550,7 @@ paths:
         -
           name: occurrences.start
           in: query
-          description: 'Filter based on occurrences.start greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. occurrences.start[gt]=2004-02-12T15:19:21+00:00) '
+          description: 'Filter based on occurrences.start greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. occurrences.start[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -562,7 +562,7 @@ paths:
         -
           name: 'occurrences.start[between]'
           in: query
-          description: "Filter based on occurrences.start between two ISO 8601 datetime (yyyy-MM-dd'T'HH:mm:ssz) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
+          description: "Filter based on occurrences.start between two ISO 8601 datetime [(yyyy-MM-dd'T'HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -574,7 +574,7 @@ paths:
         -
           name: 'occurrences.start[gt]'
           in: query
-          description: 'Filter based on occurrences.start greater than ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on occurrences.start greater than ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -586,7 +586,7 @@ paths:
         -
           name: 'occurrences.start[gte]'
           in: query
-          description: 'Filter based on occurrences.start greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on occurrences.start greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -598,7 +598,7 @@ paths:
         -
           name: 'occurrences.start[lt]'
           in: query
-          description: 'Filter based on occurrences.start less then ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on occurrences.start less then ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -610,7 +610,7 @@ paths:
         -
           name: 'occurrences.start[lte]'
           in: query
-          description: 'Filter based on occurrences.start less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on occurrences.start less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -622,7 +622,7 @@ paths:
         -
           name: occurrences.end
           in: query
-          description: 'Filter based on occurrences.end less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. occurrences.end[gt]=2004-02-12T15:19:21+00:00) '
+          description: 'Filter based on occurrences.end less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. occurrences.end[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -634,7 +634,7 @@ paths:
         -
           name: 'occurrences.end[between]'
           in: query
-          description: "Filter based on occurrences.end between two ISO 8601 datetime (yyyy-MM-dd'T'HH:mm:ssz) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
+          description: "Filter based on occurrences.end between two ISO 8601 datetime [(yyyy-MM-dd'T'HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -646,7 +646,7 @@ paths:
         -
           name: 'occurrences.end[gt]'
           in: query
-          description: 'Filter based on occurrences.end greater than ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on occurrences.end greater than ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -658,7 +658,7 @@ paths:
         -
           name: 'occurrences.end[gte]'
           in: query
-          description: 'Filter based on occurrences.end greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on occurrences.end greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -670,7 +670,7 @@ paths:
         -
           name: 'occurrences.end[lt]'
           in: query
-          description: 'Filter based on occurrences.end less then ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on occurrences.end less then ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -682,7 +682,7 @@ paths:
         -
           name: 'occurrences.end[lte]'
           in: query
-          description: 'Filter based on occurrences.end less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on occurrences.end less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -694,7 +694,7 @@ paths:
         -
           name: updated
           in: query
-          description: 'Filter based on updated greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. updated[gt]=2004-02-12T15:19:21+00:00) '
+          description: 'Filter based on updated greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. updated[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -706,7 +706,7 @@ paths:
         -
           name: 'updated[between]'
           in: query
-          description: "Filter based on updated between two ISO 8601 datetime (yyyy-MM-dd'T'HH:mm:ssz) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
+          description: "Filter based on updated between two ISO 8601 datetime [(yyyy-MM-dd'T'HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -718,7 +718,7 @@ paths:
         -
           name: 'updated[gt]'
           in: query
-          description: 'Filter based on updated greater than ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on updated greater than ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -730,7 +730,7 @@ paths:
         -
           name: 'updated[gte]'
           in: query
-          description: 'Filter based on updated greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on updated greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -742,7 +742,7 @@ paths:
         -
           name: 'updated[lt]'
           in: query
-          description: 'Filter based on updated less then ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on updated less then ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -754,7 +754,7 @@ paths:
         -
           name: 'updated[lte]'
           in: query
-          description: 'Filter based on updated less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on updated less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -878,7 +878,7 @@ paths:
         -
           name: updated
           in: query
-          description: 'Filter based on updated greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. updated[gt]=2004-02-12T15:19:21+00:00) '
+          description: 'Filter based on updated greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. updated[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -890,7 +890,7 @@ paths:
         -
           name: 'updated[between]'
           in: query
-          description: "Filter based on updated between two ISO 8601 datetime (yyyy-MM-dd'T'HH:mm:ssz) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
+          description: "Filter based on updated between two ISO 8601 datetime [(yyyy-MM-dd'T'HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -902,7 +902,7 @@ paths:
         -
           name: 'updated[gt]'
           in: query
-          description: 'Filter based on updated greater than ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on updated greater than ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -914,7 +914,7 @@ paths:
         -
           name: 'updated[gte]'
           in: query
-          description: 'Filter based on updated greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on updated greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -926,7 +926,7 @@ paths:
         -
           name: 'updated[lt]'
           in: query
-          description: 'Filter based on updated less then ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on updated less then ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -938,7 +938,7 @@ paths:
         -
           name: 'updated[lte]'
           in: query
-          description: 'Filter based on updated less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on updated less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -1116,7 +1116,7 @@ paths:
         -
           name: start
           in: query
-          description: 'Filter based on start greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. start[gt]=2004-02-12T15:19:21+00:00) '
+          description: 'Filter based on start greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. start[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -1128,7 +1128,7 @@ paths:
         -
           name: 'start[between]'
           in: query
-          description: "Filter based on start between two ISO 8601 datetime (yyyy-MM-dd'T'HH:mm:ssz) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
+          description: "Filter based on start between two ISO 8601 datetime [(yyyy-MM-dd'T'HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -1140,7 +1140,7 @@ paths:
         -
           name: 'start[gt]'
           in: query
-          description: 'Filter based on start greater than ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on start greater than ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -1152,7 +1152,7 @@ paths:
         -
           name: 'start[gte]'
           in: query
-          description: 'Filter based on start greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on start greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -1164,7 +1164,7 @@ paths:
         -
           name: 'start[lt]'
           in: query
-          description: 'Filter based on start less then ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on start less then ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -1176,7 +1176,7 @@ paths:
         -
           name: 'start[lte]'
           in: query
-          description: 'Filter based on start less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on start less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -1188,7 +1188,7 @@ paths:
         -
           name: end
           in: query
-          description: 'Filter based on end less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. end[gt]=2004-02-12T15:19:21+00:00) '
+          description: 'Filter based on end less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. end[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -1200,7 +1200,7 @@ paths:
         -
           name: 'end[between]'
           in: query
-          description: "Filter based on end between two ISO 8601 datetime (yyyy-MM-dd'T'HH:mm:ssz) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
+          description: "Filter based on end between two ISO 8601 datetime [(yyyy-MM-dd'T'HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -1212,7 +1212,7 @@ paths:
         -
           name: 'end[gt]'
           in: query
-          description: 'Filter based on end greater than ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on end greater than ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -1224,7 +1224,7 @@ paths:
         -
           name: 'end[gte]'
           in: query
-          description: 'Filter based on end greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on end greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -1236,7 +1236,7 @@ paths:
         -
           name: 'end[lt]'
           in: query
-          description: 'Filter based on end less then ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on end less then ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -1248,7 +1248,7 @@ paths:
         -
           name: 'end[lte]'
           in: query
-          description: 'Filter based on end less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on end less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -1260,7 +1260,7 @@ paths:
         -
           name: updated
           in: query
-          description: 'Filter based on updated greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. updated[gt]=2004-02-12T15:19:21+00:00) '
+          description: 'Filter based on updated greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. updated[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -1272,7 +1272,7 @@ paths:
         -
           name: 'updated[between]'
           in: query
-          description: "Filter based on updated between two ISO 8601 datetime (yyyy-MM-dd'T'HH:mm:ssz) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
+          description: "Filter based on updated between two ISO 8601 datetime [(yyyy-MM-dd'T'HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -1284,7 +1284,7 @@ paths:
         -
           name: 'updated[gt]'
           in: query
-          description: 'Filter based on updated greater than ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on updated greater than ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -1296,7 +1296,7 @@ paths:
         -
           name: 'updated[gte]'
           in: query
-          description: 'Filter based on updated greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on updated greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -1308,7 +1308,7 @@ paths:
         -
           name: 'updated[lt]'
           in: query
-          description: 'Filter based on updated less then ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on updated less then ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -1320,7 +1320,7 @@ paths:
         -
           name: 'updated[lte]'
           in: query
-          description: 'Filter based on updated less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on updated less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -1432,7 +1432,7 @@ paths:
         -
           name: updated
           in: query
-          description: 'Filter based on updated greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. updated[gt]=2004-02-12T15:19:21+00:00) '
+          description: 'Filter based on updated greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. updated[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -1444,7 +1444,7 @@ paths:
         -
           name: 'updated[between]'
           in: query
-          description: "Filter based on updated between two ISO 8601 datetime (yyyy-MM-dd'T'HH:mm:ssz) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
+          description: "Filter based on updated between two ISO 8601 datetime [(yyyy-MM-dd'T'HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -1456,7 +1456,7 @@ paths:
         -
           name: 'updated[gt]'
           in: query
-          description: 'Filter based on updated greater than ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on updated greater than ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -1468,7 +1468,7 @@ paths:
         -
           name: 'updated[gte]'
           in: query
-          description: 'Filter based on updated greater then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on updated greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -1480,7 +1480,7 @@ paths:
         -
           name: 'updated[lt]'
           in: query
-          description: 'Filter based on updated less then ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on updated less then ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false
@@ -1492,7 +1492,7 @@ paths:
         -
           name: 'updated[lte]'
           in: query
-          description: 'Filter based on updated less then or equal to ISO 8601 datetime (yyyy-MM-dd''T''HH:mm:ssz), e.g. "2004-02-12T15:19:21+00:00"'
+          description: 'Filter based on updated less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
           allowEmptyValue: false

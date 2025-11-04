@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- Update composer dependencies
+
 ## [1.2.0] - 2025-09-02
 
 - [PR-25](https://github.com/itk-dev/event-database-api/pull/25)  

@@ -8,6 +8,13 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+## [1.2.2] - 2026-05-22
+
+- [PR-26](https://github.com/itk-dev/event-database-api/pull/26)
+  Symfony 7.4 and dependencies, CVE's on both Symfony and Twig
+
+## [1.2.1] - 2026-03-06
+
 - Update composer dependencies
 
 ## [1.2.0] - 2025-09-02

@@ -1,8 +1,7 @@
 <?php
 
-namespace ApiPlatform;
+namespace App\Tests\ApiPlatform;
 
-use App\Tests\ApiPlatform\AbstractApiTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
@@ -42,21 +41,9 @@ class EventsFilterTest extends AbstractApiTestCase
             1,
         ];
 
-        // Test DateRangeFilter.
+        // Test DateRangeFilter on occurrences.start.
         yield [
-            ['occurrences.start[between]' => implode('..', [
-                (new \DateTimeImmutable('2001-01-01'))->format(\DateTimeImmutable::ATOM),
-                (new \DateTimeImmutable('2100-01-01'))->format(\DateTimeImmutable::ATOM),
-            ])],
-            3,
-            'Events in 21st century',
-        ];
-
-        yield [
-            ['occurrences.start[between]' => implode('..', [
-                (new \DateTimeImmutable('2001-01-01'))->format(\DateTimeImmutable::ATOM),
-                (new \DateTimeImmutable('2100-01-01'))->format(\DateTimeImmutable::ATOM),
-            ])],
+            ['occurrences.start[between]' => static::formatDateTime('2001-01-01').'..'.static::formatDateTime('2100-01-01')],
             3,
             'Events in 21st century',
         ];
@@ -65,6 +52,19 @@ class EventsFilterTest extends AbstractApiTestCase
             ['occurrences.start[between]' => static::formatDateTime('2026-01-01').'..'.static::formatDateTime('2026-12-31')],
             1,
             'Events in 2026',
+        ];
+
+        // Test DateRangeFilter on updated (default operator: gte).
+        yield [
+            ['updated' => static::formatDateTime('2024-01-01')],
+            3,
+            'Events updated on or after 2024-01-01',
+        ];
+
+        yield [
+            ['updated[gte]' => static::formatDateTime('2100-01-01')],
+            0,
+            'No events updated after 2100',
         ];
 
         // Test IdFilter.

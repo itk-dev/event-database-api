@@ -19,5 +19,13 @@ trait GetEntitiesTestTrait
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
         $this->assertJson($response->getContent());
+
+        $data = $response->toArray();
+        $this->assertArrayHasKey('hydra:member', $data);
+        $this->assertArrayHasKey('hydra:totalItems', $data);
+
+        if (isset(static::$resourceClass)) {
+            $this->assertMatchesResourceCollectionJsonSchema(static::$resourceClass);
+        }
     }
 }

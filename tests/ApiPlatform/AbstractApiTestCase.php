@@ -12,6 +12,12 @@ abstract class AbstractApiTestCase extends ApiTestCase
 
     protected static string $requestPath;
 
+    protected static string $resourceClass;
+
+    protected static int|string $itemId;
+
+    protected static int|string $unknownItemId = 99999;
+
     protected static function createAuthenticatedClient(): Client
     {
         return static::createClient(defaultOptions: [

@@ -50,7 +50,7 @@ class ElasticSearchIndex implements IndexInterface
     {
         $params = [
             'index' => $indexName,
-            'id' => $id,
+            'id' => (string) $id,
         ];
 
         try {
@@ -163,7 +163,7 @@ class ElasticSearchIndex implements IndexInterface
         ];
 
         $body = $this->buildBody($filters);
-        if (!empty($body)) {
+        if ([] !== $body) {
             $params['body']['query'] = $body;
         }
 

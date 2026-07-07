@@ -16,7 +16,7 @@ final class IdFilter extends AbstractFilter
 
         /** @var string $property */
         foreach ($properties as $property) {
-            if (empty($context['filters'][$property])) {
+            if (!isset($context['filters'][$property]) || '' === $context['filters'][$property] || [] === $context['filters'][$property]) {
                 // If no value or empty value is set, skip it.
                 continue;
             }
@@ -31,7 +31,7 @@ final class IdFilter extends AbstractFilter
 
     public function getDescription(string $resourceClass): array
     {
-        if (!$this->properties) {
+        if (null === $this->properties || [] === $this->properties) {
             return [];
         }
 

@@ -148,11 +148,14 @@ run tooling **inside the `phpfpm` container**.
 - **Hooks** — `SessionStart` boots the Docker stack and checks host prerequisites; `PostToolUse` auto-runs
   php-cs-fixer, phpstan, twig-cs-fixer, `composer normalize`, prettier, and markdownlint on the file you just edited
   (so single-file changes don't need manual formatting); `PreToolUse` blocks edits to generated/locked/secret files
-  (`config/reference.php`, lock files, `.env.local`, …); `Stop` validates the DI container (`lint:container`) and
-  warns on ES index-contract changes (`scripts/claude-hook-check-index-contract.sh`).
+  (`config/reference.php`, lock files, `.env.local`, …); `Stop` validates the DI container (`lint:container`), warns
+  on ES index-contract changes (`scripts/claude-hook-check-index-contract.sh`), and warns when a resource changed
+  but `public/spec.yaml` was not regenerated (`scripts/claude-hook-check-spec-drift.sh`).
 - **Prerequisite:** `jq` must be installed on the **host** — the Edit/Write hooks read the edited file path from the
   tool payload via `jq` and silently no-op without it (`brew install jq`; a `SessionStart` hook warns if missing).
-- **Subagents** (`.claude/agents/`): `pr-readiness` (run all CI-equivalent checks) and `reload-fixtures` (reload ES
-  fixtures / recover a not-ready cluster).
+- **Subagents** (`.claude/agents/`): `pr-readiness` (run all CI-equivalent checks), `reload-fixtures` (reload ES
+  fixtures / recover a not-ready cluster), and `filter-provider-reviewer` (review ES filter/provider changes for
+  query-DSL correctness and index-contract alignment).
 - **Skills** (`.claude/skills/`, user-invocable): `/update-api-spec` (regenerate `public/spec.yaml` after changing
-  an API resource).
+  an API resource), `/changelog-entry` (add the CHANGELOG entry in the CI-enforced format), and `/new-resource`
+  (scaffold a new index-backed resource following the DTO + provider + filter pattern).

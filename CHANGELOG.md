@@ -10,6 +10,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 - [PR-30](https://github.com/itk-dev/event-database-api/pull/30)
   Update vulnerable dependencies (twig, symfony, guzzle) and audit the lock file in CI
+- [PR-29](https://github.com/itk-dev/event-database-api/pull/29)
+  Add Claude Code skills, filter/provider reviewer subagent, and spec-drift hook
 - [PR-28](https://github.com/itk-dev/event-database-api/pull/28)
   Adapt Claude Code hooks from event-database-imports and guard the ES index contract
 - [PR-27](https://github.com/itk-dev/event-database-api/pull/27)

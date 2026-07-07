@@ -54,7 +54,7 @@ abstract class AbstractProvider
                 if ($filter instanceof FilterInterface) {
                     $data = $filter->apply([], IndexName::Events->value, $operation, $context);
 
-                    if (!empty($data)) {
+                    if ([] !== $data) {
                         if ($filter instanceof SortFilterInterface) {
                             $outputFilters[FilterType::Sort->value][] = $data;
                         } else {

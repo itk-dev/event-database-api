@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-32](https://github.com/itk-dev/event-database-api/pull/32)
+  Pay down the PHPStan baseline: fix the mechanical strict-rule findings (34 → 10)
 - [PR-31](https://github.com/itk-dev/event-database-api/pull/31)
   Align dev tooling with event-database-imports: PHPStan level 8 + strict rules, PHP 8.4, twig-cs-fixer v4, PHPUnit 13
 - [PR-30](https://github.com/itk-dev/event-database-api/pull/30)

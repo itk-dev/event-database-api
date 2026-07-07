@@ -9,7 +9,7 @@ See [keep a changelog] for information about writing changes to this log.
 ## [Unreleased]
 
 - [PR-34](https://github.com/itk-dev/event-database-api/pull/34)
-  Document the item-as-collection quirk in the README as a TODO for API versioning
+  Document the item-as-collection quirk as a versioning TODO and fix the README fixtures wording (no Doctrine)
 - [PR-31](https://github.com/itk-dev/event-database-api/pull/31)
   Align dev tooling with event-database-imports: PHPStan level 8 + strict rules, PHP 8.4, twig-cs-fixer v4, PHPUnit 13
 - [PR-30](https://github.com/itk-dev/event-database-api/pull/30)

@@ -40,8 +40,8 @@ docker compose exec phpfpm composer install
 
 ### Fixtures
 
-The project comes with doctrine fixtures to help development on local machines. They can be loaded with the standard
-doctrine fixture load command:
+The project comes with Elasticsearch index fixtures to help development on local machines (this API has no Doctrine
+database — see [`CLAUDE.md`](CLAUDE.md)). They can be loaded with the `app:fixtures:load` command:
 
 ```shell
 docker compose exec phpfpm bin/console app:fixtures:load <index>

@@ -7,6 +7,7 @@ use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\Exception\ClientResponseException;
 use Elastic\Elasticsearch\Exception\MissingParameterException;
 use Elastic\Elasticsearch\Exception\ServerResponseException;
+use Elastic\Elasticsearch\Response\Elasticsearch;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -63,13 +64,17 @@ class FixtureLoader
     private function download(string $url): array
     {
         // Load from local file if using "file" URL scheme.
-        if (preg_match('~^file://(?<path>/.+)$~', $url, $matches)) {
+        if (1 === preg_match('~^file://(?<path>/.+)$~', $url, $matches)) {
             $path = $matches['path'];
             if (!is_readable($path)) {
                 throw new \HttpException('Unable to load fixture data');
             }
-            $data = json_decode(file_get_contents($path), true);
-            if (empty($data)) {
+            $contents = file_get_contents($path);
+            if (false === $contents) {
+                throw new \HttpException('Unable to load fixture data');
+            }
+            $data = json_decode($contents, true);
+            if (!is_array($data) || [] === $data) {
                 throw new \HttpException('Unable to load fixture data');
             }
 
@@ -108,9 +113,10 @@ class FixtureLoader
             }
             try {
                 // No other places in this part of the frontend should index data, hence it's not in the index service.
+                /** @var Elasticsearch $response */
                 $response = $this->client->index($params);
 
-                if (!in_array($response->getStatusCode(), [Response::HTTP_OK, Response::HTTP_CREATED, Response::HTTP_NO_CONTENT])) {
+                if (!in_array($response->getStatusCode(), [Response::HTTP_OK, Response::HTTP_CREATED, Response::HTTP_NO_CONTENT], true)) {
                     throw new \Exception('Unable to add item to index', $response->getStatusCode());
                 }
             } catch (ClientResponseException|MissingParameterException|ServerResponseException $e) {

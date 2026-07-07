@@ -19,7 +19,7 @@ final readonly class ElasticSearchPaginator implements \IteratorAggregate, Pagin
 
     public function count(): int
     {
-        return $this->results->total;
+        return max(0, $this->results->total);
     }
 
     public function getLastPage(): float
@@ -28,7 +28,9 @@ final readonly class ElasticSearchPaginator implements \IteratorAggregate, Pagin
             return 1.;
         }
 
-        return ceil($this->getTotalItems() / $this->limit) ?: 1.;
+        $lastPage = ceil($this->getTotalItems() / $this->limit);
+
+        return 0.0 === $lastPage ? 1. : $lastPage;
     }
 
     public function getTotalItems(): float

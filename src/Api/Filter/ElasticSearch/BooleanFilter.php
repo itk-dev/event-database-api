@@ -16,19 +16,19 @@ final class BooleanFilter extends AbstractFilter
 
         /** @var string $property */
         foreach ($properties as $property) {
-            if (empty($context['filters'][$property])) {
+            if (!isset($context['filters'][$property]) || '' === $context['filters'][$property] || [] === $context['filters'][$property]) {
                 // If no value or empty value is set, skip it.
                 continue;
             }
             $terms[$property] = explode(',', $context['filters'][$property]);
         }
 
-        return empty($terms) ? $terms : ['terms' => $terms + ['boost' => 1.0]];
+        return [] === $terms ? $terms : ['terms' => $terms + ['boost' => 1.0]];
     }
 
     public function getDescription(string $resourceClass): array
     {
-        if (!$this->properties) {
+        if (null === $this->properties || [] === $this->properties) {
             return [];
         }
 

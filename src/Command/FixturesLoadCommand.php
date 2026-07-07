@@ -70,7 +70,7 @@ class FixturesLoadCommand extends Command
             return Command::FAILURE;
         }
 
-        if (!in_array($indexName, IndexName::values())) {
+        if (!in_array($indexName, IndexName::values(), true)) {
             $io->error(sprintf('Index %s does not exist', $indexName));
 
             return Command::FAILURE;

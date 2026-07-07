@@ -6,6 +6,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class ApiUser implements UserInterface
 {
+    /**
+     * @param non-empty-string $username
+     */
     public function __construct(public readonly string $username)
     {
     }

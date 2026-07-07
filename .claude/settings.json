@@ -164,6 +164,12 @@
             "command": "sh \"$CLAUDE_PROJECT_DIR/scripts/claude-hook-check-index-contract.sh\" || true",
             "timeout": 10,
             "statusMessage": "Checking Elasticsearch index contract..."
+          },
+          {
+            "type": "command",
+            "command": "sh \"$CLAUDE_PROJECT_DIR/scripts/claude-hook-check-spec-drift.sh\" || true",
+            "timeout": 10,
+            "statusMessage": "Checking OpenAPI spec is up to date..."
           }
         ]
       }

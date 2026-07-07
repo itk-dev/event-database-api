@@ -117,3 +117,42 @@ JSON-encoded `APP_API_KEYS` env var. `/api/v2/docs` is public; everything else u
   will fail the suite.
 - PHPStan errors about `App\Api\Dto\*::$id` being unused are intentionally ignored (API Platform writes the property
   reflectively).
+
+## Works with event-database-imports
+
+This repo is the public **read-only** API; [`event-database-imports`](https://github.com/itk-dev/event-database-imports)
+is the **write/admin** side. They are decoupled at runtime and communicate only through a **shared Elasticsearch
+cluster** — no shared database, no HTTP call between them.
+
+- **The importer writes; this repo reads.** The importer runs feed import → normalize → persist (MariaDB) → index
+  into ES. This repo serves `/api/v2/…` by reading those same ES indices (`INDEX_URL`); it has **no domain
+  database** and must never write to ES.
+- **The importer owns the index lifecycle.** It builds a versioned index `<alias>_<timestamp>`, then atomically
+  repoints the alias. This repo always queries the **alias** — so it never sees a half-built index, but a resource
+  returns empty if the alias was never populated.
+- **The contract is hand-duplicated, with no compile-time link:**
+  - Index names — `src/Model/IndexName.php` here ↔ `src/Model/Indexing/IndexNames.php` in the importer
+    (`events`, `organizations`, `occurrences`, `daily_occurrences`, `tags`, `vocabularies`, `locations`).
+  - Document shape — mappings live **only in the importer** (`src/Model/Indexing/Mappings/`); this repo has none and
+    trusts the fields/types the importer writes. A renamed or retyped field silently breaks the filters/providers
+    here (they reference ES field names directly).
+  - Keep both in sync when changing either. The `Stop` hook (below) warns when `src/Model/IndexName.php` changes.
+- **Co-hosted by path prefix** in production: `/api/v2/` → this app, `/admin/` → the importer, via Traefik on the
+  shared `frontend` network.
+
+## Claude Code automation
+
+`.claude/settings.json`, `.claude/agents/`, and `.claude/skills/` configure this repo's Claude Code setup. All hooks
+run tooling **inside the `phpfpm` container**.
+
+- **Hooks** — `SessionStart` boots the Docker stack and checks host prerequisites; `PostToolUse` auto-runs
+  php-cs-fixer, phpstan, twig-cs-fixer, `composer normalize`, prettier, and markdownlint on the file you just edited
+  (so single-file changes don't need manual formatting); `PreToolUse` blocks edits to generated/locked/secret files
+  (`config/reference.php`, lock files, `.env.local`, …); `Stop` validates the DI container (`lint:container`) and
+  warns on ES index-contract changes (`scripts/claude-hook-check-index-contract.sh`).
+- **Prerequisite:** `jq` must be installed on the **host** — the Edit/Write hooks read the edited file path from the
+  tool payload via `jq` and silently no-op without it (`brew install jq`; a `SessionStart` hook warns if missing).
+- **Subagents** (`.claude/agents/`): `pr-readiness` (run all CI-equivalent checks) and `reload-fixtures` (reload ES
+  fixtures / recover a not-ready cluster).
+- **Skills** (`.claude/skills/`, user-invocable): `/update-api-spec` (regenerate `public/spec.yaml` after changing
+  an API resource).

@@ -41,9 +41,9 @@ class ElasticSearchIndex implements IndexInterface
     {
         if ('id' === $indexField) {
             return $this->getById($indexName, $id);
-        } else {
-            return $this->getByCustomIdField($indexName, $id, $indexField);
         }
+
+        return $this->getByCustomIdField($indexName, $id, $indexField);
     }
 
     private function getById(string $indexName, int|string $id): array

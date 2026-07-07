@@ -116,6 +116,18 @@ curl --silent --header "X-Api-Key: api_key_1" "http://$(docker compose port ngin
 curl --silent --header "X-Api-Key: api_key_1" "http://$(docker compose port nginx 8080)/api/v2/events?publicAccess=false" | docker run --rm --interactive ghcr.io/jqlang/jq:latest '.["hydra:member"]|length'
 ```
 
+## Known limitations
+
+The following contract quirk is kept as-is for backwards compatibility and should be revisited when the API is next
+versioned (fixing it is a breaking change for API consumers):
+
+- **Item endpoints return a collection wrapper.** `GET /api/v2/{resource}/{id}` for `events`, `occurrences`,
+  `daily_occurrences`, `locations` and `organizations` returns a `hydra:Collection` with a single member rather than a
+  single item, and that member has no `@id`/`@type`. This is because the representation providers return the raw
+  Elasticsearch `_source` wrapped in an array (see e.g.
+  [`EventRepresentationProvider`](src/Api/State/EventRepresentationProvider.php)). `tags` and `vocabularies` already
+  return proper single items. When versioning the API, return a single mapped item with `@id`/`@type` for all resources.
+
 ## Test
 
 ``` shell name=run-tests

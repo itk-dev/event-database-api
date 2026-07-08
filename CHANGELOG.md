@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-40](https://github.com/itk-dev/event-database-api/pull/40)
+  Improve the API-spec workflow (path filter, permissions, vendor cache, oasdiff)
 - [PR-39](https://github.com/itk-dev/event-database-api/pull/39)
   Update GitHub Actions to latest: actions/checkout v7 and go-task/setup-task v2
 - [PR-38](https://github.com/itk-dev/event-database-api/pull/38)

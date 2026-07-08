@@ -48,8 +48,9 @@ class OccurrencesFilterTest extends AbstractApiTestCase
             'Occurrences ending around 2024-12-08',
         ];
 
-        // MatchFilter on event.title. MatchFilter is token-based (ES word match),
-        // so all three fixture events contain the shared tokens "ITKDev/test/event".
+        // MatchFilter on event.title. `title` is a `text` field in production (see
+        // event-database-imports Mappings/Event), so ES tokenises it and this is a word
+        // match — all three fixture events share the tokens "ITKDev/test/event".
         // To narrow we'd need a token unique to a single record.
         yield [
             ['event.title' => 'ITKDev'],
@@ -94,11 +95,11 @@ class OccurrencesFilterTest extends AbstractApiTestCase
             3,
         ];
 
-        // TagFilter on event.tags.
+        // TagFilter on event.tags — keyword field, exact/case-sensitive match.
         yield [
-            ['event.tags' => 'itkdev'],
+            ['event.tags' => 'ITKDev'],
             1,
-            'Occurrences for events tagged "itkdev"',
+            'Occurrences for events tagged "ITKDev"',
         ];
 
         yield [

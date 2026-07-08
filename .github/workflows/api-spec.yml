@@ -1,5 +1,13 @@
 on:
   pull_request:
+    paths:
+      - "src/**/*.php"
+      - "config/**"
+      - "composer.json"
+      - "composer.lock"
+      - "public/spec.yaml"
+      - "docker-compose.yml"
+      - "docker-compose.override.yml"
 
 name: API Spec review
 
@@ -10,11 +18,21 @@ jobs:
   api-spec:
     runs-on: ubuntu-latest
     name: Ensure committed API specification is up to date
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v5
         with:
           fetch-depth: 2
+
+      - name: Cache vendor
+        uses: actions/cache@v5
+        with:
+          path: vendor
+          key: vendor-php8.4-${{ hashFiles('composer.lock') }}
+          restore-keys: vendor-php8.4-
 
       # https://taskfile.dev/installation/#github-actions
       - uses: go-task/setup-task@v1
@@ -51,64 +69,125 @@ jobs:
     name: Detect breaking changes in API specification
     runs-on: ubuntu-latest
     needs: [api-spec]
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
-      - name: Check out BASE rev
+      - name: Checkout
         uses: actions/checkout@v5
-        with:
-          ref: ${{ github.base_ref }}
-          path: base
 
-      - name: Check out HEAD rev
-        uses: actions/checkout@v5
-        with:
-          ref: ${{ github.head_ref }}
-          path: head
+      - name: Fetch base branch for comparison
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: git fetch --depth=1 origin "$BASE_REF"
 
-      - name: Run OpenAPI Changed (from HEAD rev)
-        id: api-changed
+      # oasdiff cannot parse `headers: []` (it expects a map); normalise both specs.
+      - name: Sanitise specs (headers -> map)
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          mkdir -p .api-spec-tmp
+          git show "origin/$BASE_REF:public/spec.yaml" | sed 's/headers: \[\]/headers: {}/g' > .api-spec-tmp/base.yaml
+          sed 's/headers: \[\]/headers: {}/g' public/spec.yaml > .api-spec-tmp/revision.yaml
+
+      - name: Detect breaking changes
+        id: breaking
         continue-on-error: true
-        uses: docker://openapitools/openapi-diff:latest
+        uses: oasdiff/oasdiff-action/breaking@v0.0.44
         with:
-          args: --fail-on-changed base/public/spec.yaml head/public/spec.yaml --markdown api-spec-changed.md
+          base: .api-spec-tmp/base.yaml
+          revision: .api-spec-tmp/revision.yaml
+          fail-on: ERR
 
-      - name: Run OpenAPI Incompatible (from HEAD rev)
-        id: api-incompatible
+      - name: Generate changelog
+        id: changelog
         continue-on-error: true
-        uses: docker://openapitools/openapi-diff:latest
+        uses: oasdiff/oasdiff-action/changelog@v0.0.44
         with:
-          args: --fail-on-incompatible base/public/spec.yaml head/public/spec.yaml --markdown api-spec-incompatible.md
+          base: .api-spec-tmp/base.yaml
+          revision: .api-spec-tmp/revision.yaml
+          format: markdown
+          output-to-file: changelog.md
 
-      - name: Comment PR with no changes
-        if: steps.api-changed.outcome == 'success' && steps.api-incompatible.outcome == 'success'
-        working-directory: head
+      - name: Determine whether the spec changed
+        id: changes
+        run: |
+          if [ -s changelog.md ] && ! grep -qi 'no changes' changelog.md; then
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Find previous workflow comment
+        id: prev-comment
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh pr comment ${{ github.event.pull_request.number }} --body "✅ **No changes detected in API specification**" --create-if-none --edit-last
+          id=$(gh api \
+            "repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments" \
+            --paginate \
+            --jq '.[] | select(.body | startswith("<!-- api-spec-workflow -->")) | .id' \
+            | tail -n1)
+          echo "id=${id:-}" >> "$GITHUB_OUTPUT"
 
-      - name: Comment PR with non-breaking changes
-        if: steps.api-changed.outcome == 'failure' && steps.api-incompatible.outcome == 'success'
-        working-directory: head
+      - name: Comment PR - non-breaking changes
+        if: steps.breaking.outcome == 'success' && steps.changes.outputs.has_changes == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
+          PREV_ID: ${{ steps.prev-comment.outputs.id }}
         run: |
-          echo "## ⚠️ Non-Breaking changes detected in API specification" > ../comment.md
-          echo "" >> ../comment.md
-          cat ../api-spec-changed.md >> ../comment.md
-          gh pr comment ${{ github.event.pull_request.number }} --body-file ../comment.md --create-if-none --edit-last
+          {
+            echo "<!-- api-spec-workflow -->"
+            echo "## ⚠️ API specification — non-breaking changes"
+            echo ""
+            cat changelog.md
+          } > comment.md
+          if [ -n "$PREV_ID" ]; then
+            jq -Rs '{body: .}' < comment.md \
+              | gh api "repos/${{ github.repository }}/issues/comments/$PREV_ID" --method PATCH --input -
+          else
+            gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
+          fi
 
-      - name: Comment PR with breaking changes
-        if: steps.api-incompatible.outcome == 'failure'
-        working-directory: head
+      - name: Comment PR - breaking changes
+        if: steps.breaking.outcome == 'failure'
         env:
           GH_TOKEN: ${{ github.token }}
+          PREV_ID: ${{ steps.prev-comment.outputs.id }}
         run: |
-          echo "## 🛑 Breaking changes detected in API specification" > ../comment.md
-          echo "" >> ../comment.md
-          cat ../api-spec-incompatible.md >> ../comment.md
-          gh pr comment ${{ github.event.pull_request.number }} --body-file ../comment.md --create-if-none --edit-last
+          {
+            echo "<!-- api-spec-workflow -->"
+            echo "## 🛑 API specification — breaking changes detected"
+            echo ""
+            if [ -s changelog.md ]; then
+              cat changelog.md
+            else
+              echo "The breaking-changes check flagged incompatible changes. Review the workflow logs for details."
+            fi
+          } > comment.md
+          if [ -n "$PREV_ID" ]; then
+            jq -Rs '{body: .}' < comment.md \
+              | gh api "repos/${{ github.repository }}/issues/comments/$PREV_ID" --method PATCH --input -
+          else
+            gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
+          fi
+
+      - name: Mark previous comment resolved (when no changes)
+        if: steps.breaking.outcome == 'success' && steps.changes.outputs.has_changes == 'false' && steps.prev-comment.outputs.id != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PREV_ID: ${{ steps.prev-comment.outputs.id }}
+        run: |
+          {
+            echo "<!-- api-spec-workflow -->"
+            echo "## ✅ API specification"
+            echo ""
+            echo "_No changes detected on this run — previous diff resolved._"
+          } > comment.md
+          jq -Rs '{body: .}' < comment.md \
+            | gh api "repos/${{ github.repository }}/issues/comments/$PREV_ID" --method PATCH --input -
 
       - name: Fail if breaking changes detected
-        if: steps.api-incompatible.outcome == 'failure'
+        if: steps.breaking.outcome == 'failure'
         run: |
           exit 1

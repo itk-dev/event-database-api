@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-40](https://github.com/itk-dev/event-database-api/pull/40)
+  Improve the API-spec workflow: path-filtered trigger, least-privilege permissions, vendor cache, and oasdiff breaking-change detection
 - [PR-37](https://github.com/itk-dev/event-database-api/pull/37)
   Upload test coverage to Codecov in CI
 - [PR-36](https://github.com/itk-dev/event-database-api/pull/36)

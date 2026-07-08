@@ -54,10 +54,13 @@ class ErrorContractTest extends AbstractApiTestCase
     }
 
     /**
-     * When a client asks for problem+json, auth errors are served as RFC 7807
-     * problem+json (unprefixed title/detail/status/type) rather than hydra.
-     * The 401 short-circuits before resource content negotiation, so it is
-     * available in the requested media type.
+     * `rfc_7807_compliant_errors: true` (config/packages/api_platform.yaml)
+     * registers problem+json as an error format, so an auth error requested as
+     * `application/problem+json` is served as RFC 7807 (unprefixed
+     * title/detail/status/type) rather than hydra. The 401 also short-circuits
+     * before resource content negotiation, so the format is honoured.
+     *
+     * @see https://api-platform.com/docs/core/content-negotiation/
      */
     public function testUnauthenticatedErrorIsAvailableAsProblemJson(): void
     {
@@ -77,11 +80,15 @@ class ErrorContractTest extends AbstractApiTestCase
     }
 
     /**
-     * The resources themselves only produce ld+json, so requesting an item with
-     * `Accept: application/problem+json` is not satisfiable — it yields 406 Not
-     * Acceptable (NOT a 404), and the 406 body is itself a problem+json error.
-     * Pinning this documents that problem+json is not a resource representation;
-     * consumers must read resources as ld+json.
+     * The only resource format configured under `formats` in
+     * config/packages/api_platform.yaml is `application/ld+json`, so content
+     * negotiation cannot satisfy `Accept: application/problem+json` on a resource
+     * read: it yields 406 Not Acceptable (NOT a 404), and the 406 body is itself
+     * a problem+json error. Pinning this documents that problem+json is not a
+     * resource representation (consumers must read resources as ld+json) and
+     * guards the `formats` allow-list — adding problem+json there would flip this.
+     *
+     * @see https://api-platform.com/docs/core/content-negotiation/
      */
     public function testProblemJsonIsNotAcceptableForResourceReads(): void
     {

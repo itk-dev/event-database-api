@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-49](https://github.com/itk-dev/event-database-api/pull/49)
+  Bump oasdiff-action to v0.1.5 in the API-spec workflow
 - [PR-48](https://github.com/itk-dev/event-database-api/pull/48)
   Add an os2display consumer contract test suite exercising the endpoints and filters its feed helper depends on
 - [PR-47](https://github.com/itk-dev/event-database-api/pull/47)

@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-45](https://github.com/itk-dev/event-database-api/pull/45)
+  Check committed index mappings against event-database-imports@develop in CI
 - [PR-44](https://github.com/itk-dev/event-database-api/pull/44)
   Validate deep payload schemas (nested objects, field types) for every resource
 - [PR-43](https://github.com/itk-dev/event-database-api/pull/43)

@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-50](https://github.com/itk-dev/event-database-api/pull/50)
+  Disable the oasdiff.com spec upload (review: false) so no API spec leaves CI
 - [PR-49](https://github.com/itk-dev/event-database-api/pull/49)
   Bump oasdiff-action to v0.1.5 in the API-spec workflow
 - [PR-48](https://github.com/itk-dev/event-database-api/pull/48)

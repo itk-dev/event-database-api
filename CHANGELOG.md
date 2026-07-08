@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-39](https://github.com/itk-dev/event-database-api/pull/39)
+  Update GitHub Actions to latest: actions/checkout v7 and go-task/setup-task v2
 - [PR-38](https://github.com/itk-dev/event-database-api/pull/38)
   Extract SearchParamsBuilder from ElasticSearchIndex and unit-test the query DSL
 - [PR-37](https://github.com/itk-dev/event-database-api/pull/37)

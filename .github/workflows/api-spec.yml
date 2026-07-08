@@ -93,7 +93,7 @@ jobs:
       - name: Detect breaking changes
         id: breaking
         continue-on-error: true
-        uses: oasdiff/oasdiff-action/breaking@v0.0.44
+        uses: oasdiff/oasdiff-action/breaking@v0.1.5
         with:
           base: .api-spec-tmp/base.yaml
           revision: .api-spec-tmp/revision.yaml
@@ -102,7 +102,7 @@ jobs:
       - name: Generate changelog
         id: changelog
         continue-on-error: true
-        uses: oasdiff/oasdiff-action/changelog@v0.0.44
+        uses: oasdiff/oasdiff-action/changelog@v0.1.5
         with:
           base: .api-spec-tmp/base.yaml
           revision: .api-spec-tmp/revision.yaml

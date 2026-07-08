@@ -3,6 +3,7 @@
 namespace App\Api\Filter\ElasticSearch;
 
 use ApiPlatform\Elasticsearch\Filter\AbstractFilter;
+use ApiPlatform\Metadata\Exception\InvalidArgumentException;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\Metadata\Property\Factory\PropertyMetadataFactoryInterface;
 use ApiPlatform\Metadata\Property\Factory\PropertyNameCollectionFactoryInterface;
@@ -85,12 +86,17 @@ final class DateRangeFilter extends AbstractFilter
         if (null === $this->properties) {
             throw new \InvalidArgumentException('The property must be defined in the filter.');
         }
+
+        $throwOnInvalid = $this->config[$this->properties[$property]]->throwOnInvalid;
+
         if (!\is_array($filter)) {
-            $fallbackOperator = $this->properties[$property];
-            $operator = $this->config[$fallbackOperator]->limit;
+            $operator = $this->config[$this->properties[$property]]->limit;
             $value = $filter;
         } else {
-            $operator = DateLimit::{array_key_first($filter)};
+            $operator = $this->resolveOperator((string) array_key_first($filter), $throwOnInvalid);
+            if (null === $operator) {
+                return [];
+            }
             $value = array_shift($filter);
         }
 
@@ -99,7 +105,11 @@ final class DateRangeFilter extends AbstractFilter
                 $values = explode('..', $value);
 
                 if (2 !== count($values)) {
-                    throw new \InvalidArgumentException('Invalid date range');
+                    if ($throwOnInvalid) {
+                        throw new InvalidArgumentException(sprintf('Invalid date range for "%s": expected two ISO 8601 datetimes separated by "..".', $property));
+                    }
+
+                    return [];
                 }
 
                 return [
@@ -124,6 +134,28 @@ final class DateRangeFilter extends AbstractFilter
             default:
                 return [];
         }
+    }
+
+    /**
+     * Resolve a client-supplied operator key (e.g. "gt") to a DateLimit case.
+     *
+     * DateLimit case names are the operators the client uses in `field[op]=…`.
+     * Returns null for an unknown key when the filter is not configured to
+     * throw, so the caller can skip the clause instead of leaking a 5xx.
+     */
+    private function resolveOperator(string $key, bool $throwOnInvalid): ?DateLimit
+    {
+        foreach (DateLimit::cases() as $case) {
+            if ($case->name === $key) {
+                return $case;
+            }
+        }
+
+        if ($throwOnInvalid) {
+            throw new InvalidArgumentException(sprintf('Unknown date range operator "%s".', $key));
+        }
+
+        return null;
     }
 
     private function getFilterDescription(string $fieldName, DateLimit $operator, bool $isDefault = false): array

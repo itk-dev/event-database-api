@@ -10,6 +10,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 - [PR-37](https://github.com/itk-dev/event-database-api/pull/37)
   Upload test coverage to Codecov in CI
+- [PR-34](https://github.com/itk-dev/event-database-api/pull/34)
+  Document the item-as-collection quirk as a versioning TODO and fix the README fixtures wording (no Doctrine)
 - [PR-33](https://github.com/itk-dev/event-database-api/pull/33)
   Mature the API test suite ahead of the API Platform upgrade (contract, filter, pagination and error tests)
 - [PR-32](https://github.com/itk-dev/event-database-api/pull/32)

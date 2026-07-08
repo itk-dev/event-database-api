@@ -5,106 +5,69 @@ namespace App\Tests\ApiPlatform;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
- * Test that filtering occurrences work as expected.
+ * Test that filtering occurrences works as expected.
+ *
+ * Assertions pin the exact set of matching occurrence `entityId`s. Fixture ids:
+ * 10 (start 2024-12-07, event 8), 11 (start 2024-11-08, event 8),
+ * 12 (start 2024-12-08, event 7). See tests/resources/occurrences.json.
  */
 class OccurrencesFilterTest extends AbstractApiTestCase
 {
     protected static string $requestPath = '/api/v2/occurrences';
 
     #[DataProvider('getOccurrencesProvider')]
-    public function testGetOccurrences(array $query, int $expectedCount, ?string $message = null): void
+    public function testGetOccurrences(array $query, array $expectedIds, ?string $message = null): void
     {
-        $message ??= '';
-
         $response = $this->get($query);
 
-        $data = $response->toArray();
-        $this->assertArrayHasKey('hydra:member', $data, $message);
-        $this->assertCount($expectedCount, $data['hydra:member'], $message);
+        $this->assertMemberIds($expectedIds, $response, 'entityId', message: $message ?? '');
     }
 
     public static function getOccurrencesProvider(): iterable
     {
-        // Unfiltered.
-        yield [[], 3];
+        yield 'unfiltered' => [[], [10, 11, 12]];
 
         // DateRangeFilter on start.
-        yield [
+        yield 'start in December 2024' => [
             ['start[between]' => static::formatDateTime('2024-12-01').'..'.static::formatDateTime('2024-12-31')],
-            2,
-            'Occurrences starting in December 2024',
+            [10, 12],
+            'Occurrences 10 and 12 start in December 2024',
         ];
-
-        yield [
+        yield 'start in November 2024' => [
             ['start[between]' => static::formatDateTime('2024-11-01').'..'.static::formatDateTime('2024-11-30')],
-            1,
-            'Occurrences starting in November 2024',
+            [11],
+            'Only occurrence 11 starts in November 2024',
         ];
 
         // DateRangeFilter on end.
-        yield [
+        yield 'end around 2024-12-08' => [
             ['end[between]' => static::formatDateTime('2024-12-07').'..'.static::formatDateTime('2024-12-09')],
-            2,
-            'Occurrences ending around 2024-12-08',
+            [10, 12],
+            'Occurrences 10 and 12 end within 2024-12-07..2024-12-09',
         ];
 
         // MatchFilter on event.title. `title` is a `text` field in production (see
         // event-database-imports Mappings/Event), so ES tokenises it and this is a word
-        // match — all three fixture events share the tokens "ITKDev/test/event".
-        // To narrow we'd need a token unique to a single record.
-        yield [
+        // match — all three fixture events share the token "ITKDev".
+        yield 'event title token ITKDev' => [
             ['event.title' => 'ITKDev'],
-            3,
+            [10, 11, 12],
             'All fixture events have "ITKDev" in the title',
         ];
+        yield 'event title absent token' => [['event.title' => 'totallyuniqueword'], []];
 
-        yield [
-            ['event.title' => 'totallyuniqueword'],
-            0,
-            'Token absent from all titles returns no occurrences',
-        ];
+        // MatchFilter on event.organizer.name / event.location.name (all events share these).
+        yield 'event organizer name ITKDev' => [['event.organizer.name' => 'ITKDev'], [10, 11, 12]];
+        yield 'event location name' => [['event.location.name' => 'ITK Development'], [10, 11, 12]];
 
-        // MatchFilter on event.organizer.name.
-        yield [
-            ['event.organizer.name' => 'ITKDev'],
-            3,
-            'Occurrences organized by ITKDev',
-        ];
+        // IdFilter on event.organizer.entityId / event.location.entityId.
+        yield 'event organizer 9' => [['event.organizer.entityId' => 9], [10, 11, 12]];
+        yield 'event organizer 99' => [['event.organizer.entityId' => 99], []];
+        yield 'event location 4' => [['event.location.entityId' => 4], [10, 11, 12]];
 
-        // MatchFilter on event.location.name.
-        yield [
-            ['event.location.name' => 'ITK Development'],
-            3,
-            'Occurrences at ITK Development',
-        ];
-
-        // IdFilter on event.organizer.entityId.
-        yield [
-            ['event.organizer.entityId' => 9],
-            3,
-        ];
-
-        yield [
-            ['event.organizer.entityId' => 99],
-            0,
-        ];
-
-        // IdFilter on event.location.entityId.
-        yield [
-            ['event.location.entityId' => 4],
-            3,
-        ];
-
-        // TagFilter on event.tags — keyword field, exact/case-sensitive match.
-        yield [
-            ['event.tags' => 'ITKDev'],
-            1,
-            'Occurrences for events tagged "ITKDev"',
-        ];
-
-        yield [
-            ['event.tags' => 'unknown-tag'],
-            0,
-        ];
+        // TagFilter on event.tags — keyword field, exact/case-sensitive match. Only
+        // occurrence 12 belongs to event 7, which carries the "ITKDev" tag.
+        yield 'event tag ITKDev' => [['event.tags' => 'ITKDev'], [12], 'Occurrence 12 belongs to the ITKDev-tagged event'];
+        yield 'event tag unknown' => [['event.tags' => 'unknown-tag'], []];
     }
 }

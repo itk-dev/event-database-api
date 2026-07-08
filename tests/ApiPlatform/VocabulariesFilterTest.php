@@ -5,36 +5,35 @@ namespace App\Tests\ApiPlatform;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
- * Test that filtering vocabularies work as expected.
+ * Test that filtering vocabularies works as expected.
+ *
+ * Vocabulary is a true API Platform resource identified by `slug`, so assertions
+ * pin the exact set of matching slugs. Fixture slugs: aarhusguiden, feeds
+ * (see tests/resources/vocabularies.json).
  */
 class VocabulariesFilterTest extends AbstractApiTestCase
 {
     protected static string $requestPath = '/api/v2/vocabularies';
 
     #[DataProvider('getVocabulariesProvider')]
-    public function testGetVocabularies(array $query, int $expectedCount, ?string $message = null): void
+    public function testGetVocabularies(array $query, array $expectedSlugs, ?string $message = null): void
     {
-        $message ??= '';
-
         $response = $this->get($query);
 
-        $data = $response->toArray();
-        $this->assertArrayHasKey('hydra:member', $data, $message);
-        $this->assertCount($expectedCount, $data['hydra:member'], $message);
+        $this->assertMemberIds($expectedSlugs, $response, 'slug', message: $message ?? '');
     }
 
     public static function getVocabulariesProvider(): iterable
     {
-        // Unfiltered.
-        yield [[], 2];
+        yield 'unfiltered' => [[], ['aarhusguiden', 'feeds']];
 
-        // MatchFilter on name.
-        yield [['name' => 'aarhusguiden'], 1];
-        yield [['name' => 'feeds'], 1];
-        yield [['name' => 'nonexistent'], 0];
+        // MatchFilter on name (`name` is a `text` field → token match); slug is the identity.
+        yield 'name aarhusguiden' => [['name' => 'aarhusguiden'], ['aarhusguiden']];
+        yield 'name feeds' => [['name' => 'feeds'], ['feeds']];
+        yield 'name nonexistent' => [['name' => 'nonexistent'], []];
 
-        // MatchFilter on tags.
-        yield [['tags' => 'aros'], 1, 'aarhusguiden vocabulary contains the "aros" tag'];
-        yield [['tags' => 'unknown-tag'], 0];
+        // MatchFilter on tags — only aarhusguiden contains the "aros" tag.
+        yield 'tags aros' => [['tags' => 'aros'], ['aarhusguiden'], 'aarhusguiden vocabulary contains the "aros" tag'];
+        yield 'tags unknown' => [['tags' => 'unknown-tag'], []];
     }
 }

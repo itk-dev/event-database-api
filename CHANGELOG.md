@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-47](https://github.com/itk-dev/event-database-api/pull/47)
+  Add an aarhusguiden consumer contract test suite exercising the endpoints and filters the site depends on
 - [PR-45](https://github.com/itk-dev/event-database-api/pull/45)
   Check committed index mappings against event-database-imports@develop in CI
 - [PR-44](https://github.com/itk-dev/event-database-api/pull/44)

@@ -34,16 +34,17 @@ jobs:
           key: vendor-php8.4-${{ hashFiles('composer.lock') }}
           restore-keys: vendor-php8.4-
 
-      # https://taskfile.dev/installation/#github-actions
-      - uses: go-task/setup-task@v2
-
-      - run: |
+      - name: Install dependencies
+        run: |
           docker network create frontend
-          task --yes site:update
+          # The spec export only needs PHP — pull phpfpm alone and run it as a
+          # one-off (--no-deps skips mariadb/rabbit), not the whole stack.
+          docker compose pull --quiet phpfpm
+          docker compose run --rm --no-deps phpfpm composer install --no-interaction
 
       - name: Export API specification
         run: |
-          task --yes api:spec:export
+          docker compose run --rm --no-deps phpfpm bin/console api:openapi:export --yaml --output=public/spec.yaml --no-interaction
 
       - name: Check for changes in specification
         id: git-diff-spec

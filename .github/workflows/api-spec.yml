@@ -98,6 +98,11 @@ jobs:
           base: .api-spec-tmp/base.yaml
           revision: .api-spec-tmp/revision.yaml
           fail-on: ERR
+          # Upload to oasdiff.com to get a side-by-side review link (exposed as
+          # the review_url output), but suppress the action's own comment with an
+          # empty token — we post a single combined comment below.
+          review: true
+          github-token: ""
 
       - name: Generate changelog
         id: changelog
@@ -108,6 +113,9 @@ jobs:
           revision: .api-spec-tmp/revision.yaml
           format: markdown
           output-to-file: changelog.md
+          # As above: keep the upload/review_url output, suppress the auto-comment.
+          review: true
+          github-token: ""
 
       - name: Determine whether the spec changed
         id: changes
@@ -135,12 +143,20 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           PREV_ID: ${{ steps.prev-comment.outputs.id }}
+          REVIEW_URL: ${{ steps.changelog.outputs.review_url }}
         run: |
           {
             echo "<!-- api-spec-workflow -->"
             echo "## ⚠️ API specification — non-breaking changes"
             echo ""
+            echo "<details><summary>API changes</summary>"
+            echo ""
             cat changelog.md
+            echo ""
+            echo "</details>"
+            if [ -n "$REVIEW_URL" ]; then
+              printf '\n🔍 [View the full side-by-side review](%s)\n' "$REVIEW_URL"
+            fi
           } > comment.md
           if [ -n "$PREV_ID" ]; then
             jq -Rs '{body: .}' < comment.md \
@@ -154,15 +170,23 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           PREV_ID: ${{ steps.prev-comment.outputs.id }}
+          REVIEW_URL: ${{ steps.breaking.outputs.review_url }}
         run: |
           {
             echo "<!-- api-spec-workflow -->"
             echo "## 🛑 API specification — breaking changes detected"
             echo ""
             if [ -s changelog.md ]; then
+              echo "<details><summary>API changes</summary>"
+              echo ""
               cat changelog.md
+              echo ""
+              echo "</details>"
             else
               echo "The breaking-changes check flagged incompatible changes. Review the workflow logs for details."
+            fi
+            if [ -n "$REVIEW_URL" ]; then
+              printf '\n🔍 [View the full side-by-side review](%s)\n' "$REVIEW_URL"
             fi
           } > comment.md
           if [ -n "$PREV_ID" ]; then

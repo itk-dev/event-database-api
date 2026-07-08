@@ -38,8 +38,6 @@ tasks:
         task: compose
         vars:
           COMPOSE_ARGS: exec phpfpm bin/console app:fixtures:load {{.ITEM}}
-    # Loading some fixtures generates an 'Warning: Undefined array key "entityId"' error.
-    ignore_error: true
     silent: true
 
   fixtures:load:test:
@@ -57,8 +55,6 @@ tasks:
         task: compose
         vars:
           COMPOSE_ARGS: exec phpfpm bin/console app:fixtures:load {{.ITEM}} --url=file:///app/tests/resources/{{.ITEM}}.json
-    # Loading some fixtures generates an 'Warning: Undefined array key "entityId"' error.
-    ignore_error: true
 
   composer:
     desc: "Run `composer` command. Example: task composer -- normalize"

@@ -42,6 +42,12 @@ Tests hit a real Elasticsearch (no mocking) — see `tests/ApiPlatform/AbstractA
 API key is `test_api_key`. If a test run dies with "No alive nodes", run `docker compose up --detach --wait` and
 reload fixtures.
 
+The test harness creates each index with a **production-parity mapping** (`dynamic: strict`) checked in at
+`tests/resources/mappings/<index>.json` — a hand-kept copy of the importer's `src/Model/Indexing/Mappings/`.
+`FixtureLoader::createIndex()` fails loudly if a mapping is missing, so the filter tests exercise real field
+semantics (`keyword` = exact/case-sensitive; `text` = tokenised) rather than Elasticsearch dynamic-mapping
+artefacts. When the importer changes a mapping, update the matching file here (the `Stop` hook warns on drift).
+
 ### Lint / static analysis
 
 ```shell

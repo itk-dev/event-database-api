@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-54](https://github.com/itk-dev/event-database-api/pull/54)
+  Add Rector (relevant sets aligned with PHPStan), apply it across the codebase, and run it in CI
 - [PR-51](https://github.com/itk-dev/event-database-api/pull/51)
   Show the API-spec diff summary inline in the PR comment (collapsed) alongside the oasdiff review link
 - [PR-49](https://github.com/itk-dev/event-database-api/pull/49)

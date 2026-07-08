@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\ApiPlatform\Contract;
 
 use App\Tests\ApiPlatform\AbstractApiTestCase;
@@ -23,16 +25,16 @@ use PHPUnit\Framework\Attributes\DataProvider;
  * member on their item endpoint, so both collection and item members are
  * validated against the same definition; Tag/Vocabulary return true items.
  */
-class ContractSchemaTest extends AbstractApiTestCase
+final class ContractSchemaTest extends AbstractApiTestCase
 {
-    private const SCHEMA_URI = 'internal://contract.schema.json';
-    private const SCHEMA_PATH = __DIR__.'/../../schemas/contract.schema.json';
+    private const string SCHEMA_URI = 'internal://contract.schema.json';
+    private const string SCHEMA_PATH = __DIR__.'/../../schemas/contract.schema.json';
 
     #[DataProvider('collectionProvider')]
     public function testCollectionMembersMatchSchema(string $path, string $definition): void
     {
         $data = $this->get([], $path)->toArray();
-        self::assertNotEmpty($data['hydra:member'], $path.' needs at least one fixture member');
+        $this->assertNotEmpty($data['hydra:member'], $path.' needs at least one fixture member');
 
         foreach ($data['hydra:member'] as $i => $member) {
             $this->assertMatchesDefinition($member, $definition, $path.' member #'.$i);
@@ -45,8 +47,8 @@ class ContractSchemaTest extends AbstractApiTestCase
         $data = $this->get([], $path)->toArray();
 
         if ($collectionWrapped) {
-            self::assertArrayHasKey('hydra:member', $data, $path.' should return a collection wrapper (D6)');
-            self::assertNotEmpty($data['hydra:member']);
+            $this->assertArrayHasKey('hydra:member', $data, $path.' should return a collection wrapper (D6)');
+            $this->assertNotEmpty($data['hydra:member']);
             foreach ($data['hydra:member'] as $member) {
                 $this->assertMatchesDefinition($member, $definition, $path.' item member');
             }
@@ -93,19 +95,16 @@ class ContractSchemaTest extends AbstractApiTestCase
 
         $validator->validate($data, (object) ['$ref' => self::SCHEMA_URI.'#/definitions/'.$definition]);
 
-        self::assertTrue(
-            $validator->isValid(),
-            $message.' failed contract schema "'.$definition.'": '.self::formatErrors($validator->getErrors())
-        );
+        $this->assertTrue($validator->isValid(), $message.' failed contract schema "'.$definition.'": '.$this->formatErrors($validator->getErrors()));
     }
 
     /**
      * @param array<int, array{property?: string, message?: string}> $errors
      */
-    private static function formatErrors(array $errors): string
+    private function formatErrors(array $errors): string
     {
         return implode('; ', array_map(
-            static fn (array $e) => trim(($e['property'] ?? '').' '.($e['message'] ?? '')),
+            static fn (array $e): string => trim(($e['property'] ?? '').' '.($e['message'] ?? '')),
             $errors
         ));
     }

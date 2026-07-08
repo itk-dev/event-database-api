@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Api\Filter\ElasticSearch;
 
 use ApiPlatform\Elasticsearch\Filter\AbstractFilter;
@@ -16,12 +18,20 @@ final class IdFilter extends AbstractFilter
 
         /** @var string $property */
         foreach ($properties as $property) {
-            if (!isset($context['filters'][$property]) || '' === $context['filters'][$property] || [] === $context['filters'][$property]) {
+            if (!isset($context['filters'][$property])) {
+                // If no value or empty value is set, skip it.
+                continue;
+            }
+            if ('' === $context['filters'][$property]) {
+                // If no value or empty value is set, skip it.
+                continue;
+            }
+            if ([] === $context['filters'][$property]) {
                 // If no value or empty value is set, skip it.
                 continue;
             }
             $terms = [];
-            $terms[$property] = explode(',', $context['filters'][$property]);
+            $terms[$property] = explode(',', (string) $context['filters'][$property]);
             $terms['boost'] = 1.0;
             $result[]['terms'] = $terms;
         }
@@ -36,7 +46,7 @@ final class IdFilter extends AbstractFilter
         }
 
         $description = [];
-        foreach ($this->properties as $filterParameterName => $value) {
+        foreach (array_keys($this->properties) as $filterParameterName) {
             $description[$filterParameterName] = [
                 'property' => $filterParameterName,
                 'type' => TypeIdentifier::ARRAY->value,

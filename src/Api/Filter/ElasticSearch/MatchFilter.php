@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Api\Filter\ElasticSearch;
 
 use ApiPlatform\Elasticsearch\Filter\AbstractFilter;
@@ -34,7 +36,7 @@ final class MatchFilter extends AbstractFilter
         }
 
         $description = [];
-        foreach ($this->properties as $filterParameterName => $value) {
+        foreach (array_keys($this->properties) as $filterParameterName) {
             $description[$filterParameterName] = [
                 'property' => $filterParameterName,
                 'type' => TypeIdentifier::STRING->value,

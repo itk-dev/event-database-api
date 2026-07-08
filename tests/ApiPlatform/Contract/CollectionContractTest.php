@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\ApiPlatform\Contract;
 
 use App\Tests\ApiPlatform\AbstractApiTestCase;
@@ -15,7 +17,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
  * Captured against the current version; treat any diff during the upgrade as a
  * potential BC break to reconcile against the "no BC changes" rule.
  */
-class CollectionContractTest extends AbstractApiTestCase
+final class CollectionContractTest extends AbstractApiTestCase
 {
     protected static string $requestPath = '/api/v2/events';
 

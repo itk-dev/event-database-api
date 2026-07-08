@@ -165,6 +165,7 @@ tasks:
     desc: "Run code analysis"
     cmds:
       - task: code-analysis:phpstan
+      - task: code-analysis:rector
     silent: true
 
   code-analysis:phpstan:
@@ -173,6 +174,22 @@ tasks:
       - task: compose
         vars:
           COMPOSE_ARGS: exec phpfpm vendor/bin/phpstan
+    silent: true
+
+  code-analysis:rector:
+    desc: "Check for Rector suggestions (dry-run; no changes applied)"
+    cmds:
+      - task: compose
+        vars:
+          COMPOSE_ARGS: exec phpfpm vendor/bin/rector process --dry-run
+    silent: true
+
+  code-analysis:rector:apply:
+    desc: "Apply Rector changes"
+    cmds:
+      - task: compose
+        vars:
+          COMPOSE_ARGS: exec phpfpm vendor/bin/rector process
     silent: true
 
   api:test:

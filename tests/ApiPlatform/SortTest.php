@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\ApiPlatform;
 
 /**
@@ -12,7 +14,7 @@ namespace App\Tests\ApiPlatform;
  *  - Occurrences / Daily  → start ascending
  *  - Tags/Vocab/Loc/Org   → _score, then name.keyword ascending
  */
-class SortTest extends AbstractApiTestCase
+final class SortTest extends AbstractApiTestCase
 {
     protected static string $requestPath = '/api/v2/events';
 
@@ -24,7 +26,7 @@ class SortTest extends AbstractApiTestCase
         $sorted = $titles;
         sort($sorted, SORT_STRING);
 
-        self::assertSame($sorted, $titles, 'Events must be ordered by title.keyword ascending');
+        $this->assertSame($sorted, $titles, 'Events must be ordered by title.keyword ascending');
     }
 
     public function testOccurrencesAreSortedByStartAscending(): void
@@ -37,7 +39,7 @@ class SortTest extends AbstractApiTestCase
         $starts = array_column($response->toArray()['hydra:member'], 'start');
         $sorted = $starts;
         sort($sorted, SORT_STRING);
-        self::assertSame($sorted, $starts, 'start values must be ascending');
+        $this->assertSame($sorted, $starts, 'start values must be ascending');
     }
 
     public function testDailyOccurrencesAreSortedByStartAscending(): void

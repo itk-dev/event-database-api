@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\ApiPlatform;
 
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -10,7 +12,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
  * Assertions pin the exact set of matching `entityId`s. Fixture ids mirror the
  * occurrences index: 10/11 belong to event 8, 12 to event 7.
  */
-class DailyOccurrencesFilterTest extends AbstractApiTestCase
+final class DailyOccurrencesFilterTest extends AbstractApiTestCase
 {
     protected static string $requestPath = '/api/v2/daily_occurrences';
 
@@ -35,7 +37,7 @@ class DailyOccurrencesFilterTest extends AbstractApiTestCase
 
         // DateRangeFilter on start.
         yield 'start in December 2024' => [
-            ['start[between]' => static::formatDateTime('2024-12-01').'..'.static::formatDateTime('2024-12-31')],
+            ['start[between]' => self::formatDateTime('2024-12-01').'..'.self::formatDateTime('2024-12-31')],
             [10, 12],
         ];
 

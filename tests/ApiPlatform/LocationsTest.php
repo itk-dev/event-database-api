@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\ApiPlatform;
 
 use App\Api\Dto\Location;
 use App\Tests\ApiPlatform\Trait\GetEntitiesTestTrait;
 use App\Tests\ApiPlatform\Trait\GetItemTestTrait;
 
-class LocationsTest extends AbstractApiTestCase
+final class LocationsTest extends AbstractApiTestCase
 {
     use GetEntitiesTestTrait;
     use GetItemTestTrait;

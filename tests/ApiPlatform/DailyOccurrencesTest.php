@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\ApiPlatform;
 
 use App\Api\Dto\DailyOccurrence;
 use App\Tests\ApiPlatform\Trait\GetEntitiesTestTrait;
 use App\Tests\ApiPlatform\Trait\GetItemTestTrait;
 
-class DailyOccurrencesTest extends AbstractApiTestCase
+final class DailyOccurrencesTest extends AbstractApiTestCase
 {
     use GetEntitiesTestTrait;
     use GetItemTestTrait;

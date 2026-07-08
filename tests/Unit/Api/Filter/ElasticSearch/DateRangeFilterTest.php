@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Api\Filter\ElasticSearch;
 
 use ApiPlatform\Metadata\Exception\InvalidArgumentException;
@@ -16,11 +18,11 @@ use PHPUnit\Framework\TestCase;
  * to HTTP 400 via `exception_to_status` — rather than leaking a native throwable
  * as a 500. With `throwOnInvalid: false` the clause is skipped instead.
  */
-class DateRangeFilterTest extends TestCase
+final class DateRangeFilterTest extends TestCase
 {
     use FilterFactoryMockTrait;
 
-    private const RESOURCE = 'App\Api\Dto\Event';
+    private const string RESOURCE = \App\Api\Dto\Event::class;
 
     /**
      * @param array{limit: DateLimit, throwOnInvalid: bool}[] $config
@@ -42,7 +44,7 @@ class DateRangeFilterTest extends TestCase
             ['gte' => ['limit' => DateLimit::gte, 'throwOnInvalid' => true]],
         );
 
-        self::assertSame($expected, $filter->apply([], self::RESOURCE, null, ['filters' => $filters]));
+        $this->assertSame($expected, $filter->apply([], self::RESOURCE, null, ['filters' => $filters]));
     }
 
     public static function applyProvider(): iterable
@@ -109,7 +111,7 @@ class DateRangeFilterTest extends TestCase
             ['gte' => ['limit' => DateLimit::gte, 'throwOnInvalid' => false]],
         );
 
-        self::assertSame([], $filter->apply([], self::RESOURCE, null, ['filters' => $filters]));
+        $this->assertSame([], $filter->apply([], self::RESOURCE, null, ['filters' => $filters]));
     }
 
     public static function invalidInputProvider(): iterable
@@ -130,7 +132,7 @@ class DateRangeFilterTest extends TestCase
         $description = $filter->getDescription(self::RESOURCE);
 
         foreach (['updated', 'updated[between]', 'updated[gt]', 'updated[gte]', 'updated[lt]', 'updated[lte]'] as $key) {
-            self::assertArrayHasKey($key, $description, $key.' should be described');
+            $this->assertArrayHasKey($key, $description, $key.' should be described');
         }
     }
 }

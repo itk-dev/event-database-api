@@ -18,6 +18,17 @@ abstract class AbstractApiTestCase extends ApiTestCase
 
     protected static int|string $unknownItemId = 99999;
 
+    /**
+     * Whether to assert the collection against API Platform's self-generated
+     * JSON schema. That schema requires `@id`/`@var` on every member; the five
+     * resources whose provider returns the raw Elasticsearch `_source` (Event,
+     * Occurrence, DailyOccurrence, Location, Organization) intentionally omit
+     * those (see README "Known limitations", D6), so they opt out. Tag and
+     * Vocabulary are true API Platform resources and keep the assertion — where
+     * it also serves as a tripwire for future API Platform upgrades.
+     */
+    protected static bool $assertsGeneratedCollectionSchema = true;
+
     protected static function createAuthenticatedClient(): Client
     {
         return static::createClient(defaultOptions: [

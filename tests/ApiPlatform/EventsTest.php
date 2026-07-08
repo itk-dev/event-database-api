@@ -18,5 +18,9 @@ class EventsTest extends AbstractApiTestCase
 
     protected static string $resourceClass = Event::class;
 
+    // Members are the raw Elasticsearch _source with no @id/@type, so API
+    // Platform's self-generated collection schema does not apply (see D6).
+    protected static bool $assertsGeneratedCollectionSchema = false;
+
     protected static int|string $itemId = 7;
 }

@@ -16,6 +16,9 @@ See [keep a changelog] for information about writing changes to this log.
   Add an os2display consumer contract test suite exercising the endpoints and filters its feed helper depends on
 - [PR-47](https://github.com/itk-dev/event-database-api/pull/47)
   Add an aarhusguiden consumer contract test suite exercising the endpoints and filters the site depends on
+- [PR-46](https://github.com/itk-dev/event-database-api/pull/46)
+  Upgrade api-platform/core 4.1 to 4.3. Runtime responses are unchanged except that 401/404 error bodies now use
+  `hydra:title`/`hydra:description` instead of the unprefixed `title` (`status`, `type` and `detail` unchanged)
 - [PR-45](https://github.com/itk-dev/event-database-api/pull/45)
   Check committed index mappings against event-database-imports@develop in CI
 - [PR-44](https://github.com/itk-dev/event-database-api/pull/44)

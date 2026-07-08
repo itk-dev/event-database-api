@@ -24,7 +24,7 @@ trait GetEntitiesTestTrait
         $this->assertArrayHasKey('hydra:member', $data);
         $this->assertArrayHasKey('hydra:totalItems', $data);
 
-        if (isset(static::$resourceClass)) {
+        if (isset(static::$resourceClass) && static::$assertsGeneratedCollectionSchema) {
             $this->assertMatchesResourceCollectionJsonSchema(static::$resourceClass);
         }
     }

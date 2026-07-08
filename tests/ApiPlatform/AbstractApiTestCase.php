@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\ApiPlatform;
 
 use ApiPlatform\Symfony\Bundle\Test\ApiTestCase;
@@ -65,7 +67,7 @@ abstract class AbstractApiTestCase extends ApiTestCase
     protected function assertMemberIds(array $expected, ResponseInterface $response, string $field = 'entityId', bool $ordered = false, string $message = ''): void
     {
         $data = $response->toArray();
-        self::assertArrayHasKey('hydra:member', $data, $message);
+        $this->assertArrayHasKey('hydra:member', $data, $message);
 
         $actual = array_map(
             static fn (array $member) => $member[$field] ?? null,
@@ -73,13 +75,13 @@ abstract class AbstractApiTestCase extends ApiTestCase
         );
 
         if ($ordered) {
-            self::assertSame($expected, $actual, $message);
+            $this->assertSame($expected, $actual, $message);
 
             return;
         }
 
         sort($expected);
         sort($actual);
-        self::assertSame($expected, $actual, $message);
+        $this->assertSame($expected, $actual, $message);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Api\Filter\ElasticSearch;
 
 use App\Api\Filter\ElasticSearch\TagFilter;
@@ -11,11 +13,11 @@ use PHPUnit\Framework\TestCase;
  * The emitted term values are verbatim (no lowercasing/normalisation): matching
  * against the production `keyword` mapping is exact and case-sensitive.
  */
-class TagFilterTest extends TestCase
+final class TagFilterTest extends TestCase
 {
     use FilterFactoryMockTrait;
 
-    private const RESOURCE = 'App\Api\Dto\Event';
+    private const string RESOURCE = \App\Api\Dto\Event::class;
 
     // Goal: apply() emits a comma-split `terms` clause with verbatim values (no
     // lowercasing), so matching the production keyword mapping stays exact.
@@ -25,7 +27,7 @@ class TagFilterTest extends TestCase
         [$names, $meta, $resolver] = $this->filterDependencies();
         $filter = new TagFilter($names, $meta, $resolver, null, ['tags' => null]);
 
-        self::assertSame($expected, $filter->apply([], self::RESOURCE, null, ['filters' => $filters]));
+        $this->assertSame($expected, $filter->apply([], self::RESOURCE, null, ['filters' => $filters]));
     }
 
     public static function applyProvider(): iterable
@@ -46,7 +48,7 @@ class TagFilterTest extends TestCase
 
         $description = $filter->getDescription(self::RESOURCE);
 
-        self::assertArrayHasKey('tags', $description);
-        self::assertTrue($description['tags']['is_collection']);
+        $this->assertArrayHasKey('tags', $description);
+        $this->assertTrue($description['tags']['is_collection']);
     }
 }

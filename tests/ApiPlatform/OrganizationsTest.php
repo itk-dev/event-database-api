@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\ApiPlatform;
 
 use App\Api\Dto\Organization;
 use App\Tests\ApiPlatform\Trait\GetEntitiesTestTrait;
 use App\Tests\ApiPlatform\Trait\GetItemTestTrait;
 
-class OrganizationsTest extends AbstractApiTestCase
+final class OrganizationsTest extends AbstractApiTestCase
 {
     use GetEntitiesTestTrait;
     use GetItemTestTrait;

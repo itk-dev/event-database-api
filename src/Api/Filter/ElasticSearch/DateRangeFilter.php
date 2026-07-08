@@ -52,7 +52,7 @@ final class DateRangeFilter extends AbstractFilter
             return $ranges;
         }
 
-        foreach ($this->properties as $property => $value) {
+        foreach (array_keys($this->properties) as $property) {
             if (isset($context['filters'][$property]) && '' !== $context['filters'][$property] && [] !== $context['filters'][$property]) {
                 $ranges[] = $this->getElasticSearchQueryRanges($property, $context['filters'][$property]);
             }
@@ -94,7 +94,7 @@ final class DateRangeFilter extends AbstractFilter
             $value = $filter;
         } else {
             $operator = $this->resolveOperator((string) array_key_first($filter), $throwOnInvalid);
-            if (null === $operator) {
+            if (!$operator instanceof DateLimit) {
                 return [];
             }
             $value = array_shift($filter);
@@ -102,7 +102,7 @@ final class DateRangeFilter extends AbstractFilter
 
         switch ($operator) {
             case DateLimit::between:
-                $values = explode('..', $value);
+                $values = explode('..', (string) $value);
 
                 if (2 !== count($values)) {
                     if ($throwOnInvalid) {

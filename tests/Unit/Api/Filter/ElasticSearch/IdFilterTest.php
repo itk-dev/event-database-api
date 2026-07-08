@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Api\Filter\ElasticSearch;
 
 use App\Api\Filter\ElasticSearch\IdFilter;
@@ -11,11 +13,11 @@ use PHPUnit\Framework\TestCase;
  * yields its own `terms` clause appended to a list, with the boost nested inside
  * the clause.
  */
-class IdFilterTest extends TestCase
+final class IdFilterTest extends TestCase
 {
     use FilterFactoryMockTrait;
 
-    private const RESOURCE = 'App\Api\Dto\Event';
+    private const string RESOURCE = \App\Api\Dto\Event::class;
 
     // Goal: apply() appends one `terms` clause per property (boost nested inside)
     // and comma-splits multi-value ids.
@@ -25,7 +27,7 @@ class IdFilterTest extends TestCase
         [$names, $meta, $resolver] = $this->filterDependencies();
         $filter = new IdFilter($names, $meta, $resolver, null, $properties);
 
-        self::assertSame($expected, $filter->apply([], self::RESOURCE, null, ['filters' => $filters]));
+        $this->assertSame($expected, $filter->apply([], self::RESOURCE, null, ['filters' => $filters]));
     }
 
     public static function applyProvider(): iterable
@@ -62,7 +64,7 @@ class IdFilterTest extends TestCase
 
         $description = $filter->getDescription(self::RESOURCE);
 
-        self::assertArrayHasKey('organizer.entityId', $description);
-        self::assertTrue($description['organizer.entityId']['is_collection']);
+        $this->assertArrayHasKey('organizer.entityId', $description);
+        $this->assertTrue($description['organizer.entityId']['is_collection']);
     }
 }

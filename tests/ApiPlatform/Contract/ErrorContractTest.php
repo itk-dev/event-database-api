@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\ApiPlatform\Contract;
 
 use App\Tests\ApiPlatform\AbstractApiTestCase;
@@ -18,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Note: the body also carries a `trace` array in the test env (debug on); that
  * is environment-dependent and intentionally NOT asserted here.
  */
-class ErrorContractTest extends AbstractApiTestCase
+final class ErrorContractTest extends AbstractApiTestCase
 {
     protected static string $requestPath = '/api/v2/events';
 

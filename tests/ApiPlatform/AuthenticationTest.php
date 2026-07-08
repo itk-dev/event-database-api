@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\ApiPlatform;
 
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -8,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Verify the API key auth boundary across all resources.
  */
-class AuthenticationTest extends AbstractApiTestCase
+final class AuthenticationTest extends AbstractApiTestCase
 {
     protected static string $requestPath = '/api/v2/events';
 

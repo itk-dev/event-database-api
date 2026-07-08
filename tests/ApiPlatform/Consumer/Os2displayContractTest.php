@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\ApiPlatform\Consumer;
 
 use App\Tests\ApiPlatform\AbstractApiTestCase;
@@ -26,7 +28,7 @@ use Symfony\Component\HttpFoundation\Response;
  * (tags …/ITKDev); all occurrences organizer 9, location 4. Events 7 & 8 are at
  * location 4, event 9 at location 5.
  */
-class Os2displayContractTest extends AbstractApiTestCase
+final class Os2displayContractTest extends AbstractApiTestCase
 {
     protected static string $requestPath = '/api/v2/occurrences';
 
@@ -36,7 +38,7 @@ class Os2displayContractTest extends AbstractApiTestCase
         $response = $this->get([
             'event.tags' => 'Koncert',
             'event.location.entityId' => 4,
-            'end' => ['gt' => static::formatDateTime('2024-12-01')],
+            'end' => ['gt' => self::formatDateTime('2024-12-01')],
             'itemsPerPage' => 20,
             'page' => 1,
         ]);
@@ -79,7 +81,7 @@ class Os2displayContractTest extends AbstractApiTestCase
         $response = $this->get([
             'title' => 'ITKDev',
             'location.entityId' => 4,
-            'occurrences.end' => ['gt' => static::formatDateTime('2024-01-01')],
+            'occurrences.end' => ['gt' => self::formatDateTime('2024-01-01')],
             'itemsPerPage' => 10,
         ], '/api/v2/events');
 

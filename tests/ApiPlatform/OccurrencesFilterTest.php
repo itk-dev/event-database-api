@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\ApiPlatform;
 
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -11,7 +13,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
  * 10 (start 2024-12-07, event 8), 11 (start 2024-11-08, event 8),
  * 12 (start 2024-12-08, event 7). See tests/resources/occurrences.json.
  */
-class OccurrencesFilterTest extends AbstractApiTestCase
+final class OccurrencesFilterTest extends AbstractApiTestCase
 {
     protected static string $requestPath = '/api/v2/occurrences';
 
@@ -29,19 +31,19 @@ class OccurrencesFilterTest extends AbstractApiTestCase
 
         // DateRangeFilter on start.
         yield 'start in December 2024' => [
-            ['start[between]' => static::formatDateTime('2024-12-01').'..'.static::formatDateTime('2024-12-31')],
+            ['start[between]' => self::formatDateTime('2024-12-01').'..'.self::formatDateTime('2024-12-31')],
             [10, 12],
             'Occurrences 10 and 12 start in December 2024',
         ];
         yield 'start in November 2024' => [
-            ['start[between]' => static::formatDateTime('2024-11-01').'..'.static::formatDateTime('2024-11-30')],
+            ['start[between]' => self::formatDateTime('2024-11-01').'..'.self::formatDateTime('2024-11-30')],
             [11],
             'Only occurrence 11 starts in November 2024',
         ];
 
         // DateRangeFilter on end.
         yield 'end around 2024-12-08' => [
-            ['end[between]' => static::formatDateTime('2024-12-07').'..'.static::formatDateTime('2024-12-09')],
+            ['end[between]' => self::formatDateTime('2024-12-07').'..'.self::formatDateTime('2024-12-09')],
             [10, 12],
             'Occurrences 10 and 12 end within 2024-12-07..2024-12-09',
         ];

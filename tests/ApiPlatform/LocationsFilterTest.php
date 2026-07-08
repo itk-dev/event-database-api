@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\ApiPlatform;
 
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -10,7 +12,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
  * Assertions pin the exact set of matching `entityId`s. Fixture ids: 4 (ITK
  * Development, postal 8000), 5 (Somewhere). See tests/resources/locations.json.
  */
-class LocationsFilterTest extends AbstractApiTestCase
+final class LocationsFilterTest extends AbstractApiTestCase
 {
     protected static string $requestPath = '/api/v2/locations';
 

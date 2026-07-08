@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\ApiPlatform\Contract;
 
 use App\Tests\ApiPlatform\AbstractApiTestCase;
@@ -12,7 +14,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
  * strong client-facing contract and a likely BC-sensitive area on upgrade
  * (default formats, negotiation behaviour).
  */
-class ContentNegotiationContractTest extends AbstractApiTestCase
+final class ContentNegotiationContractTest extends AbstractApiTestCase
 {
     protected static string $requestPath = '/api/v2/events';
 

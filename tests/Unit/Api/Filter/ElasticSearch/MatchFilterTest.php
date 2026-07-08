@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Api\Filter\ElasticSearch;
 
 use App\Api\Filter\ElasticSearch\MatchFilter;
@@ -12,11 +14,11 @@ use PHPUnit\Framework\TestCase;
  * consumer-visible query contract so a change to the filter (or an API Platform
  * upgrade) is caught.
  */
-class MatchFilterTest extends TestCase
+final class MatchFilterTest extends TestCase
 {
     use FilterFactoryMockTrait;
 
-    private const RESOURCE = 'App\Api\Dto\Event';
+    private const string RESOURCE = \App\Api\Dto\Event::class;
 
     /**
      * Goal: apply() emits the exact `match` DSL — a single hit is returned bare,
@@ -30,7 +32,7 @@ class MatchFilterTest extends TestCase
         [$names, $meta, $resolver] = $this->filterDependencies();
         $filter = new MatchFilter($names, $meta, $resolver, null, $properties);
 
-        self::assertSame($expected, $filter->apply([], self::RESOURCE, null, ['filters' => $filters]));
+        $this->assertSame($expected, $filter->apply([], self::RESOURCE, null, ['filters' => $filters]));
     }
 
     public static function applyProvider(): iterable
@@ -66,9 +68,9 @@ class MatchFilterTest extends TestCase
 
         $description = $filter->getDescription(self::RESOURCE);
 
-        self::assertArrayHasKey('title', $description);
-        self::assertSame('title', $description['title']['property']);
-        self::assertSame('string', $description['title']['type']);
-        self::assertFalse($description['title']['required']);
+        $this->assertArrayHasKey('title', $description);
+        $this->assertSame('title', $description['title']['property']);
+        $this->assertSame('string', $description['title']['type']);
+        $this->assertFalse($description['title']['required']);
     }
 }

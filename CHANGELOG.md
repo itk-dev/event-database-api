@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-35](https://github.com/itk-dev/event-database-api/pull/35)
+  Test against production-parity Elasticsearch mappings (dynamic: strict) so filter tests exercise real field semantics
 - [PR-33](https://github.com/itk-dev/event-database-api/pull/33)
   Mature the API test suite ahead of the API Platform upgrade (contract, filter, pagination and error tests)
 - [PR-32](https://github.com/itk-dev/event-database-api/pull/32)

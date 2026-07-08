@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-43](https://github.com/itk-dev/event-database-api/pull/43)
+  Assert filter identities (not counts), sort order, and pagination edge cases
 - [PR-42](https://github.com/itk-dev/event-database-api/pull/42)
   Return HTTP 400 (not 500) for malformed date-range filter input; unskip FilterErrorTest
 - [PR-41](https://github.com/itk-dev/event-database-api/pull/41)

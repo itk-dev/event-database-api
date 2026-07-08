@@ -69,6 +69,40 @@ class PaginationTest extends AbstractApiTestCase
         $this->assertArrayHasKey('hydra:previous', $data['hydra:view'], 'Page 3 of 3 should expose hydra:previous');
     }
 
+    public function testOutOfRangePageReturnsEmptyMemberButFullTotal(): void
+    {
+        // 3 events, itemsPerPage=1 → page 99 is past the end. The slice is empty
+        // but hydra:totalItems still reports the full unpaginated count.
+        $data = $this->get(['itemsPerPage' => 1, 'page' => 99], '/api/v2/events')->toArray();
+
+        $this->assertSame([], $data['hydra:member'], 'An out-of-range page must return an empty member list');
+        $this->assertSame(3, $data['hydra:totalItems'], 'totalItems must ignore pagination');
+    }
+
+    public function testTotalItemsReflectsActiveFilter(): void
+    {
+        // hydra:totalItems must count the filtered result set, not the whole index.
+        $data = $this->get(['publicAccess' => 'true'], '/api/v2/events')->toArray();
+
+        $this->assertSame(2, $data['hydra:totalItems'], 'totalItems must reflect the publicAccess=true filter');
+        $this->assertCount(2, $data['hydra:member']);
+    }
+
+    public function testPagingThroughSingleItemPagesCoversTheFullSet(): void
+    {
+        // Walking every page at itemsPerPage=1 must yield each event exactly once —
+        // no gaps, no duplicates across page boundaries.
+        $seen = [];
+        for ($page = 1; $page <= 3; ++$page) {
+            $data = $this->get(['itemsPerPage' => 1, 'page' => $page], '/api/v2/events')->toArray();
+            $this->assertCount(1, $data['hydra:member'], 'Page '.$page.' should hold exactly one event');
+            $seen[] = $data['hydra:member'][0]['entityId'];
+        }
+
+        sort($seen);
+        $this->assertSame([7, 8, 9], $seen, 'Pages 1∪2∪3 must equal the full event set with no duplicates');
+    }
+
     public static function resourceProvider(): iterable
     {
         // [path, fixture count, paginationMaximumItemsPerPage]

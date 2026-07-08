@@ -5,33 +5,31 @@ namespace App\Tests\ApiPlatform;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
- * Test that filtering organizations work as expected.
+ * Test that filtering organizations works as expected.
+ *
+ * Assertions pin the exact set of matching `entityId`s. Fixture ids: 9 (ITKDev),
+ * 10 (Aakb), 11 (Dokk1). See tests/resources/organizations.json.
  */
 class OrganizationsFilterTest extends AbstractApiTestCase
 {
     protected static string $requestPath = '/api/v2/organizations';
 
     #[DataProvider('getOrganizationsProvider')]
-    public function testGetOrganizations(array $query, int $expectedCount, ?string $message = null): void
+    public function testGetOrganizations(array $query, array $expectedIds, ?string $message = null): void
     {
-        $message ??= '';
-
         $response = $this->get($query);
 
-        $data = $response->toArray();
-        $this->assertArrayHasKey('hydra:member', $data, $message);
-        $this->assertCount($expectedCount, $data['hydra:member'], $message);
+        $this->assertMemberIds($expectedIds, $response, 'entityId', message: $message ?? '');
     }
 
     public static function getOrganizationsProvider(): iterable
     {
-        // Unfiltered.
-        yield [[], 3];
+        yield 'unfiltered' => [[], [9, 10, 11]];
 
-        // MatchFilter on name.
-        yield [['name' => 'ITKDev'], 1, 'Organization named "ITKDev"'];
-        yield [['name' => 'Dokk1'], 1];
-        yield [['name' => 'Aakb'], 1];
-        yield [['name' => 'nonexistent'], 0];
+        // MatchFilter on name (`name` is a `text` field → token match).
+        yield 'name ITKDev' => [['name' => 'ITKDev'], [9], 'Organization 9 is "ITKDev"'];
+        yield 'name Dokk1' => [['name' => 'Dokk1'], [11]];
+        yield 'name Aakb' => [['name' => 'Aakb'], [10]];
+        yield 'name nonexistent' => [['name' => 'nonexistent'], []];
     }
 }

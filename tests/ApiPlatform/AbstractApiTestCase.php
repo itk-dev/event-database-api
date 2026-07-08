@@ -41,4 +41,34 @@ abstract class AbstractApiTestCase extends ApiTestCase
     {
         return (new \DateTimeImmutable($datetime))->format(\DateTimeImmutable::ATOM);
     }
+
+    /**
+     * Assert a collection response contains exactly the expected member identities.
+     *
+     * Reads $field from each `hydra:member` — `entityId` for most resources,
+     * `slug` for Tag/Vocabulary. The comparison is order-independent by default;
+     * pass $ordered to also assert the sequence (used by the sort contract).
+     *
+     * @param array<int|string>                                $expected
+     */
+    protected function assertMemberIds(array $expected, ResponseInterface $response, string $field = 'entityId', bool $ordered = false, string $message = ''): void
+    {
+        $data = $response->toArray();
+        self::assertArrayHasKey('hydra:member', $data, $message);
+
+        $actual = array_map(
+            static fn (array $member) => $member[$field] ?? null,
+            $data['hydra:member']
+        );
+
+        if ($ordered) {
+            self::assertSame($expected, $actual, $message);
+
+            return;
+        }
+
+        sort($expected);
+        sort($actual);
+        self::assertSame($expected, $actual, $message);
+    }
 }

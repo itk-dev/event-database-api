@@ -5,36 +5,34 @@ namespace App\Tests\ApiPlatform;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
- * Test that filtering locations work as expected.
+ * Test that filtering locations works as expected.
+ *
+ * Assertions pin the exact set of matching `entityId`s. Fixture ids: 4 (ITK
+ * Development, postal 8000), 5 (Somewhere). See tests/resources/locations.json.
  */
 class LocationsFilterTest extends AbstractApiTestCase
 {
     protected static string $requestPath = '/api/v2/locations';
 
     #[DataProvider('getLocationsProvider')]
-    public function testGetLocations(array $query, int $expectedCount, ?string $message = null): void
+    public function testGetLocations(array $query, array $expectedIds, ?string $message = null): void
     {
-        $message ??= '';
-
         $response = $this->get($query);
 
-        $data = $response->toArray();
-        $this->assertArrayHasKey('hydra:member', $data, $message);
-        $this->assertCount($expectedCount, $data['hydra:member'], $message);
+        $this->assertMemberIds($expectedIds, $response, 'entityId', message: $message ?? '');
     }
 
     public static function getLocationsProvider(): iterable
     {
-        // Unfiltered.
-        yield [[], 2];
+        yield 'unfiltered' => [[], [4, 5]];
 
-        // MatchFilter on name.
-        yield [['name' => 'ITK Development'], 1, 'Location named "ITK Development"'];
-        yield [['name' => 'Somewhere'], 1, 'Location named "Somewhere"'];
-        yield [['name' => 'nonexistent'], 0];
+        // MatchFilter on name (`name` is a `text` field → token match).
+        yield 'name ITK Development' => [['name' => 'ITK Development'], [4], 'Location 4 is "ITK Development"'];
+        yield 'name Somewhere' => [['name' => 'Somewhere'], [5], 'Location 5 is "Somewhere"'];
+        yield 'name nonexistent' => [['name' => 'nonexistent'], []];
 
-        // MatchFilter on postalCode.
-        yield [['postalCode' => '8000'], 1, 'Location with postal code 8000'];
-        yield [['postalCode' => '9999'], 0];
+        // MatchFilter on postalCode (`postalCode` is a `keyword` field → exact match).
+        yield 'postalCode 8000' => [['postalCode' => '8000'], [4], 'Location 4 has postal code 8000'];
+        yield 'postalCode 9999' => [['postalCode' => '9999'], []];
     }
 }

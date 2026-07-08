@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-51](https://github.com/itk-dev/event-database-api/pull/51)
+  Show the API-spec diff summary inline in the PR comment (collapsed) alongside the oasdiff review link
 - [PR-49](https://github.com/itk-dev/event-database-api/pull/49)
   Bump oasdiff-action to v0.1.5 in the API-spec workflow
 - [PR-48](https://github.com/itk-dev/event-database-api/pull/48)

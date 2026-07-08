@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-36](https://github.com/itk-dev/event-database-api/pull/36)
+  Add unit tests pinning the Elasticsearch filters' query DSL and parameter descriptors
 - [PR-35](https://github.com/itk-dev/event-database-api/pull/35)
   Test against production-parity Elasticsearch mappings (dynamic: strict) so filter tests exercise real field semantics
 - [PR-34](https://github.com/itk-dev/event-database-api/pull/34)

@@ -10,6 +10,10 @@ See [keep a changelog] for information about writing changes to this log.
 
 - [PR-39](https://github.com/itk-dev/event-database-api/pull/39)
   Update GitHub Actions to latest: actions/checkout v7 and go-task/setup-task v2
+- [PR-38](https://github.com/itk-dev/event-database-api/pull/38)
+  Extract SearchParamsBuilder from ElasticSearchIndex and unit-test the query DSL
+- [PR-37](https://github.com/itk-dev/event-database-api/pull/37)
+  Upload test coverage to Codecov in CI
 - [PR-36](https://github.com/itk-dev/event-database-api/pull/36)
   Add unit tests pinning the Elasticsearch filters' query DSL and parameter descriptors
 - [PR-35](https://github.com/itk-dev/event-database-api/pull/35)

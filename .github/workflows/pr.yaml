@@ -27,7 +27,15 @@ jobs:
 
       - name: Run API tests
         run: |
-          task --yes api:test
+          task --yes api:test:coverage
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v7
+        with:
+          files: ./coverage/unit.xml
+          flags: unittests
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   code-analysis-phpstan:
     runs-on: ubuntu-latest

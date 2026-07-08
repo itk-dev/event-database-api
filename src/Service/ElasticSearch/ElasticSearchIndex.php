@@ -3,8 +3,6 @@
 namespace App\Service\ElasticSearch;
 
 use App\Exception\IndexException;
-use App\Model\FilterType;
-use App\Model\IndexName;
 use App\Model\SearchResults;
 use App\Service\IndexInterface;
 use Elastic\Elasticsearch\Client;
@@ -18,6 +16,7 @@ class ElasticSearchIndex implements IndexInterface
 {
     public function __construct(
         private readonly Client $client,
+        private readonly SearchParamsBuilder $paramsBuilder,
     ) {
     }
 
@@ -113,7 +112,7 @@ class ElasticSearchIndex implements IndexInterface
 
     public function getAll(string $indexName, array $filters = [], int $from = 0, int $size = 10): SearchResults
     {
-        $params = $this->buildParams($indexName, $filters, $from, $size);
+        $params = $this->paramsBuilder->buildParams($indexName, $filters, $from, $size);
 
         try {
             /** @var Elasticsearch $response */
@@ -130,79 +129,6 @@ class ElasticSearchIndex implements IndexInterface
             hits: $this->extractSourceFromHits($data),
             total: $this->getTotalHits($data),
         );
-    }
-
-    /**
-     * Builds the parameters for the Elasticsearch search request.
-     *
-     * @param string $indexName
-     *   The name of the index to search in
-     * @param array $filters
-     *   An array of filters to apply to the search query
-     * @param int $from
-     *   The starting offset for the search results
-     * @param int $size
-     *   The maximum number of search results to return
-     *
-     * @return array
-     *   The built parameters for the Elasticsearch search request
-     */
-    private function buildParams(string $indexName, array $filters, int $from, int $size): array
-    {
-        $params = [
-            'index' => $indexName,
-            'body' => [
-                'query' => [
-                    'match_all' => (object) [],
-                ],
-                'size' => $size,
-                'from' => $from,
-                // @TODO: make a proper sort filter to allow client to set sort direction
-                'sort' => $this->getSort($indexName),
-            ],
-        ];
-
-        $body = $this->buildBody($filters);
-        if ([] !== $body) {
-            $params['body']['query'] = $body;
-        }
-
-        return $params;
-    }
-
-    /**
-     * Builds the body for Elasticsearch request using the given filters.
-     *
-     * @param array $filters
-     *   The filters to be included in the body
-     *
-     * @return array
-     *   The built body for Elasticsearch request
-     */
-    private function buildBody(array $filters): array
-    {
-        $body = [];
-        $combined = (bool) count($filters[FilterType::Filters->value]);
-        foreach ($filters[FilterType::Filters->value] as $filter) {
-            if ($combined) {
-                if (!array_key_exists('bool', $body)) {
-                    $body['bool'] = ['must' => []];
-                }
-                // Ensure that associative arrays and lists are not combined with keys "0","1" etc. in the final json.
-                // So we need to loop over lists to ensure keys are "reset" in the final body statement.
-                if (array_is_list($filter)) {
-                    foreach ($filter as $val) {
-                        $body['bool']['must'][] = $val;
-                    }
-                } else {
-                    $body['bool']['must'][] = $filter;
-                }
-            } else {
-                $body += $filter;
-            }
-        }
-
-        return $body;
     }
 
     /**
@@ -253,51 +179,5 @@ class ElasticSearchIndex implements IndexInterface
     private function getTotalHits(array $data): int
     {
         return $data['hits']['total']['value'] ?? 0;
-    }
-
-    /**
-     * Get the sorting configuration for a specific index.
-     *
-     * This method returns an array containing the sorting configuration based on the given index name.
-     * If the index name matches one of the predefined index names, a specific sorting configuration will be returned.
-     * Otherwise, an empty array will be returned indicating no sorting is required.
-     *
-     * @param string $indexName the name of the index
-     *
-     * @return array the sorting configuration
-     */
-    private function getSort(string $indexName): array
-    {
-        // Translates a string or int into the corresponding Enum case, if any.
-        // If there is no matching case defined, it will return null.
-        $indexName = IndexName::tryFrom($indexName);
-
-        return match ($indexName) {
-            IndexName::Events => [
-                '_score',
-                [
-                    'title.keyword' => [
-                        'order' => 'asc',
-                    ],
-                ],
-            ],
-            IndexName::DailyOccurrences, IndexName::Occurrences => [
-                'start' => [
-                    'order' => 'asc',
-                    'format' => 'strict_date_optional_time_nanos',
-                ],
-            ],
-            IndexName::Tags, IndexName::Vocabularies,IndexName::Locations, IndexName::Organizations => [
-                '_score',
-                [
-                    'name.keyword' => [
-                        'order' => 'asc',
-                    ],
-                ],
-            ],
-            default => [
-                '_score',
-            ],
-        };
     }
 }

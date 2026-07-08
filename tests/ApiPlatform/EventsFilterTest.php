@@ -90,11 +90,36 @@ class EventsFilterTest extends AbstractApiTestCase
             0,
         ];
 
-        // Test TagFilter.
+        // Test TagFilter. In production `tags` is a keyword field (see event-database-imports
+        // Mappings/Event) — matching is exact, case-sensitive and whole-value (no tokenisation).
+        yield [
+            ['tags' => 'ITKDev'],
+            2,
+            'Events tagged with "ITKDev" (exact keyword match)',
+        ];
+
         yield [
             ['tags' => 'itkdev'],
-            2,
-            'Events tagged with "itkdev"',
+            0,
+            'Tag matching is case-sensitive: "itkdev" does not match "ITKDev"',
+        ];
+
+        yield [
+            ['tags' => 'aros'],
+            3,
+            'All fixture events are tagged "aros"',
+        ];
+
+        yield [
+            ['tags' => 'for-boern'],
+            1,
+            'A hyphenated tag matches as a whole value, not by token',
+        ];
+
+        yield [
+            ['tags' => 'boern'],
+            0,
+            'No substring/token match on a keyword field',
         ];
 
         yield [
@@ -103,42 +128,14 @@ class EventsFilterTest extends AbstractApiTestCase
             'Events tagged with "itkdevelopment"',
         ];
 
-        // @todo Does tags filtering use the tag slug or name?
-        // yield [
-        //   ['tags' => 'for børn'],
-        //   0,
-        //   'Events tagged with "for børn"',
-        // ];
-        //
-        // yield [
-        //   ['tags' => 'for-boern'],
-        //   1,
-        //   'Events tagged with "for-boern"',
-        // ];
-
-        // @todo It seems that filtering in tags use som sort of "contains word"
-        // stuff, i.e. we can match the tag "for-boern" by filtering on "boern"
-        // or on "for" – but not on "for-boern" …
-        yield [
-            ['tags' => 'boern'],
-            1,
-            'Events tagged with "boern"',
-        ];
-
-        yield [
-            ['tags' => 'for'],
-            2,
-            'Events tagged with "for"',
-        ];
-
         // Combined filters.
         yield [
             [
                 'occurrences.start[between]' => static::formatDateTime('2026-01-01').'..'.static::formatDateTime('2026-12-31'),
-                'tags' => 'itkdev',
+                'tags' => 'aros',
             ],
             1,
-            'Events in 2026 tagged with "itkdev"',
+            'Events in 2026 also tagged "aros"',
         ];
     }
 }

@@ -186,6 +186,13 @@ tasks:
         vars:
           COMPOSE_ARGS: exec phpfpm bin/phpunit
 
+  api:test:coverage:
+    desc: Run API tests with a Clover coverage report (coverage/unit.xml)
+    cmds:
+      - task: compose
+        vars:
+          COMPOSE_ARGS: exec --env XDEBUG_MODE=coverage phpfpm bin/phpunit --coverage-clover=coverage/unit.xml
+
   api:spec:export:
     desc: Export API spec
     cmds:

@@ -10,6 +10,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 - [PR-41](https://github.com/itk-dev/event-database-api/pull/41)
   Run the Code Review workflow via docker compose directly (drop Task) with vendor caching and image pre-pull
+- [PR-38](https://github.com/itk-dev/event-database-api/pull/38)
+  Extract SearchParamsBuilder from ElasticSearchIndex and unit-test the query DSL
 - [PR-37](https://github.com/itk-dev/event-database-api/pull/37)
   Upload test coverage to Codecov in CI
 - [PR-36](https://github.com/itk-dev/event-database-api/pull/36)

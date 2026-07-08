@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-41](https://github.com/itk-dev/event-database-api/pull/41)
+  Run the Code Review workflow via docker compose directly (drop Task) with vendor caching and image pre-pull
 - [PR-37](https://github.com/itk-dev/event-database-api/pull/37)
   Upload test coverage to Codecov in CI
 - [PR-36](https://github.com/itk-dev/event-database-api/pull/36)

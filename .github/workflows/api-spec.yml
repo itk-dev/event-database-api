@@ -51,15 +51,53 @@ jobs:
         continue-on-error: true
         run: git diff --diff-filter=ACMRT --exit-code public/spec.yaml
 
-      - name: Comment PR
-        if: steps.git-diff-spec.outcome == 'failure'
+      - name: Find previous export comment
+        id: prev-export-comment
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          echo '## 🛑 Exported API specification file not up to date' > var/comment.md
-          echo '' >> var/comment.md
-          echo 'Please run `task api:spec:export` to export the API specification. Then commit and push the changes.' >> var/comment.md
-          gh pr comment ${{ github.event.pull_request.number }} --body-file var/comment.md --create-if-none --edit-last
+          id=$(gh api \
+            "repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments" \
+            --paginate \
+            --jq '.[] | select(.body | startswith("<!-- api-spec-export -->")) | .id' \
+            | tail -n1)
+          echo "id=${id:-}" >> "$GITHUB_OUTPUT"
+
+      - name: Comment PR - spec out of date
+        if: steps.git-diff-spec.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PREV_ID: ${{ steps.prev-export-comment.outputs.id }}
+        run: |
+          {
+            echo "<!-- api-spec-export -->"
+            echo "## 🛑 Exported API specification file not up to date"
+            echo ""
+            echo "Run \`task api:spec:export\` to export the API specification, then commit and push the changes."
+          } > comment.md
+          if [ -n "$PREV_ID" ]; then
+            jq -Rs '{body: .}' < comment.md \
+              | gh api "repos/${{ github.repository }}/issues/comments/$PREV_ID" --method PATCH --input -
+          else
+            gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
+          fi
+
+      # Self-heal: once the committed spec matches the export again, edit the
+      # previous 🛑 comment to ✅ instead of leaving a stale failure comment.
+      - name: Mark export comment resolved (when up to date)
+        if: steps.git-diff-spec.outcome == 'success' && steps.prev-export-comment.outputs.id != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PREV_ID: ${{ steps.prev-export-comment.outputs.id }}
+        run: |
+          {
+            echo "<!-- api-spec-export -->"
+            echo "## ✅ Exported API specification is up to date"
+            echo ""
+            echo "_Resolved — the committed \`public/spec.yaml\` matches the export._"
+          } > comment.md
+          jq -Rs '{body: .}' < comment.md \
+            | gh api "repos/${{ github.repository }}/issues/comments/$PREV_ID" --method PATCH --input -
 
       - name: Fail job api spec is not up to date
         if: steps.git-diff-spec.outcome == 'failure'

@@ -10,6 +10,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 - [PR-56](https://github.com/itk-dev/event-database-api/pull/56)
   Scope CI image pulls to each job's real dependencies (phpfpm, or phpfpm + elasticsearch) instead of the whole stack
+- [PR-55](https://github.com/itk-dev/event-database-api/pull/55)
+  Self-heal the API-spec "up to date" PR comment (resolve to ✅ once the spec matches, no stale 🛑)
 - [PR-54](https://github.com/itk-dev/event-database-api/pull/54)
   Add Rector (relevant sets aligned with PHPStan), apply it across the codebase, and run it in CI
 - [PR-53](https://github.com/itk-dev/event-database-api/pull/53)

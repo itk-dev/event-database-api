@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Service\ElasticSearch;
 
 use App\Service\ElasticSearch\ElasticIndexException;
@@ -10,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  * A 400 is parsed from the ES error JSON into "Type: reason"; anything else
  * collapses to a generic "Bad Request".
  */
-class ElasticIndexExceptionTest extends TestCase
+final class ElasticIndexExceptionTest extends TestCase
 {
     // Goal: a 400 parse error is rendered as a readable "Parse exception: <reason>".
     public function test400ParsesElasticErrorMessage(): void
@@ -20,11 +22,8 @@ class ElasticIndexExceptionTest extends TestCase
 
         $exception = new ElasticIndexException($raw, 400);
 
-        self::assertSame(
-            'Parse exception: failed to parse date field [2004-02-12T15:19:21+0000]',
-            $exception->getMessage(),
-        );
-        self::assertSame(400, $exception->getCode());
+        $this->assertSame('Parse exception: failed to parse date field [2004-02-12T15:19:21+0000]', $exception->getMessage());
+        $this->assertSame(400, $exception->getCode());
     }
 
     // Goal: non-400 codes collapse to a generic message (no ES JSON to parse).
@@ -32,6 +31,6 @@ class ElasticIndexExceptionTest extends TestCase
     {
         $exception = new ElasticIndexException('500 Internal Server Error: something', 500);
 
-        self::assertSame('Bad Request', $exception->getMessage());
+        $this->assertSame('Bad Request', $exception->getMessage());
     }
 }

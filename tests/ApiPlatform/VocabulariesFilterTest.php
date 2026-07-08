@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\ApiPlatform;
 
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -11,7 +13,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
  * pin the exact set of matching slugs. Fixture slugs: aarhusguiden, feeds
  * (see tests/resources/vocabularies.json).
  */
-class VocabulariesFilterTest extends AbstractApiTestCase
+final class VocabulariesFilterTest extends AbstractApiTestCase
 {
     protected static string $requestPath = '/api/v2/vocabularies';
 

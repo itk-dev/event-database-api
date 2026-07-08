@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Api\Filter\ElasticSearch;
 
 use ApiPlatform\Elasticsearch\Filter\AbstractFilter;
@@ -16,11 +18,19 @@ final class BooleanFilter extends AbstractFilter
 
         /** @var string $property */
         foreach ($properties as $property) {
-            if (!isset($context['filters'][$property]) || '' === $context['filters'][$property] || [] === $context['filters'][$property]) {
+            if (!isset($context['filters'][$property])) {
                 // If no value or empty value is set, skip it.
                 continue;
             }
-            $terms[$property] = explode(',', $context['filters'][$property]);
+            if ('' === $context['filters'][$property]) {
+                // If no value or empty value is set, skip it.
+                continue;
+            }
+            if ([] === $context['filters'][$property]) {
+                // If no value or empty value is set, skip it.
+                continue;
+            }
+            $terms[$property] = explode(',', (string) $context['filters'][$property]);
         }
 
         return [] === $terms ? $terms : ['terms' => $terms + ['boost' => 1.0]];
@@ -33,7 +43,7 @@ final class BooleanFilter extends AbstractFilter
         }
 
         $description = [];
-        foreach ($this->properties as $filterParameterName => $value) {
+        foreach (array_keys($this->properties) as $filterParameterName) {
             $description[$filterParameterName] = [
                 'property' => $filterParameterName,
                 'type' => TypeIdentifier::BOOL->value,

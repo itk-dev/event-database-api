@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\ApiPlatform;
 
 use App\Api\Dto\Tag;
@@ -9,7 +11,7 @@ use App\Tests\ApiPlatform\Trait\GetItemTestTrait;
 /**
  * Test that we can call the API.
  */
-class TagsTest extends AbstractApiTestCase
+final class TagsTest extends AbstractApiTestCase
 {
     use GetEntitiesTestTrait;
     use GetItemTestTrait;

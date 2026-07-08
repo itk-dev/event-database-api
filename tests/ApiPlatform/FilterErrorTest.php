@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\ApiPlatform;
 
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -15,7 +17,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
  * non-date value passes the filter but is rejected by Elasticsearch, coming
  * back as an ElasticIndexException (also mapped to 400).
  */
-class FilterErrorTest extends AbstractApiTestCase
+final class FilterErrorTest extends AbstractApiTestCase
 {
     protected static string $requestPath = '/api/v2/events';
 

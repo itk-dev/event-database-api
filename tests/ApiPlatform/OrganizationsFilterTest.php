@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\ApiPlatform;
 
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -10,7 +12,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
  * Assertions pin the exact set of matching `entityId`s. Fixture ids: 9 (ITKDev),
  * 10 (Aakb), 11 (Dokk1). See tests/resources/organizations.json.
  */
-class OrganizationsFilterTest extends AbstractApiTestCase
+final class OrganizationsFilterTest extends AbstractApiTestCase
 {
     protected static string $requestPath = '/api/v2/organizations';
 

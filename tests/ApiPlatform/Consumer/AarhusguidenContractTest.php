@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\ApiPlatform\Consumer;
 
 use App\Tests\ApiPlatform\AbstractApiTestCase;
@@ -19,7 +21,7 @@ use App\Tests\ApiPlatform\AbstractApiTestCase;
  * 12 → event 7 (tags aros/theoceanraceaarhus/ITKDev); all embedded events are
  * public (see tests/resources/daily_occurrences.json).
  */
-class AarhusguidenContractTest extends AbstractApiTestCase
+final class AarhusguidenContractTest extends AbstractApiTestCase
 {
     protected static string $requestPath = '/api/v2/daily_occurrences';
 
@@ -30,8 +32,8 @@ class AarhusguidenContractTest extends AbstractApiTestCase
         $response = $this->get([
             'event.tags' => 'ITKDev',
             'event.publicAccess' => 'true',
-            'start' => static::formatDateTime('2024-01-01'),
-            'end' => static::formatDateTime('2024-12-31'),
+            'start' => self::formatDateTime('2024-01-01'),
+            'end' => self::formatDateTime('2024-12-31'),
             'page' => 1,
             'itemsPerPage' => 6,
         ]);

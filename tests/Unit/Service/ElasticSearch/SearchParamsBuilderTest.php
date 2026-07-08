@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Service\ElasticSearch;
 
 use App\Model\FilterType;
@@ -13,7 +15,7 @@ use PHPUnit\Framework\TestCase;
  * the default match_all query, how filter clauses combine into `bool`/`must`,
  * and the per-index sort — without a live Elasticsearch.
  */
-class SearchParamsBuilderTest extends TestCase
+final class SearchParamsBuilderTest extends TestCase
 {
     private function noFilters(): array
     {
@@ -33,11 +35,11 @@ class SearchParamsBuilderTest extends TestCase
     {
         $params = (new SearchParamsBuilder())->buildParams(IndexName::Events->value, $this->noFilters(), 20, 5);
 
-        self::assertSame(IndexName::Events->value, $params['index']);
-        self::assertEquals(['match_all' => (object) []], $params['body']['query']);
-        self::assertSame(5, $params['body']['size']);
-        self::assertSame(20, $params['body']['from']);
-        self::assertArrayHasKey('sort', $params['body']);
+        $this->assertSame(IndexName::Events->value, $params['index']);
+        $this->assertEquals(['match_all' => (object) []], $params['body']['query']);
+        $this->assertSame(5, $params['body']['size']);
+        $this->assertSame(20, $params['body']['from']);
+        $this->assertArrayHasKey('sort', $params['body']);
     }
 
     // Goal: a single associative clause (e.g. a MatchFilter hit) is wrapped in bool/must.
@@ -50,7 +52,7 @@ class SearchParamsBuilderTest extends TestCase
             10,
         );
 
-        self::assertSame(['bool' => ['must' => [['match' => ['title' => 'x']]]]], $params['body']['query']);
+        $this->assertSame(['bool' => ['must' => [['match' => ['title' => 'x']]]]], $params['body']['query']);
     }
 
     // Goal: a list-shaped clause (e.g. IdFilter output) is flattened into must, not
@@ -64,10 +66,7 @@ class SearchParamsBuilderTest extends TestCase
             10,
         );
 
-        self::assertSame(
-            ['bool' => ['must' => [['terms' => ['organizer.entityId' => ['9'], 'boost' => 1.0]]]]],
-            $params['body']['query'],
-        );
+        $this->assertSame(['bool' => ['must' => [['terms' => ['organizer.entityId' => ['9'], 'boost' => 1.0]]]]], $params['body']['query']);
     }
 
     // Goal: multiple clauses accumulate under a single bool/must.
@@ -83,7 +82,7 @@ class SearchParamsBuilderTest extends TestCase
             10,
         );
 
-        self::assertSame([
+        $this->assertSame([
             ['match' => ['title' => 'x']],
             ['terms' => ['tags' => ['aros'], 'boost' => 1.0]],
         ], $params['body']['query']['bool']['must']);
@@ -95,7 +94,7 @@ class SearchParamsBuilderTest extends TestCase
     {
         $params = (new SearchParamsBuilder())->buildParams($index, $this->noFilters(), 0, 10);
 
-        self::assertSame($expectedSort, $params['body']['sort']);
+        $this->assertSame($expectedSort, $params['body']['sort']);
     }
 
     public static function sortProvider(): iterable

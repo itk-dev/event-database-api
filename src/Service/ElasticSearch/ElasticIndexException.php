@@ -40,7 +40,7 @@ class ElasticIndexException extends IndexException
             ->title()
             ->toString();
 
-        $reason = explode(': ', $message->error->root_cause[0]->reason)[0];
+        $reason = explode(': ', (string) $message->error->root_cause[0]->reason)[0];
 
         return $type.': '.$reason;
     }

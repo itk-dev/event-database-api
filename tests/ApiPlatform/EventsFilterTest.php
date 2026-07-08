@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\ApiPlatform;
 
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -11,7 +13,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
  * so a filter regression that returns the wrong records — not merely the wrong
  * number of them — is caught. Fixture ids: 7, 8, 9 (see tests/resources/events.json).
  */
-class EventsFilterTest extends AbstractApiTestCase
+final class EventsFilterTest extends AbstractApiTestCase
 {
     protected static string $requestPath = '/api/v2/events';
 
@@ -33,24 +35,24 @@ class EventsFilterTest extends AbstractApiTestCase
 
         // DateRangeFilter on occurrences.start.
         yield 'occurrences in 21st century' => [
-            ['occurrences.start[between]' => static::formatDateTime('2001-01-01').'..'.static::formatDateTime('2100-01-01')],
+            ['occurrences.start[between]' => self::formatDateTime('2001-01-01').'..'.self::formatDateTime('2100-01-01')],
             [7, 8, 9],
             'Every fixture event has an occurrence in the 21st century',
         ];
         yield 'occurrences in 2026' => [
-            ['occurrences.start[between]' => static::formatDateTime('2026-01-01').'..'.static::formatDateTime('2026-12-31')],
+            ['occurrences.start[between]' => self::formatDateTime('2026-01-01').'..'.self::formatDateTime('2026-12-31')],
             [9],
             'Only event 9 has an occurrence in 2026',
         ];
 
         // DateRangeFilter on updated (default operator: gte).
         yield 'updated on or after 2024' => [
-            ['updated' => static::formatDateTime('2024-01-01')],
+            ['updated' => self::formatDateTime('2024-01-01')],
             [7, 8, 9],
             'All events were updated on or after 2024-01-01',
         ];
         yield 'updated after 2100' => [
-            ['updated[gte]' => static::formatDateTime('2100-01-01')],
+            ['updated[gte]' => self::formatDateTime('2100-01-01')],
             [],
             'No events updated after 2100',
         ];
@@ -64,8 +66,8 @@ class EventsFilterTest extends AbstractApiTestCase
         // a conscious, BC-visible decision.
         yield 'F7: start/end satisfied by different occurrences' => [
             [
-                'occurrences.start[gte]' => static::formatDateTime('2024-12-01'),
-                'occurrences.end[lte]' => static::formatDateTime('2024-11-30'),
+                'occurrences.start[gte]' => self::formatDateTime('2024-12-01'),
+                'occurrences.end[lte]' => self::formatDateTime('2024-11-30'),
             ],
             [8],
             'Non-nested occurrences: event 8 matches although no single occurrence satisfies both bounds',
@@ -91,7 +93,7 @@ class EventsFilterTest extends AbstractApiTestCase
         // Combined filters.
         yield 'occurrences in 2026 AND tagged aros' => [
             [
-                'occurrences.start[between]' => static::formatDateTime('2026-01-01').'..'.static::formatDateTime('2026-12-31'),
+                'occurrences.start[between]' => self::formatDateTime('2026-01-01').'..'.self::formatDateTime('2026-12-31'),
                 'tags' => 'aros',
             ],
             [9],

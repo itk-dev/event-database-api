@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\ApiPlatform\Contract;
 
 use App\Tests\ApiPlatform\AbstractApiTestCase;
@@ -17,7 +19,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
  * See PR notes: this asymmetry is current behaviour, not necessarily desired —
  * the tests exist to catch it changing during the upgrade.
  */
-class ItemContractTest extends AbstractApiTestCase
+final class ItemContractTest extends AbstractApiTestCase
 {
     protected static string $requestPath = '/api/v2/events';
 

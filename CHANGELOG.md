@@ -10,6 +10,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 - [PR-55](https://github.com/itk-dev/event-database-api/pull/55)
   Self-heal the API-spec "up to date" PR comment (resolve to ✅ once the spec matches, no stale 🛑)
+- [PR-54](https://github.com/itk-dev/event-database-api/pull/54)
+  Add Rector (relevant sets aligned with PHPStan), apply it across the codebase, and run it in CI
 - [PR-53](https://github.com/itk-dev/event-database-api/pull/53)
   Compare effective schemas in the oasdiff gate (flatten-allof) so allOf/$ref restructures are not miscounted
 - [PR-52](https://github.com/itk-dev/event-database-api/pull/52)

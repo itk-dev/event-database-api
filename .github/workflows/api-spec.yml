@@ -12,12 +12,12 @@ jobs:
     name: Ensure committed API specification is up to date
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           fetch-depth: 2
 
       # https://taskfile.dev/installation/#github-actions
-      - uses: go-task/setup-task@v1
+      - uses: go-task/setup-task@v2
 
       - run: |
           docker network create frontend
@@ -53,13 +53,13 @@ jobs:
     needs: [api-spec]
     steps:
       - name: Check out BASE rev
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.base_ref }}
           path: base
 
       - name: Check out HEAD rev
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.head_ref }}
           path: head

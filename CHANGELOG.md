@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-39](https://github.com/itk-dev/event-database-api/pull/39)
+  Update GitHub Actions to latest: actions/checkout v7 and go-task/setup-task v2
 - [PR-36](https://github.com/itk-dev/event-database-api/pull/36)
   Add unit tests pinning the Elasticsearch filters' query DSL and parameter descriptors
 - [PR-35](https://github.com/itk-dev/event-database-api/pull/35)

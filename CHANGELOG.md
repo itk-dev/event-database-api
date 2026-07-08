@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-36](https://github.com/itk-dev/event-database-api/pull/36)
+  Add unit tests pinning the Elasticsearch filters' query DSL and parameter descriptors
 - [PR-33](https://github.com/itk-dev/event-database-api/pull/33)
   Mature the API test suite ahead of the API Platform upgrade (contract, filter, pagination and error tests)
 - [PR-32](https://github.com/itk-dev/event-database-api/pull/32)

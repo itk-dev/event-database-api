@@ -9,9 +9,11 @@ use PHPUnit\Framework\Attributes\DataProvider;
  *
  * The DateRangeFilter on the Event, Occurrence, DailyOccurrence, Location and
  * Organization resources is configured with `throwOnInvalid: true`, so a
- * malformed value must surface as a client error (4xx) rather than a 5xx leak,
- * and the response body must follow RFC 7807 (problem+json) per
- * `rfc_7807_compliant_errors: true` in api_platform.yaml.
+ * malformed value (unparseable `between`, unknown operator) surfaces as a
+ * client error (4xx) rather than a 5xx leak: the filter throws ApiPlatform's
+ * InvalidArgumentException, mapped to HTTP 400 via `exception_to_status`. A
+ * non-date value passes the filter but is rejected by Elasticsearch, coming
+ * back as an ElasticIndexException (also mapped to 400).
  */
 class FilterErrorTest extends AbstractApiTestCase
 {
@@ -20,15 +22,6 @@ class FilterErrorTest extends AbstractApiTestCase
     #[DataProvider('invalidDateRangeProvider')]
     public function testInvalidDateRangeReturnsClientError(string $path, array $query, string $message): void
     {
-        // TODO: DateRangeFilter::getElasticSearchQueryRanges() throws PHP's
-        // native \InvalidArgumentException, which is not in api_platform.yaml's
-        // exception_to_status map, so the framework returns 500 instead of 400.
-        // Either map \InvalidArgumentException -> 400, or throw
-        // ApiPlatform\Exception\InvalidArgumentException. Once fixed, remove
-        // this skip — the assertions below already encode the desired contract.
-        $this->markTestSkipped('Known contract bug: malformed date range returns 5xx. See TODO.');
-
-        // @phpstan-ignore-next-line deadCode.unreachable
         $response = $this->get($query, $path);
         $statusCode = $response->getStatusCode();
         $this->assertGreaterThanOrEqual(400, $statusCode, $message.': '.$statusCode);
@@ -37,7 +30,7 @@ class FilterErrorTest extends AbstractApiTestCase
 
     public static function invalidDateRangeProvider(): iterable
     {
-        // Missing '..' separator → DateRangeFilter throws \InvalidArgumentException('Invalid date range').
+        // Missing '..' separator → DateRangeFilter throws InvalidArgumentException.
         yield 'events: missing separator' => [
             '/api/v2/events',
             ['occurrences.start[between]' => '2024-01-01T00:00:00+00:00'],
@@ -49,6 +42,22 @@ class FilterErrorTest extends AbstractApiTestCase
             '/api/v2/events',
             ['occurrences.start[between]' => '2024-01-01T00:00:00+00:00..2024-06-01T00:00:00+00:00..2024-12-31T00:00:00+00:00'],
             'Between filter with three segments',
+        ];
+
+        // Unknown operator → DateRangeFilter can no longer resolve the DateLimit
+        // case and throws InvalidArgumentException (used to be a raw \Error → 500).
+        yield 'events: unknown operator' => [
+            '/api/v2/events',
+            ['occurrences.start[whenever]' => '2024-01-01T00:00:00+00:00'],
+            'Unknown date range operator',
+        ];
+
+        // Non-date value passes the filter but Elasticsearch cannot parse it →
+        // ElasticIndexException (mapped to 400).
+        yield 'events: non-date value' => [
+            '/api/v2/events',
+            ['occurrences.start[gte]' => 'not-a-date'],
+            'Non-date value for a date range filter',
         ];
 
         yield 'occurrences: missing separator' => [

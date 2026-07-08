@@ -2,16 +2,19 @@
 
 namespace App\Tests\Unit\Api\Filter\ElasticSearch;
 
+use ApiPlatform\Metadata\Exception\InvalidArgumentException;
 use App\Api\Filter\ElasticSearch\DateRangeFilter;
 use App\Model\DateLimit;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Pins DateRangeFilter::apply() query DSL and its (currently un-mapped) error
- * behaviour. `between` produces exclusive `gt`/`lt` bounds — a consumer-visible
- * semantic. The malformed-input and unknown-operator cases document current
- * behaviour: both surface as uncaught throwables (they leak as HTTP 500 today).
+ * Pins DateRangeFilter::apply() query DSL and its error behaviour. `between`
+ * produces exclusive `gt`/`lt` bounds — a consumer-visible semantic. Malformed
+ * and unknown-operator input, when the filter is configured with
+ * `throwOnInvalid: true`, throws ApiPlatform's InvalidArgumentException — mapped
+ * to HTTP 400 via `exception_to_status` — rather than leaking a native throwable
+ * as a 500. With `throwOnInvalid: false` the clause is skipped instead.
  */
 class DateRangeFilterTest extends TestCase
 {
@@ -69,8 +72,8 @@ class DateRangeFilterTest extends TestCase
         ];
     }
 
-    // Goal: pin that a malformed `between` value is currently an uncaught throwable
-    // (the error-contract fix will turn this into a 4xx).
+    // Goal: a malformed `between` value throws ApiPlatform's InvalidArgumentException
+    // (mapped to HTTP 400) rather than a native throwable that leaks as a 500.
     public function testMalformedBetweenThrows(): void
     {
         $filter = $this->newFilter(
@@ -78,47 +81,41 @@ class DateRangeFilterTest extends TestCase
             ['gte' => ['limit' => DateLimit::gte, 'throwOnInvalid' => true]],
         );
 
-        // No ".." separator → invalid range. Currently an uncaught \InvalidArgumentException
-        // (leaks as HTTP 500; the error-contract fix will map this to 4xx).
-        $this->expectException(\InvalidArgumentException::class);
+        // No ".." separator → invalid range.
+        $this->expectException(InvalidArgumentException::class);
         $filter->apply([], self::RESOURCE, null, ['filters' => ['updated' => ['between' => '2024-01-01T00:00:00+00:00']]]);
     }
 
-    // Goal: pin the second, distinct error leak — an unknown operator hits a native
-    // \Error — so the error-contract fix addresses both paths.
-    public function testUnknownOperatorThrowsError(): void
+    // Goal: an unknown operator (`updated[foo]=…`) throws ApiPlatform's
+    // InvalidArgumentException instead of the native \Error it used to leak.
+    public function testUnknownOperatorThrows(): void
     {
         $filter = $this->newFilter(
             ['updated' => 'gte'],
             ['gte' => ['limit' => DateLimit::gte, 'throwOnInvalid' => true]],
         );
 
-        // `updated[foo]=…` resolves DateLimit::{foo} → a native \Error (undefined enum
-        // case). Distinct from the malformed-between path; also leaks as HTTP 500 today.
-        $this->expectException(\Error::class);
+        $this->expectException(InvalidArgumentException::class);
         $filter->apply([], self::RESOURCE, null, ['filters' => ['updated' => ['foo' => 'x']]]);
     }
 
-    // Goal: document that the `throwOnInvalid` config flag is dead — invalid input
-    // throws whether it is true or false.
-    #[DataProvider('throwOnInvalidProvider')]
-    public function testThrowOnInvalidConfigIsNotConsulted(bool $throwOnInvalid): void
+    // Goal: `throwOnInvalid: false` makes invalid input skip the clause (empty DSL)
+    // instead of throwing — the flag is consulted for both invalid paths.
+    #[DataProvider('invalidInputProvider')]
+    public function testThrowOnInvalidFalseSkipsInvalidInput(array $filters): void
     {
-        // `throwOnInvalid` is stored in the config but never read: invalid input throws
-        // regardless of its value. This pins that the flag is currently dead.
         $filter = $this->newFilter(
             ['updated' => 'gte'],
-            ['gte' => ['limit' => DateLimit::gte, 'throwOnInvalid' => $throwOnInvalid]],
+            ['gte' => ['limit' => DateLimit::gte, 'throwOnInvalid' => false]],
         );
 
-        $this->expectException(\InvalidArgumentException::class);
-        $filter->apply([], self::RESOURCE, null, ['filters' => ['updated' => ['between' => 'no-separator']]]);
+        self::assertSame([], $filter->apply([], self::RESOURCE, null, ['filters' => $filters]));
     }
 
-    public static function throwOnInvalidProvider(): iterable
+    public static function invalidInputProvider(): iterable
     {
-        yield 'throwOnInvalid=true' => [true];
-        yield 'throwOnInvalid=false' => [false];
+        yield 'malformed between' => [['updated' => ['between' => 'no-separator']]];
+        yield 'unknown operator' => [['updated' => ['foo' => 'x']]];
     }
 
     // Goal: getDescription() advertises the default parameter plus every

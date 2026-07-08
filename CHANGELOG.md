@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-41](https://github.com/itk-dev/event-database-api/pull/41)
+  Run the Code Review workflow via docker compose directly (drop Task) with vendor caching and image pre-pull
 - [PR-40](https://github.com/itk-dev/event-database-api/pull/40)
   Improve the API-spec workflow (path filter, permissions, vendor cache, oasdiff)
 - [PR-39](https://github.com/itk-dev/event-database-api/pull/39)

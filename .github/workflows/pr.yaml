@@ -13,21 +13,29 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      # https://taskfile.dev/installation/#github-actions
-      - uses: go-task/setup-task@v2
+      - name: Cache vendor
+        uses: actions/cache@v5
+        with:
+          path: vendor
+          key: vendor-php8.4-${{ hashFiles('composer.lock') }}
+          restore-keys: vendor-php8.4-
 
       - name: Start docker compose setup and install site
         run: |
           docker network create frontend
-          task --yes site:update
+          docker compose pull --quiet
+          docker compose up --detach --wait
+          docker compose exec -T phpfpm composer install --no-interaction
 
       - name: Load test fixtures
         run: |
-          task --yes fixtures:load:test
+          for index in events organizations occurrences daily_occurrences tags vocabularies locations; do
+            docker compose exec -T phpfpm bin/console app:fixtures:load "$index" --url="file:///app/tests/resources/$index.json"
+          done
 
-      - name: Run API tests
+      - name: Run API tests with coverage
         run: |
-          task --yes api:test:coverage
+          docker compose exec -T -e XDEBUG_MODE=coverage phpfpm bin/phpunit --coverage-clover=coverage/unit.xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v7
@@ -43,13 +51,20 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      # https://taskfile.dev/installation/#github-actions
-      - uses: go-task/setup-task@v2
+      - name: Cache vendor
+        uses: actions/cache@v5
+        with:
+          path: vendor
+          key: vendor-php8.4-${{ hashFiles('composer.lock') }}
+          restore-keys: vendor-php8.4-
 
-      - run: |
+      - name: Start docker compose setup and install site
+        run: |
           docker network create frontend
-          task --yes site:update
+          docker compose pull --quiet
+          docker compose up --detach --wait
+          docker compose exec -T phpfpm composer install --no-interaction
 
       - name: Run code analysis
         run: |
-          task --yes code-analysis:phpstan
+          docker compose exec -T phpfpm vendor/bin/phpstan analyse --no-progress

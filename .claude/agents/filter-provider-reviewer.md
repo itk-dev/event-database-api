@@ -18,10 +18,14 @@ Focus your review on:
    `SortFilterInterface` marker. A new sorting filter must implement that marker or it will be treated as a query
    clause; a query filter must not.
 
-3. **Index-contract alignment.** Field names/types referenced in the DSL must match what `event-database-imports`
-   writes (mappings live only there — this repo has none). A typo'd or renamed field yields empty/incorrect results
-   silently, not an error. Flag any field reference you can't confirm against the index contract and recommend
-   verifying against a live mapping (`docker compose exec -T phpfpm curl -s http://elasticsearch:9200/<index>/_mapping`).
+3. **Index-contract alignment — check the MAPPED field type, not assumed behaviour.** Field names/types referenced
+   in the DSL must match what `event-database-imports` writes. The production-parity mappings are copied in
+   `tests/resources/mappings/*.json` — consult them. Matching semantics depend on the mapped type: a `keyword` field
+   (e.g. `tags`, `slug`, `vocabulary`, `postalCode`) matches **exact, case-sensitive, whole-value** (no tokenisation);
+   a `text` field (e.g. `title`, `name`, `description`) is **tokenised** (word match). Do not assume dynamic-mapping
+   behaviour. A typo'd/renamed field, or a filter that assumes token matching on a `keyword` field, yields
+   empty/incorrect results silently — not an error. Confirm against `tests/resources/mappings/<index>.json` or a live
+   mapping (`docker compose exec -T phpfpm curl -s http://elasticsearch:9200/<index>/_mapping`).
 
 4. **Pagination & limits.** `paginationMaximumItemsPerPage` on the DTO and `AbstractProvider::MAX_PAGE_SIZE_FALLBACK`
    (20) bound page size — check a new provider respects them and returns `SearchResults` for collections / a single

@@ -53,9 +53,9 @@ class DailyOccurrencesFilterTest extends AbstractApiTestCase
             3,
         ];
 
-        // TagFilter on event.tags.
+        // TagFilter on event.tags — keyword field, exact/case-sensitive match.
         yield [
-            ['event.tags' => 'itkdev'],
+            ['event.tags' => 'ITKDev'],
             1,
         ];
 

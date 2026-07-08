@@ -10,6 +10,12 @@ See [keep a changelog] for information about writing changes to this log.
 
 - [PR-38](https://github.com/itk-dev/event-database-api/pull/38)
   Extract SearchParamsBuilder from ElasticSearchIndex and unit-test the query DSL
+- [PR-37](https://github.com/itk-dev/event-database-api/pull/37)
+  Upload test coverage to Codecov in CI
+- [PR-36](https://github.com/itk-dev/event-database-api/pull/36)
+  Add unit tests pinning the Elasticsearch filters' query DSL and parameter descriptors
+- [PR-35](https://github.com/itk-dev/event-database-api/pull/35)
+  Test against production-parity Elasticsearch mappings (dynamic: strict) so filter tests exercise real field semantics
 - [PR-34](https://github.com/itk-dev/event-database-api/pull/34)
   Document the item-as-collection quirk as a versioning TODO and fix the README fixtures wording (no Doctrine)
 - [PR-33](https://github.com/itk-dev/event-database-api/pull/33)

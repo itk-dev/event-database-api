@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-53](https://github.com/itk-dev/event-database-api/pull/53)
+  Compare effective schemas in the oasdiff gate (flatten-allof) so allOf/$ref restructures are not miscounted
 - [PR-51](https://github.com/itk-dev/event-database-api/pull/51)
   Show the API-spec diff summary inline in the PR comment (collapsed) alongside the oasdiff review link
 - [PR-49](https://github.com/itk-dev/event-database-api/pull/49)

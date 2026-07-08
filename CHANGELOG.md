@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-53](https://github.com/itk-dev/event-database-api/pull/53)
+  Compare effective schemas in the oasdiff gate (flatten-allof) so allOf/$ref restructures are not miscounted
 - [PR-52](https://github.com/itk-dev/event-database-api/pull/52)
   Pin the problem+json error contract: 401 served as RFC 7807, resource reads in problem+json yield 406
 - [PR-51](https://github.com/itk-dev/event-database-api/pull/51)

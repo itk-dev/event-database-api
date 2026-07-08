@@ -98,6 +98,9 @@ jobs:
           base: .api-spec-tmp/base.yaml
           revision: .api-spec-tmp/revision.yaml
           fail-on: ERR
+          # Compare effective (flattened) schemas so an allOf/$ref restructure is
+          # not reported as removed properties. Never masks real diffs.
+          flatten-allof: true
           # Upload to oasdiff.com to get a side-by-side review link (exposed as
           # the review_url output), but suppress the action's own comment with an
           # empty token — we post a single combined comment below.
@@ -113,6 +116,7 @@ jobs:
           revision: .api-spec-tmp/revision.yaml
           format: markdown
           output-to-file: changelog.md
+          flatten-allof: true
           # As above: keep the upload/review_url output, suppress the auto-comment.
           review: true
           github-token: ""

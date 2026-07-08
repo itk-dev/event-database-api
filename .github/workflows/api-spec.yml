@@ -98,6 +98,8 @@ jobs:
           base: .api-spec-tmp/base.yaml
           revision: .api-spec-tmp/revision.yaml
           fail-on: ERR
+          # Do not upload the spec to oasdiff.com; keep the diff entirely in CI.
+          review: false
 
       - name: Generate changelog
         id: changelog
@@ -108,6 +110,8 @@ jobs:
           revision: .api-spec-tmp/revision.yaml
           format: markdown
           output-to-file: changelog.md
+          # Do not upload the spec to oasdiff.com; keep the diff entirely in CI.
+          review: false
 
       - name: Determine whether the spec changed
         id: changes

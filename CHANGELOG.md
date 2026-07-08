@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-38](https://github.com/itk-dev/event-database-api/pull/38)
+  Extract SearchParamsBuilder from ElasticSearchIndex and unit-test the query DSL
 - [PR-33](https://github.com/itk-dev/event-database-api/pull/33)
   Mature the API test suite ahead of the API Platform upgrade (contract, filter, pagination and error tests)
 - [PR-32](https://github.com/itk-dev/event-database-api/pull/32)

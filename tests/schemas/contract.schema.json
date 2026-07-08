@@ -1,0 +1,129 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "internal://contract.schema.json",
+    "$comment": "Deep payload contract for every API resource member. Additive-tolerant (additionalProperties defaults to true): adding a field passes, removing/renaming a required field or changing a type fails. Derived from live payloads and event-database-imports mappings. See ContractSchemaTest.",
+    "definitions": {
+        "coordinates": {
+            "type": "array",
+            "items": {"type": "number"},
+            "minItems": 2,
+            "maxItems": 2
+        },
+        "imageUrls": {
+            "type": "object",
+            "required": ["small", "medium", "large"],
+            "properties": {
+                "small": {"type": "string"},
+                "medium": {"type": "string"},
+                "large": {"type": "string"}
+            }
+        },
+        "party": {
+            "$comment": "Organizer / partner / Organization member — same shape.",
+            "type": "object",
+            "required": ["entityId", "name", "email", "url"],
+            "properties": {
+                "entityId": {"type": "integer"},
+                "name": {"type": "string"},
+                "email": {"type": "string"},
+                "url": {"type": "string"},
+                "created": {"type": "string"},
+                "updated": {"type": "string"}
+            }
+        },
+        "location": {
+            "type": "object",
+            "required": ["entityId", "name", "disabilityAccess", "coordinates"],
+            "properties": {
+                "entityId": {"type": "integer"},
+                "name": {"type": "string"},
+                "image": {"type": ["string", "null"]},
+                "url": {"type": ["string", "null"]},
+                "telephone": {"type": ["string", "null"]},
+                "disabilityAccess": {"type": "boolean"},
+                "mail": {"type": ["string", "null"]},
+                "street": {"type": "string"},
+                "suite": {"type": "string"},
+                "region": {"type": "string"},
+                "city": {"type": "string"},
+                "country": {"type": "string"},
+                "postalCode": {"type": "string"},
+                "coordinates": {"$ref": "#/definitions/coordinates"}
+            }
+        },
+        "occurrenceEmbedded": {
+            "$comment": "Occurrence as embedded inside an event (no back-reference to event).",
+            "type": "object",
+            "required": ["entityId", "start", "end"],
+            "properties": {
+                "entityId": {"type": "integer"},
+                "start": {"type": "string"},
+                "end": {"type": "string"},
+                "ticketPriceRange": {"type": ["string", "null"]},
+                "room": {"type": ["string", "null"]},
+                "status": {"type": ["string", "null"]}
+            }
+        },
+        "event": {
+            "type": "object",
+            "required": ["entityId", "title", "publicAccess", "organizer", "location", "occurrences", "tags", "imageUrls"],
+            "properties": {
+                "entityId": {"type": "integer"},
+                "title": {"type": "string"},
+                "excerpt": {"type": ["string", "null"]},
+                "description": {"type": ["string", "null"]},
+                "url": {"type": ["string", "null"]},
+                "ticketUrl": {"type": ["string", "null"]},
+                "publicAccess": {"type": "boolean"},
+                "organizer": {"$ref": "#/definitions/party"},
+                "partners": {"type": "array", "items": {"$ref": "#/definitions/party"}},
+                "occurrences": {"type": "array", "items": {"$ref": "#/definitions/occurrenceEmbedded"}},
+                "dailyOccurrences": {"type": "array", "items": {"$ref": "#/definitions/occurrenceEmbedded"}},
+                "tags": {"type": "array", "items": {"type": "string"}},
+                "imageUrls": {"$ref": "#/definitions/imageUrls"},
+                "created": {"type": "string"},
+                "updated": {"type": "string"},
+                "location": {"$ref": "#/definitions/location"}
+            }
+        },
+        "occurrence": {
+            "$comment": "Occurrence / DailyOccurrence resource member — carries the parent event.",
+            "type": "object",
+            "required": ["entityId", "start", "end", "event"],
+            "properties": {
+                "entityId": {"type": "integer"},
+                "start": {"type": "string"},
+                "end": {"type": "string"},
+                "ticketPriceRange": {"type": ["string", "null"]},
+                "room": {"type": ["string", "null"]},
+                "status": {"type": ["string", "null"]},
+                "event": {"$ref": "#/definitions/event"}
+            }
+        },
+        "organization": {
+            "$ref": "#/definitions/party"
+        },
+        "tag": {
+            "type": "object",
+            "required": ["@id", "@type", "slug", "name"],
+            "properties": {
+                "@id": {"type": "string"},
+                "@type": {"type": "string"},
+                "slug": {"type": "string"},
+                "name": {"type": "string"}
+            }
+        },
+        "vocabulary": {
+            "type": "object",
+            "required": ["@id", "@type", "slug", "name"],
+            "properties": {
+                "@id": {"type": "string"},
+                "@type": {"type": "string"},
+                "slug": {"type": "string"},
+                "name": {"type": "string"},
+                "description": {"type": ["string", "null"]},
+                "tags": {"type": "array", "items": {"type": "string"}}
+            }
+        }
+    }
+}

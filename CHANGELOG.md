@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-37](https://github.com/itk-dev/event-database-api/pull/37)
+  Upload test coverage to Codecov in CI
 - [PR-36](https://github.com/itk-dev/event-database-api/pull/36)
   Add unit tests pinning the Elasticsearch filters' query DSL and parameter descriptors
 - [PR-35](https://github.com/itk-dev/event-database-api/pull/35)

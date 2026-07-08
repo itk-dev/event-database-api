@@ -36,3 +36,6 @@ phpstan.neon
 ###> claude-code ###
 /.claude/settings.local.json
 ###< claude-code ###
+
+# Coverage reports (generated in CI, uploaded to Codecov).
+/coverage

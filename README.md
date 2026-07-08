@@ -40,8 +40,8 @@ docker compose exec phpfpm composer install
 
 ### Fixtures
 
-The project comes with doctrine fixtures to help development on local machines. They can be loaded with the standard
-doctrine fixture load command:
+The project comes with Elasticsearch index fixtures to help development on local machines (this API has no Doctrine
+database — see [`CLAUDE.md`](CLAUDE.md)). They can be loaded with the `app:fixtures:load` command:
 
 ```shell
 docker compose exec phpfpm bin/console app:fixtures:load <index>
@@ -115,6 +115,18 @@ Get events with(out) public access:
 curl --silent --header "X-Api-Key: api_key_1" "http://$(docker compose port nginx 8080)/api/v2/events?publicAccess=true"  | docker run --rm --interactive ghcr.io/jqlang/jq:latest '.["hydra:member"]|length'
 curl --silent --header "X-Api-Key: api_key_1" "http://$(docker compose port nginx 8080)/api/v2/events?publicAccess=false" | docker run --rm --interactive ghcr.io/jqlang/jq:latest '.["hydra:member"]|length'
 ```
+
+## Known limitations
+
+The following contract quirk is kept as-is for backwards compatibility and should be revisited when the API is next
+versioned (fixing it is a breaking change for API consumers):
+
+- **Item endpoints return a collection wrapper.** `GET /api/v2/{resource}/{id}` for `events`, `occurrences`,
+  `daily_occurrences`, `locations` and `organizations` returns a `hydra:Collection` with a single member rather than a
+  single item, and that member has no `@id`/`@type`. This is because the representation providers return the raw
+  Elasticsearch `_source` wrapped in an array (see e.g.
+  [`EventRepresentationProvider`](src/Api/State/EventRepresentationProvider.php)). `tags` and `vocabularies` already
+  return proper single items. When versioning the API, return a single mapped item with `@id`/`@type` for all resources.
 
 ## Test
 

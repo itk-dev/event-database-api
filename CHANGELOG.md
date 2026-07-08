@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-52](https://github.com/itk-dev/event-database-api/pull/52)
+  Pin the problem+json error contract: 401 served as RFC 7807, resource reads in problem+json yield 406
 - [PR-51](https://github.com/itk-dev/event-database-api/pull/51)
   Show the API-spec diff summary inline in the PR comment (collapsed) alongside the oasdiff review link
 - [PR-49](https://github.com/itk-dev/event-database-api/pull/49)

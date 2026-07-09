@@ -16,13 +16,14 @@ JS/CSS to lint). Stop early if a critical check fails.
 4. **Twig coding standards**: `task coding-standards:twig:check`
 5. **YAML coding standards**: `task coding-standards:yaml:check`
 6. **Markdown coding standards**: `task coding-standards:markdown:check`
-7. **PHPStan (level 6)**: `task code-analysis:phpstan`
+7. **PHPStan (level 8)**: `task code-analysis:phpstan`
 8. **Rector (dry-run)**: `task code-analysis:rector` — the `Rector` gate fails on any suggested change; run `task code-analysis:rector:apply` to fix.
 9. **Test fixtures + API tests**: `task fixtures:load:test --yes && task api:test`. Tests hit a real Elasticsearch, so fixtures must be loaded first. If the load fails with "No alive nodes", run `docker compose up --detach --wait` and retry — see the `reload-fixtures` agent for the full recovery dance.
 10. **API spec up to date** (mirrors `.github/workflows/api-spec.yml`):
 
 - `task api:spec:export`
 - `git diff --exit-code public/spec.yaml` — must be clean.
+
 1. **CHANGELOG updated**: `git diff develop -- CHANGELOG.md` should show at least one entry under `## [Unreleased]`.
 
 ## Output

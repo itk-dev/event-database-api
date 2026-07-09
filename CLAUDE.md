@@ -10,8 +10,8 @@ API platform front-end for the Danish event database used by the municipality of
 `docker-compose.yml` is part of the standard ITK Dev Symfony image but is **not used for domain data** (the
 `migrations/` and `src/Entity/` directories are empty).
 
-Stack: PHP 8.3+, Symfony 7.4, API Platform 4.1, Elasticsearch 8.x. Runs entirely in Docker via
-`itkdev/php8.3-fpm` + nginx.
+Stack: PHP 8.3+, Symfony 7.4, API Platform 4.3, Elasticsearch 8.x. Runs entirely in Docker via
+`itkdev/php8.4-fpm` + nginx.
 
 ## Common commands
 
@@ -46,14 +46,21 @@ The test harness creates each index with a **production-parity mapping** (`dynam
 `tests/resources/mappings/<index>.json` — a hand-kept copy of the importer's `src/Model/Indexing/Mappings/`.
 `FixtureLoader::createIndex()` fails loudly if a mapping is missing, so the filter tests exercise real field
 semantics (`keyword` = exact/case-sensitive; `text` = tokenised) rather than Elasticsearch dynamic-mapping
-artefacts. When the importer changes a mapping, update the matching file here (the `Stop` hook warns on drift).
+artefacts. When the importer changes a mapping, update the matching file here — the `Stop` hook warns locally,
+and the `index-mapping-drift` CI job fails if these diverge from the importer's committed `resources/mappings`
+export (`.github/workflows/index-mapping-drift.yaml`).
+
+The suite is split into `tests/ApiPlatform/Contract/` (JSON-LD envelope + deep payload schemas via
+`ContractSchemaTest`, `tests/schemas/`), `tests/ApiPlatform/Consumer/` (per-consumer contracts —
+`AarhusguidenContractTest`, `Os2displayContractTest`), the per-resource `*Test`/`*FilterTest` (behavioural), and
+`tests/Unit/` (filter DSL + `SearchParamsBuilder`, runnable with Elasticsearch stopped).
 
 ### Lint / static analysis
 
 ```shell
 task coding-standards:check              # markdown + php-cs-fixer + twig-cs-fixer + prettier (yaml)
 task coding-standards:apply              # auto-fix all of the above
-task code-analysis                       # PHPStan, level 6
+task code-analysis                       # PHPStan (level 8) + Rector
 ```
 
 CI (GitHub Actions `pr.yaml`) runs all of these — run them locally before opening a PR.

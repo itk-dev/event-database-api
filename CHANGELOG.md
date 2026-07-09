@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-60](https://github.com/itk-dev/event-database-api/pull/60)
+  Upgrade Elasticsearch to 8.19.18 (dev image) and the `elasticsearch/elasticsearch` client constraint to `^8.19`
 - [PR-59](https://github.com/itk-dev/event-database-api/pull/59)
   Refresh CLAUDE.md/agent docs for current tooling (API Platform 4.3, php8.4 image, PHPStan level 8, test layout)
 - [PR-58](https://github.com/itk-dev/event-database-api/pull/58)

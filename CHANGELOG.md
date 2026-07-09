@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-59](https://github.com/itk-dev/event-database-api/pull/59)
+  Refresh CLAUDE.md/agent docs for current tooling (API Platform 4.3, php8.4 image, PHPStan level 8, test layout)
 - [PR-58](https://github.com/itk-dev/event-database-api/pull/58)
   Update dependencies in-constraint (Symfony 7.4.14 patch train, phpunit/php-cs-fixer/phpstan-symfony/flex)
 - [PR-57](https://github.com/itk-dev/event-database-api/pull/57)

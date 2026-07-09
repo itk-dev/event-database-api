@@ -22,4 +22,4 @@ Two flavours of fixtures exist (see `src/Model/IndexName.php` for the seven inde
    - Poll the cluster health endpoint until it returns HTTP 200:
      `docker compose exec elasticsearch curl 'http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=5s' --verbose`
    - Re-run the fixture load command.
-5. Report which indices were loaded and any non-fatal warnings (the Taskfile sets `ignore_error: true` because some fixtures emit a benign `Warning: Undefined array key "entityId"`).
+5. Report which indices were loaded and any non-fatal warnings.

@@ -9,7 +9,8 @@ See [keep a changelog] for information about writing changes to this log.
 ## [Unreleased]
 
 - [PR-57](https://github.com/itk-dev/event-database-api/pull/57)
-  Run Rector from the Claude Code setup (PostToolUse hook + pr-readiness step)
+  Run Rector from the Claude Code setup (PostToolUse hook + pr-readiness step); drop the redundant
+  `--user=root`/`COMPOSER_ALLOW_SUPERUSER` from the release workflow (`COMPOSE_USER: runner`)
 - [PR-56](https://github.com/itk-dev/event-database-api/pull/56)
   Scope CI image pulls to each job's real dependencies (phpfpm, or phpfpm + elasticsearch) instead of the whole stack
 - [PR-55](https://github.com/itk-dev/event-database-api/pull/55)

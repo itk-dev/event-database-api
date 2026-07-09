@@ -163,7 +163,9 @@ jobs:
       - name: Determine whether the spec changed
         id: changes
         run: |
-          if [ -s changelog.md ] && ! grep -qi 'no changes' changelog.md; then
+          # oasdiff writes "No changelog changes" (v0.1.x) / "No changes" (older)
+          # when the spec is unchanged; treat either as no change.
+          if [ -s changelog.md ] && ! grep -qiE 'no (changelog )?changes' changelog.md; then
             echo "has_changes=true" >> "$GITHUB_OUTPUT"
           else
             echo "has_changes=false" >> "$GITHUB_OUTPUT"

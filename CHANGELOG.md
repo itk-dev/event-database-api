@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-61](https://github.com/itk-dev/event-database-api/pull/61)
+  Fix the API-spec workflow's no-change detection for oasdiff v0.1.x ("No changelog changes" wording)
 - [PR-60](https://github.com/itk-dev/event-database-api/pull/60)
   Upgrade Elasticsearch to 8.19.18 (dev image) and the `elasticsearch/elasticsearch` client constraint to `^8.19`
 - [PR-59](https://github.com/itk-dev/event-database-api/pull/59)

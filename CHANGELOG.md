@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-58](https://github.com/itk-dev/event-database-api/pull/58)
+  Update dependencies in-constraint (Symfony 7.4.14 patch train, phpunit/php-cs-fixer/phpstan-symfony/flex)
 - [PR-57](https://github.com/itk-dev/event-database-api/pull/57)
   Run Rector from the Claude Code setup (PostToolUse hook + pr-readiness step); drop the redundant
   `--user=root`/`COMPOSER_ALLOW_SUPERUSER` from the release workflow (`COMPOSE_USER: runner`)

@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-57](https://github.com/itk-dev/event-database-api/pull/57)
+  Run Rector from the Claude Code setup (PostToolUse hook + pr-readiness step)
 - [PR-56](https://github.com/itk-dev/event-database-api/pull/56)
   Scope CI image pulls to each job's real dependencies (phpfpm, or phpfpm + elasticsearch) instead of the whole stack
 - [PR-55](https://github.com/itk-dev/event-database-api/pull/55)

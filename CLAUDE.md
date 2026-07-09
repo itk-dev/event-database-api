@@ -152,8 +152,9 @@ cluster** — no shared database, no HTTP call between them.
 run tooling **inside the `phpfpm` container**.
 
 - **Hooks** — `SessionStart` boots the Docker stack and checks host prerequisites; `PostToolUse` auto-runs
-  php-cs-fixer, phpstan, twig-cs-fixer, `composer normalize`, prettier, and markdownlint on the file you just edited
-  (so single-file changes don't need manual formatting); `PreToolUse` blocks edits to generated/locked/secret files
+  Rector (on `src`/`tests` PHP), php-cs-fixer, phpstan, twig-cs-fixer, `composer normalize`, prettier, and
+  markdownlint on the file you just edited (so single-file changes don't need manual formatting); `PreToolUse`
+  blocks edits to generated/locked/secret files
   (`config/reference.php`, lock files, `.env.local`, …); `Stop` validates the DI container (`lint:container`), warns
   on ES index-contract changes (`scripts/claude-hook-check-index-contract.sh`), and warns when a resource changed
   but `public/spec.yaml` was not regenerated (`scripts/claude-hook-check-spec-drift.sh`).

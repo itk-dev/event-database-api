@@ -55,6 +55,13 @@ The suite is split into `tests/ApiPlatform/Contract/` (JSON-LD envelope + deep p
 `AarhusguidenContractTest`, `Os2displayContractTest`), the per-resource `*Test`/`*FilterTest` (behavioural), and
 `tests/Unit/` (filter DSL + `SearchParamsBuilder`, runnable with Elasticsearch stopped).
 
+Per-resource tests extend `AbstractApiTestCase`, `use` the `GetEntitiesTestTrait` / `GetItemTestTrait` traits, and
+configure behaviour purely through static props (`$requestPath`, `$resourceClass`, `$itemId`, `$unknownItemId`) —
+`EventsTest.php` is the template. The traits assert the standard contract (401 without a key, 200 + `hydra:*` shape +
+JSON-schema match with one, 404 for unknown ids), so a new resource's happy-path coverage is mostly declarative. The
+`*FilterTest.php` classes carry the resource-specific filter assertions. Fixture ids referenced by `$itemId` must
+exist in `tests/resources/<index>.json`.
+
 ### Lint / static analysis
 
 ```shell

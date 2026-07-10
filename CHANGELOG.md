@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-07-10
+
 - [PR-61](https://github.com/itk-dev/event-database-api/pull/61)
   Fix the API-spec workflow's no-change detection for oasdiff v0.1.x ("No changelog changes" wording)
 - [PR-60](https://github.com/itk-dev/event-database-api/pull/60)
@@ -155,7 +157,10 @@ See [keep a changelog] for information about writing changes to this log.
 - Added multi-value filtering for Lactions and Organizations
 
 [keep a changelog]: https://keepachangelog.com/en/1.1.0/
-[Unreleased]: https://github.com/itk-dev/event-database-api/compare/1.2.0...HEAD
+[Unreleased]: https://github.com/itk-dev/event-database-api/compare/1.3.0...HEAD
+[1.3.0]: https://github.com/itk-dev/event-database-api/compare/1.2.2...1.3.0
+[1.2.2]: https://github.com/itk-dev/event-database-api/compare/1.2.1...1.2.2
+[1.2.1]: https://github.com/itk-dev/event-database-api/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/itk-dev/event-database-api/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/itk-dev/event-database-api/releases/tag/1.1.0
 [1.0.1]: https://github.com/itk-dev/event-database-api/releases/tag/1.0.1

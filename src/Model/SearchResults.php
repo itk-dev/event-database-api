@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Model;
 
 /**
  * Represents the results of a search operation.
  */
-final class SearchResults
+final readonly class SearchResults
 {
     public function __construct(
-        public readonly array $hits,
-        public readonly int $total,
+        public array $hits,
+        public int $total,
     ) {
     }
 }

@@ -38,8 +38,6 @@ tasks:
         task: compose
         vars:
           COMPOSE_ARGS: exec phpfpm bin/console app:fixtures:load {{.ITEM}}
-    # Loading some fixtures generates an 'Warning: Undefined array key "entityId"' error.
-    ignore_error: true
     silent: true
 
   fixtures:load:test:
@@ -57,8 +55,6 @@ tasks:
         task: compose
         vars:
           COMPOSE_ARGS: exec phpfpm bin/console app:fixtures:load {{.ITEM}} --url=file:///app/tests/resources/{{.ITEM}}.json
-    # Loading some fixtures generates an 'Warning: Undefined array key "entityId"' error.
-    ignore_error: true
 
   composer:
     desc: "Run `composer` command. Example: task composer -- normalize"
@@ -169,6 +165,7 @@ tasks:
     desc: "Run code analysis"
     cmds:
       - task: code-analysis:phpstan
+      - task: code-analysis:rector
     silent: true
 
   code-analysis:phpstan:
@@ -179,12 +176,35 @@ tasks:
           COMPOSE_ARGS: exec phpfpm vendor/bin/phpstan
     silent: true
 
+  code-analysis:rector:
+    desc: "Check for Rector suggestions (dry-run; no changes applied)"
+    cmds:
+      - task: compose
+        vars:
+          COMPOSE_ARGS: exec phpfpm vendor/bin/rector process --dry-run
+    silent: true
+
+  code-analysis:rector:apply:
+    desc: "Apply Rector changes"
+    cmds:
+      - task: compose
+        vars:
+          COMPOSE_ARGS: exec phpfpm vendor/bin/rector process
+    silent: true
+
   api:test:
     desc: Run API tests
     cmds:
       - task: compose
         vars:
           COMPOSE_ARGS: exec phpfpm bin/phpunit
+
+  api:test:coverage:
+    desc: Run API tests with a Clover coverage report (coverage/unit.xml)
+    cmds:
+      - task: compose
+        vars:
+          COMPOSE_ARGS: exec --env XDEBUG_MODE=coverage phpfpm bin/phpunit --coverage-clover=coverage/unit.xml
 
   api:spec:export:
     desc: Export API spec

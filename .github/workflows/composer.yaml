@@ -41,7 +41,7 @@ jobs:
     strategy:
       fail-fast: false
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - name: Create docker network
         run: |
@@ -55,7 +55,7 @@ jobs:
     strategy:
       fail-fast: false
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - name: Create docker network
         run: |
@@ -70,11 +70,11 @@ jobs:
     strategy:
       fail-fast: false
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - name: Create docker network
         run: |
           docker network create frontend
 
       - run: |
-          docker compose run --rm phpfpm composer audit
+          docker compose run --rm phpfpm composer audit --locked

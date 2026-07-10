@@ -8,6 +8,79 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-07-10
+
+- [PR-61](https://github.com/itk-dev/event-database-api/pull/61)
+  Fix the API-spec workflow's no-change detection for oasdiff v0.1.x ("No changelog changes" wording)
+- [PR-60](https://github.com/itk-dev/event-database-api/pull/60)
+  Upgrade Elasticsearch to 8.19.18 (dev image) and the `elasticsearch/elasticsearch` client constraint to `^8.19`
+- [PR-59](https://github.com/itk-dev/event-database-api/pull/59)
+  Refresh CLAUDE.md/agent docs for current tooling (API Platform 4.3, php8.4 image, PHPStan level 8, test layout)
+- [PR-58](https://github.com/itk-dev/event-database-api/pull/58)
+  Update dependencies in-constraint (Symfony 7.4.14 patch train, phpunit/php-cs-fixer/phpstan-symfony/flex)
+- [PR-57](https://github.com/itk-dev/event-database-api/pull/57)
+  Run Rector from the Claude Code setup (PostToolUse hook + pr-readiness step); drop the redundant
+  `--user=root`/`COMPOSER_ALLOW_SUPERUSER` from the release workflow (`COMPOSE_USER: runner`)
+- [PR-56](https://github.com/itk-dev/event-database-api/pull/56)
+  Scope CI image pulls to each job's real dependencies (phpfpm, or phpfpm + elasticsearch) instead of the whole stack
+- [PR-55](https://github.com/itk-dev/event-database-api/pull/55)
+  Self-heal the API-spec "up to date" PR comment (resolve to ✅ once the spec matches, no stale 🛑)
+- [PR-54](https://github.com/itk-dev/event-database-api/pull/54)
+  Add Rector (relevant sets aligned with PHPStan), apply it across the codebase, and run it in CI
+- [PR-53](https://github.com/itk-dev/event-database-api/pull/53)
+  Compare effective schemas in the oasdiff gate (flatten-allof) so allOf/$ref restructures are not miscounted
+- [PR-52](https://github.com/itk-dev/event-database-api/pull/52)
+  Pin the problem+json error contract: 401 served as RFC 7807, resource reads in problem+json yield 406
+- [PR-51](https://github.com/itk-dev/event-database-api/pull/51)
+  Show the API-spec diff summary inline in the PR comment (collapsed) alongside the oasdiff review link
+- [PR-49](https://github.com/itk-dev/event-database-api/pull/49)
+  Bump oasdiff-action to v0.1.5 in the API-spec workflow
+- [PR-48](https://github.com/itk-dev/event-database-api/pull/48)
+  Add an os2display consumer contract test suite exercising the endpoints and filters its feed helper depends on
+- [PR-47](https://github.com/itk-dev/event-database-api/pull/47)
+  Add an aarhusguiden consumer contract test suite exercising the endpoints and filters the site depends on
+- [PR-46](https://github.com/itk-dev/event-database-api/pull/46)
+  Upgrade api-platform/core 4.1 to 4.3. Runtime responses are unchanged except that 401/404 error bodies now use
+  `hydra:title`/`hydra:description` instead of the unprefixed `title` (`status`, `type` and `detail` unchanged)
+- [PR-45](https://github.com/itk-dev/event-database-api/pull/45)
+  Check committed index mappings against event-database-imports@develop in CI
+- [PR-44](https://github.com/itk-dev/event-database-api/pull/44)
+  Validate deep payload schemas (nested objects, field types) for every resource
+- [PR-43](https://github.com/itk-dev/event-database-api/pull/43)
+  Assert filter identities (not counts), sort order, and pagination edge cases
+- [PR-42](https://github.com/itk-dev/event-database-api/pull/42)
+  Return HTTP 400 (not 500) for malformed date-range filter input; unskip FilterErrorTest
+- [PR-41](https://github.com/itk-dev/event-database-api/pull/41)
+  Run the Code Review workflow via docker compose directly (drop Task) with vendor caching and image pre-pull
+- [PR-40](https://github.com/itk-dev/event-database-api/pull/40)
+  Improve the API-spec workflow (path filter, permissions, vendor cache, oasdiff)
+- [PR-39](https://github.com/itk-dev/event-database-api/pull/39)
+  Update GitHub Actions to latest: actions/checkout v7 and go-task/setup-task v2
+- [PR-38](https://github.com/itk-dev/event-database-api/pull/38)
+  Extract SearchParamsBuilder from ElasticSearchIndex and unit-test the query DSL
+- [PR-37](https://github.com/itk-dev/event-database-api/pull/37)
+  Upload test coverage to Codecov in CI
+- [PR-36](https://github.com/itk-dev/event-database-api/pull/36)
+  Add unit tests pinning the Elasticsearch filters' query DSL and parameter descriptors
+- [PR-35](https://github.com/itk-dev/event-database-api/pull/35)
+  Test against production-parity Elasticsearch mappings (dynamic: strict) so filter tests exercise real field semantics
+- [PR-34](https://github.com/itk-dev/event-database-api/pull/34)
+  Document the item-as-collection quirk as a versioning TODO and fix the README fixtures wording (no Doctrine)
+- [PR-33](https://github.com/itk-dev/event-database-api/pull/33)
+  Mature the API test suite ahead of the API Platform upgrade (contract, filter, pagination and error tests)
+- [PR-32](https://github.com/itk-dev/event-database-api/pull/32)
+  Pay down the PHPStan baseline: fix the mechanical strict-rule findings (34 → 10)
+- [PR-31](https://github.com/itk-dev/event-database-api/pull/31)
+  Align dev tooling with event-database-imports: PHPStan level 8 + strict rules, PHP 8.4, twig-cs-fixer v4, PHPUnit 13
+- [PR-30](https://github.com/itk-dev/event-database-api/pull/30)
+  Update vulnerable dependencies (twig, symfony, guzzle) and audit the lock file in CI
+- [PR-29](https://github.com/itk-dev/event-database-api/pull/29)
+  Add Claude Code skills, filter/provider reviewer subagent, and spec-drift hook
+- [PR-28](https://github.com/itk-dev/event-database-api/pull/28)
+  Adapt Claude Code hooks from event-database-imports and guard the ES index contract
+- [PR-27](https://github.com/itk-dev/event-database-api/pull/27)
+  Add Claude Code project setup (CLAUDE.md, agents, skills)
+
 ## [1.2.2] - 2026-05-22
 
 - [PR-26](https://github.com/itk-dev/event-database-api/pull/26)
@@ -84,7 +157,10 @@ See [keep a changelog] for information about writing changes to this log.
 - Added multi-value filtering for Lactions and Organizations
 
 [keep a changelog]: https://keepachangelog.com/en/1.1.0/
-[Unreleased]: https://github.com/itk-dev/event-database-api/compare/1.2.0...HEAD
+[Unreleased]: https://github.com/itk-dev/event-database-api/compare/1.3.0...HEAD
+[1.3.0]: https://github.com/itk-dev/event-database-api/compare/1.2.2...1.3.0
+[1.2.2]: https://github.com/itk-dev/event-database-api/compare/1.2.1...1.2.2
+[1.2.1]: https://github.com/itk-dev/event-database-api/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/itk-dev/event-database-api/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/itk-dev/event-database-api/releases/tag/1.1.0
 [1.0.1]: https://github.com/itk-dev/event-database-api/releases/tag/1.0.1

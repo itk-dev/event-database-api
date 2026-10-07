@@ -49,8 +49,12 @@ class ApiKeysAddCommandTest extends TestCase
             ]'
             OTHER=value
             ENV);
+        chmod($this->dir.'/.env.local', 0600);
 
         self::assertSame(Command::SUCCESS, $this->runCommand("o'brien")->getStatusCode());
+        self::assertSame(0600, fileperms($this->dir.'/.env.local') & 0777);
+        self::assertFileDoesNotExist($this->dir.'/.env.local.backup');
+        self::assertFileDoesNotExist($this->dir.'/.env.local.temp');
 
         $env = (new Dotenv())->parse((string) file_get_contents($this->dir.'/.env.local'));
         self::assertSame('http://elasticsearch:9200', $env['INDEX_URL']);
@@ -91,7 +95,7 @@ class ApiKeysAddCommandTest extends TestCase
         self::assertSame($original, file_get_contents($this->dir.'/.env.local'));
     }
 
-    public function testRestoresFileWhenRewriteBreaksIt(): void
+    public function testLeavesFileUntouchedWhenRewriteBreaksIt(): void
     {
         // A trailing comment after a multi-line value defeats the line pattern.
         $original = "APP_API_KEYS='[\n{\"username\": \"user_1\", \"apikey\": \"api_key_1\"}\n]' # comment\n";
@@ -99,6 +103,51 @@ class ApiKeysAddCommandTest extends TestCase
 
         self::assertSame(Command::FAILURE, $this->runCommand('user_2')->getStatusCode());
         self::assertSame($original, file_get_contents($this->dir.'/.env.local'));
+        self::assertFileDoesNotExist($this->dir.'/.env.local.temp');
+        self::assertFileDoesNotExist($this->dir.'/.env.local.backup');
+    }
+
+    public function testKeepsBackupWhenDeclined(): void
+    {
+        $original = "APP_API_KEYS='[]'\n";
+        file_put_contents($this->dir.'/.env.local', $original);
+
+        self::assertSame(Command::SUCCESS, $this->runCommand('user_1', ['no'])->getStatusCode());
+        self::assertSame($original, file_get_contents($this->dir.'/.env.local.backup'));
+        self::assertSame('user_1', $this->keys()[0]['username']);
+    }
+
+    public function testFailsWhenBackupExists(): void
+    {
+        $original = "APP_API_KEYS='[]'\n";
+        file_put_contents($this->dir.'/.env.local', $original);
+        file_put_contents($this->dir.'/.env.local.backup', 'old');
+
+        self::assertSame(Command::FAILURE, $this->runCommand('user_1')->getStatusCode());
+        self::assertSame($original, file_get_contents($this->dir.'/.env.local'));
+        self::assertSame('old', file_get_contents($this->dir.'/.env.local.backup'));
+    }
+
+    public function testFailsWhenTempFileExists(): void
+    {
+        $original = "APP_API_KEYS='[]'\n";
+        file_put_contents($this->dir.'/.env.local', $original);
+        file_put_contents($this->dir.'/.env.local.temp', 'other run');
+
+        self::assertSame(Command::FAILURE, $this->runCommand('user_1')->getStatusCode());
+        self::assertSame($original, file_get_contents($this->dir.'/.env.local'));
+        self::assertSame('other run', file_get_contents($this->dir.'/.env.local.temp'));
+    }
+
+    public function testFailsWhenEnvLocalIsSymlink(): void
+    {
+        $original = "APP_API_KEYS='[]'\n";
+        file_put_contents($this->dir.'/target.env', $original);
+        symlink($this->dir.'/target.env', $this->dir.'/.env.local');
+
+        self::assertSame(Command::FAILURE, $this->runCommand('user_1')->getStatusCode());
+        self::assertTrue(is_link($this->dir.'/.env.local'));
+        self::assertSame($original, file_get_contents($this->dir.'/target.env'));
     }
 
     public function testAdvisesDumpEnvWhenCompiledFileExists(): void
@@ -111,10 +160,14 @@ class ApiKeysAddCommandTest extends TestCase
         self::assertStringContainsString('differs from .env.local', $display);
     }
 
-    private function runCommand(string $username): CommandTester
+    /**
+     * @param list<string> $answers runs non-interactively (default answers) when empty
+     */
+    private function runCommand(string $username, array $answers = []): CommandTester
     {
         $tester = new CommandTester(new ApiKeysAddCommand($this->dir));
-        $tester->execute(['username' => $username]);
+        $tester->setInputs($answers);
+        $tester->execute(['username' => $username], ['interactive' => [] !== $answers]);
 
         return $tester;
     }

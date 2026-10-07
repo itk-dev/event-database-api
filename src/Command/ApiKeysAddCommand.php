@@ -64,9 +64,23 @@ class ApiKeysAddCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $username = trim((string) $input->getArgument('username'));
         $envFile = $this->projectDir.'/.env.local';
+        $tempFile = $envFile.'.temp';
+        $backupFile = $envFile.'.backup';
 
         if ('' === $username) {
             $io->error('Username must not be empty.');
+
+            return Command::FAILURE;
+        }
+
+        if (is_link($envFile)) {
+            $io->error(sprintf('%s is a symlink. Edit the target file by hand instead.', $envFile));
+
+            return Command::FAILURE;
+        }
+
+        if (file_exists($backupFile) || is_link($backupFile)) {
+            $io->error(sprintf('%s exists from a previous run. Check it and delete it, then retry.', $backupFile));
 
             return Command::FAILURE;
         }
@@ -98,18 +112,44 @@ class ApiKeysAddCommand extends Command
             $contents = $original.('' === $original || str_ends_with($original, "\n") ? '' : "\n").$line."\n";
         }
 
-        file_put_contents($envFile, $contents);
+        // Mode 'x' fails if the file exists, which also stops concurrent runs.
+        $handle = @fopen($tempFile, 'x');
+        if (false === $handle) {
+            $io->error(sprintf('Could not create %s. If it is left over from a previous run, delete it and retry.', $tempFile));
 
-        // Never leave .env.local in a state where existing keys are lost.
+            return Command::FAILURE;
+        }
+        $written = fwrite($handle, $contents) === strlen($contents);
+        $written = fclose($handle) && $written;
+
+        // Verify what landed on disk before .env.local is touched.
         try {
-            $written = $this->parseApiKeys($contents);
+            $written = $written && $this->parseApiKeys((string) file_get_contents($tempFile)) === $updated;
         } catch (FormatException|\JsonException) {
-            $written = null;
+            $written = false;
         }
 
-        if ($written !== $updated) {
-            file_put_contents($envFile, $original);
-            $io->error(sprintf('Failed to update %s, the file has been restored.', $envFile));
+        if (!$written) {
+            unlink($tempFile);
+            $io->error(sprintf('Failed to write %s, %s is unchanged.', $tempFile, $envFile));
+
+            return Command::FAILURE;
+        }
+
+        $hasBackup = file_exists($envFile);
+        if ($hasBackup && !(chmod($tempFile, fileperms($envFile) & 0777) && copy($envFile, $backupFile))) {
+            @unlink($tempFile);
+            @unlink($backupFile);
+            $io->error(sprintf('Failed to back up %s, the file is unchanged.', $envFile));
+
+            return Command::FAILURE;
+        }
+
+        // Atomic replace, .env.local never goes missing.
+        if (!rename($tempFile, $envFile)) {
+            @unlink($tempFile);
+            @unlink($backupFile);
+            $io->error(sprintf('Failed to replace %s, the file is unchanged.', $envFile));
 
             return Command::FAILURE;
         }
@@ -125,6 +165,10 @@ class ApiKeysAddCommand extends Command
             if (json_decode((string) $compiled, true) !== $apikeys) {
                 $io->warning(sprintf('%s in %s differs from .env.local. Reconcile them before running "composer dump-env prod", or keys may be lost.', self::ENV_VAR, $compiledFile));
             }
+        }
+
+        if ($hasBackup && $io->confirm(sprintf('Delete %s?', $backupFile), true)) {
+            unlink($backupFile);
         }
 
         return Command::SUCCESS;

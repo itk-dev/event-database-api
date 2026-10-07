@@ -106,8 +106,8 @@ class ApiKeysAddCommand extends Command
 
         // JSON_HEX_APOS keeps the value safe inside single quotes.
         $line = self::ENV_VAR."='".json_encode($updated, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES | JSON_HEX_APOS)."'";
-        if (preg_match(self::ENV_LINE_PATTERN, $original)) {
-            $contents = (string) preg_replace_callback(self::ENV_LINE_PATTERN, fn () => $line, $original, 1);
+        if (1 === preg_match(self::ENV_LINE_PATTERN, $original)) {
+            $contents = (string) preg_replace_callback(self::ENV_LINE_PATTERN, fn (): string => $line, $original, 1);
         } else {
             $contents = $original.('' === $original || str_ends_with($original, "\n") ? '' : "\n").$line."\n";
         }
@@ -137,7 +137,7 @@ class ApiKeysAddCommand extends Command
         }
 
         $hasBackup = file_exists($envFile);
-        if ($hasBackup && !(chmod($tempFile, fileperms($envFile) & 0777) && copy($envFile, $backupFile))) {
+        if ($hasBackup && (!chmod($tempFile, fileperms($envFile) & 0777) || !copy($envFile, $backupFile))) {
             @unlink($tempFile);
             @unlink($backupFile);
             $io->error(sprintf('Failed to back up %s, the file is unchanged.', $envFile));

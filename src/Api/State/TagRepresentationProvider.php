@@ -20,7 +20,7 @@ final class TagRepresentationProvider extends AbstractProvider implements Provid
      * @throws NotFoundExceptionInterface
      * @throws IndexException
      */
-    public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
+    public function provide(Operation $operation, array $uriVariables = [], array $context = []): ?object
     {
         if ($operation instanceof CollectionOperationInterface) {
             $filters = $this->getFilters($operation, $context);

@@ -11,37 +11,86 @@ jobs:
     name: API test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
-      # https://taskfile.dev/installation/#github-actions
-      - uses: go-task/setup-task@v1
+      - name: Cache vendor
+        uses: actions/cache@v5
+        with:
+          path: vendor
+          key: vendor-php8.4-${{ hashFiles('composer.lock') }}
+          restore-keys: vendor-php8.4-
 
       - name: Start docker compose setup and install site
         run: |
           docker network create frontend
-          task --yes site:update
+          # API tests need PHP + Elasticsearch only (not mariadb/rabbit/nginx/mail);
+          # --no-deps keeps phpfpm's mariadb/rabbit dependencies from starting.
+          docker compose pull --quiet phpfpm elasticsearch
+          docker compose up --detach --wait --no-deps phpfpm elasticsearch
+          docker compose exec -T phpfpm composer install --no-interaction
 
       - name: Load test fixtures
         run: |
-          task --yes fixtures:load:test
+          for index in events organizations occurrences daily_occurrences tags vocabularies locations; do
+            docker compose exec -T phpfpm bin/console app:fixtures:load "$index" --url="file:///app/tests/resources/$index.json"
+          done
 
-      - name: Run API tests
+      - name: Run API tests with coverage
         run: |
-          task --yes api:test
+          docker compose exec -T -e XDEBUG_MODE=coverage phpfpm bin/phpunit --coverage-clover=coverage/unit.xml
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v7
+        with:
+          files: ./coverage/unit.xml
+          flags: unittests
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   code-analysis-phpstan:
     runs-on: ubuntu-latest
     name: PHPStan static analysis
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
-      # https://taskfile.dev/installation/#github-actions
-      - uses: go-task/setup-task@v1
+      - name: Cache vendor
+        uses: actions/cache@v5
+        with:
+          path: vendor
+          key: vendor-php8.4-${{ hashFiles('composer.lock') }}
+          restore-keys: vendor-php8.4-
 
-      - run: |
+      - name: Install dependencies
+        run: |
           docker network create frontend
-          task --yes site:update
+          # PHPStan only needs PHP — pull phpfpm and run it as a one-off (--no-deps).
+          docker compose pull --quiet phpfpm
+          docker compose run --rm --no-deps phpfpm composer install --no-interaction
 
       - name: Run code analysis
         run: |
-          task --yes code-analysis:phpstan
+          docker compose run --rm --no-deps phpfpm vendor/bin/phpstan analyse --no-progress
+
+  code-analysis-rector:
+    runs-on: ubuntu-latest
+    name: Rector
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Cache vendor
+        uses: actions/cache@v5
+        with:
+          path: vendor
+          key: vendor-php8.4-${{ hashFiles('composer.lock') }}
+          restore-keys: vendor-php8.4-
+
+      - name: Install dependencies
+        run: |
+          docker network create frontend
+          # Rector only needs PHP — pull phpfpm and run it as a one-off (--no-deps).
+          docker compose pull --quiet phpfpm
+          docker compose run --rm --no-deps phpfpm composer install --no-interaction
+
+      - name: Check for Rector suggestions
+        run: |
+          docker compose run --rm --no-deps phpfpm vendor/bin/rector process --dry-run --no-progress-bar

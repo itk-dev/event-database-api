@@ -40,9 +40,7 @@ class FixturesLoadCommand extends Command
             InputArgument::REQUIRED,
             sprintf('Index to populate with fixture data (one of %s)', implode(', ', IndexName::values())),
             null,
-            function (CompletionInput $input): array {
-                return array_filter(IndexName::values(), fn ($item) => str_starts_with($item, $input->getCompletionValue()));
-            }
+            fn (CompletionInput $input): array => array_filter(IndexName::values(), fn ($item): bool => str_starts_with((string) $item, $input->getCompletionValue()))
         )
         ->addOption('url', null, InputOption::VALUE_OPTIONAL, 'Remote url to read fixture data from', 'https://raw.githubusercontent.com/itk-dev/event-database-imports/develop/src/DataFixtures/indexes/[index].json');
     }
@@ -70,7 +68,7 @@ class FixturesLoadCommand extends Command
             return Command::FAILURE;
         }
 
-        if (!in_array($indexName, IndexName::values())) {
+        if (!in_array($indexName, IndexName::values(), true)) {
             $io->error(sprintf('Index %s does not exist', $indexName));
 
             return Command::FAILURE;

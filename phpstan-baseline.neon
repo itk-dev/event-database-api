@@ -1,0 +1,55 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Offset ''_source'' might not exist on array\|null\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: src/Api/State/DailyOccurrenceRepresentationProvider.php
+
+		-
+			message: '#^Return type \(App\\Service\\ElasticSearch\\ElasticSearchPaginator\|array\|null\) of method App\\Api\\State\\DailyOccurrenceRepresentationProvider\:\:provide\(\) should be covariant with return type \(iterable\<object\>\|object\|null\) of method ApiPlatform\\State\\ProviderInterface\<object\>\:\:provide\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: src/Api/State/DailyOccurrenceRepresentationProvider.php
+
+		-
+			message: '#^Offset ''_source'' might not exist on array\|null\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: src/Api/State/EventRepresentationProvider.php
+
+		-
+			message: '#^Return type \(App\\Service\\ElasticSearch\\ElasticSearchPaginator\|array\|null\) of method App\\Api\\State\\EventRepresentationProvider\:\:provide\(\) should be covariant with return type \(iterable\<object\>\|object\|null\) of method ApiPlatform\\State\\ProviderInterface\<object\>\:\:provide\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: src/Api/State/EventRepresentationProvider.php
+
+		-
+			message: '#^Offset ''_source'' might not exist on array\|null\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: src/Api/State/LocationRepresentationProvider.php
+
+		-
+			message: '#^Offset ''_source'' might not exist on array\|null\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: src/Api/State/OccurrenceRepresentationProvider.php
+
+		-
+			message: '#^Return type \(App\\Service\\ElasticSearch\\ElasticSearchPaginator\|array\|null\) of method App\\Api\\State\\OccurrenceRepresentationProvider\:\:provide\(\) should be covariant with return type \(iterable\<object\>\|object\|null\) of method ApiPlatform\\State\\ProviderInterface\<object\>\:\:provide\(\)$#'
+			identifier: method.childReturnType
+			count: 1
+			path: src/Api/State/OccurrenceRepresentationProvider.php
+
+		-
+			message: '#^Offset ''_source'' might not exist on array\|null\.$#'
+			identifier: offsetAccess.notFound
+			count: 1
+			path: src/Api/State/OrganizationRepresentationProvider.php
+
+		-
+			message: '#^Parameter \#5 \$suggestedValues of method Symfony\\Component\\Console\\Command\\Command\:\:addArgument\(\) expects array\|\(Closure\(Symfony\\Component\\Console\\Completion\\CompletionInput, Symfony\\Component\\Console\\Completion\\CompletionSuggestions\)\: list\<string\|Symfony\\Component\\Console\\Completion\\Suggestion\>\), Closure\(Symfony\\Component\\Console\\Completion\\CompletionInput\)\: array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Command/FixturesLoadCommand.php

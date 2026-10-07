@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Api\Filter\ElasticSearch;
 
 use ApiPlatform\Elasticsearch\Filter\AbstractFilter;
@@ -16,24 +18,32 @@ final class TagFilter extends AbstractFilter
 
         /** @var string $property */
         foreach ($properties as $property) {
-            if (empty($context['filters'][$property])) {
+            if (!isset($context['filters'][$property])) {
                 // If no value or empty value is set, skip it.
                 continue;
             }
-            $terms[$property] = explode(',', $context['filters'][$property]);
+            if ('' === $context['filters'][$property]) {
+                // If no value or empty value is set, skip it.
+                continue;
+            }
+            if ([] === $context['filters'][$property]) {
+                // If no value or empty value is set, skip it.
+                continue;
+            }
+            $terms[$property] = explode(',', (string) $context['filters'][$property]);
         }
 
-        return empty($terms) ? $terms : ['terms' => $terms + ['boost' => 1.0]];
+        return [] === $terms ? $terms : ['terms' => $terms + ['boost' => 1.0]];
     }
 
     public function getDescription(string $resourceClass): array
     {
-        if (!$this->properties) {
+        if (null === $this->properties || [] === $this->properties) {
             return [];
         }
 
         $description = [];
-        foreach ($this->properties as $filterParameterName => $value) {
+        foreach (array_keys($this->properties) as $filterParameterName) {
             $description[$filterParameterName] = [
                 'property' => $filterParameterName,
                 'type' => TypeIdentifier::ARRAY->value,

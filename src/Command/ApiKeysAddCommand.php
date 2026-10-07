@@ -6,9 +6,11 @@ namespace App\Command;
 
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Dotenv\Dotenv;
@@ -34,7 +36,27 @@ class ApiKeysAddCommand extends Command
 
     protected function configure(): void
     {
-        $this->addArgument('username', InputArgument::REQUIRED, 'Username to create an API key for');
+        $this->addArgument('username', InputArgument::OPTIONAL, 'Username to create an API key for (prompted for if omitted)');
+    }
+
+    protected function interact(InputInterface $input, OutputInterface $output): void
+    {
+        if ('' !== trim((string) $input->getArgument('username'))) {
+            return;
+        }
+
+        $question = new Question('Username to create an API key for: ');
+        $question->setValidator(function (?string $answer): string {
+            if ('' === trim((string) $answer)) {
+                throw new \RuntimeException('Username must not be empty.');
+            }
+
+            return trim((string) $answer);
+        });
+
+        /** @var QuestionHelper $helper */
+        $helper = $this->getHelper('question');
+        $input->setArgument('username', $helper->ask($input, $output, $question));
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

@@ -7,6 +7,8 @@ namespace App\Tests\Command;
 use App\Command\ApiKeysAddCommand;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\HelperSet;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Dotenv\Dotenv;
 
@@ -56,6 +58,28 @@ class ApiKeysAddCommandTest extends TestCase
         $keys = $this->keys();
         self::assertSame(['username' => 'user_1', 'apikey' => 'api_key_1'], $keys[0]);
         self::assertSame("o'brien", $keys[1]['username']);
+    }
+
+    public function testPromptsForUsernameWhenOmitted(): void
+    {
+        $command = new ApiKeysAddCommand($this->dir);
+        $command->setHelperSet(new HelperSet([new QuestionHelper()]));
+        $tester = new CommandTester($command);
+        $tester->setInputs(['', 'user_1']);
+        $tester->execute([]);
+
+        self::assertSame(Command::SUCCESS, $tester->getStatusCode());
+        self::assertStringContainsString('Username must not be empty.', $tester->getDisplay());
+        self::assertSame('user_1', $this->keys()[0]['username']);
+    }
+
+    public function testFailsWithoutUsernameWhenNonInteractive(): void
+    {
+        $tester = new CommandTester(new ApiKeysAddCommand($this->dir));
+        $tester->execute([], ['interactive' => false]);
+
+        self::assertSame(Command::FAILURE, $tester->getStatusCode());
+        self::assertFileDoesNotExist($this->dir.'/.env.local');
     }
 
     public function testRejectsDuplicateUsername(): void

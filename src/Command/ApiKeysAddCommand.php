@@ -137,7 +137,7 @@ class ApiKeysAddCommand extends Command
         }
 
         $hasBackup = file_exists($envFile);
-        if ($hasBackup && !(chmod($tempFile, fileperms($envFile) & 0777) && copy($envFile, $backupFile))) {
+        if ($hasBackup && !copy($envFile, $backupFile)) {
             @unlink($tempFile);
             @unlink($backupFile);
             $io->error(sprintf('Failed to back up %s, the file is unchanged.', $envFile));
@@ -145,11 +145,16 @@ class ApiKeysAddCommand extends Command
             return Command::FAILURE;
         }
 
-        // Atomic replace, .env.local never goes missing.
-        if (!rename($tempFile, $envFile)) {
-            @unlink($tempFile);
-            @unlink($backupFile);
-            $io->error(sprintf('Failed to replace %s, the file is unchanged.', $envFile));
+        // Write in place instead of rename(): on prod .env.local is a single-file
+        // bind mount, which rename() cannot replace (EBUSY). Keeps owner and mode too.
+        $replaced = @copy($tempFile, $envFile) && file_get_contents($envFile) === $contents;
+        unlink($tempFile);
+
+        if (!$replaced) {
+            $restored = $hasBackup ? @copy($backupFile, $envFile) : @unlink($envFile);
+            $io->error($restored
+                ? sprintf('Failed to write %s, the change has been reverted.', $envFile)
+                : sprintf('Failed to write %s and could not restore it. The original is in %s.', $envFile, $backupFile));
 
             return Command::FAILURE;
         }

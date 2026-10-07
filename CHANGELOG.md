@@ -8,6 +8,9 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-67](https://github.com/itk-dev/event-database-api/pull/67)
+  Fix `app:apikeys:add` failing when `.env.local` is a bind-mounted file
+
 ## [1.2.4] - 2026-10-07
 
 - [PR-64](https://github.com/itk-dev/event-database-api/pull/64)

@@ -79,6 +79,11 @@ See [keep a changelog] for information about writing changes to this log.
 - [PR-27](https://github.com/itk-dev/event-database-api/pull/27)
   Add Claude Code project setup (CLAUDE.md, agents, skills)
 
+## [1.2.4] - 2026-10-07
+
+- [PR-64](https://github.com/itk-dev/event-database-api/pull/64)
+  Update packages with security advisories, audit lock file in CI
+
 ## [1.2.3] - 2026-10-07
 
 - [PR-63](https://github.com/itk-dev/event-database-api/pull/63)
@@ -160,7 +165,11 @@ See [keep a changelog] for information about writing changes to this log.
 - Added multi-value filtering for Lactions and Organizations
 
 [keep a changelog]: https://keepachangelog.com/en/1.1.0/
-[Unreleased]: https://github.com/itk-dev/event-database-api/compare/1.2.0...HEAD
+[Unreleased]: https://github.com/itk-dev/event-database-api/compare/1.2.4...HEAD
+[1.2.4]: https://github.com/itk-dev/event-database-api/compare/1.2.3...1.2.4
+[1.2.3]: https://github.com/itk-dev/event-database-api/compare/1.2.2...1.2.3
+[1.2.2]: https://github.com/itk-dev/event-database-api/compare/1.2.1...1.2.2
+[1.2.1]: https://github.com/itk-dev/event-database-api/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/itk-dev/event-database-api/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/itk-dev/event-database-api/releases/tag/1.1.0
 [1.0.1]: https://github.com/itk-dev/event-database-api/releases/tag/1.0.1

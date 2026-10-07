@@ -104,8 +104,8 @@ To generate a new API key for a user and add it to `.env.local`, run:
 docker compose exec phpfpm bin/console app:apikeys:add user_3
 ```
 
-If the username is omitted, the command prompts for it. The key is printed so it can be sent to the user. If `.env.local.php` exists, `composer dump-env prod` must be run for
-the new key to take effect.
+If the username is omitted, the command prompts for it. The key is printed so it can be sent to the user. If
+`.env.local.php` exists, `composer dump-env prod` must be run for the new key to take effect.
 
 ## Production
 

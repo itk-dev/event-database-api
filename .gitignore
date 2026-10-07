@@ -8,6 +8,10 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
+# Written by app:apikeys:add
+/.env.local.temp
+/.env.local.backup
+
 ###> friendsofphp/php-cs-fixer ###
 /.php-cs-fixer.php
 /.php-cs-fixer.cache

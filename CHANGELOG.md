@@ -8,7 +8,7 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
-## [1.3.0] - 2026-07-10
+## [1.3.0] - 2026-10-07
 
 - [PR-61](https://github.com/itk-dev/event-database-api/pull/61)
   Fix the API-spec workflow's no-change detection for oasdiff v0.1.x ("No changelog changes" wording)

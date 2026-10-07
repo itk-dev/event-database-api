@@ -8,6 +8,11 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+## [1.2.3] - 2026-10-07
+
+- [PR-63](https://github.com/itk-dev/event-database-api/pull/63)
+  Add `app:apikeys:add` command to generate API keys
+
 ## [1.2.2] - 2026-05-22
 
 - [PR-26](https://github.com/itk-dev/event-database-api/pull/26)

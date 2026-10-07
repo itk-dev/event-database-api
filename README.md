@@ -98,6 +98,18 @@ APP_API_KEYS='[
 ]'
 ```
 
+To generate a new API key for a user and add it to `.env.local`, run:
+
+``` shell
+docker compose exec phpfpm bin/console app:apikeys:add user_3
+```
+
+If the username is omitted, the command prompts for it. The key is printed so it can be sent to the user. If
+`.env.local.php` exists, `composer dump-env prod` must be run for the new key to take effect.
+
+The command writes `.env.local.temp`, verifies it, copies `.env.local` to `.env.local.backup` and then replaces
+`.env.local`. It offers to delete the backup afterwards and refuses to run while a backup or temp file exists.
+
 ## Production
 
 When installing composer and Symfony based application in production, you should not install development packages,

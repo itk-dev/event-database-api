@@ -50,9 +50,13 @@ final class ApiKeysAddCommandTest extends TestCase
             OTHER=value
             ENV);
         chmod($this->dir.'/.env.local', 0600);
+        // Same inode afterwards means .env.local was written in place, not renamed over,
+        // which is required when it is a single-file bind mount (prod).
+        $inode = fileinode($this->dir.'/.env.local');
 
         $this->assertSame(Command::SUCCESS, $this->runCommand("o'brien")->getStatusCode());
         $this->assertSame(0600, fileperms($this->dir.'/.env.local') & 0777);
+        $this->assertSame($inode, fileinode($this->dir.'/.env.local'));
         $this->assertFileDoesNotExist($this->dir.'/.env.local.backup');
         $this->assertFileDoesNotExist($this->dir.'/.env.local.temp');
 

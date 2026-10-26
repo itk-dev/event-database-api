@@ -1,0 +1,32 @@
+{
+    "dynamic": "strict",
+    "properties": {
+        "name": {
+            "type": "text",
+            "analyzer": "standard",
+            "search_analyzer": "standard",
+            "fields": {
+                "keyword": {
+                    "type": "keyword"
+                }
+            },
+            "index_options": "docs",
+            "index": true,
+            "norms": false,
+            "fielddata": true
+        },
+        "slug": {
+            "type": "keyword",
+            "index_options": "docs",
+            "index": true,
+            "norms": false
+        },
+        "vocabulary": {
+            "type": "keyword",
+            "index_options": "docs",
+            "index": true,
+            "doc_values": false,
+            "norms": false
+        }
+    }
+}

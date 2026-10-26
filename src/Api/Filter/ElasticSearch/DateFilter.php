@@ -45,12 +45,12 @@ final class DateFilter extends AbstractFilter
     {
         $ranges = [];
 
-        if (!$this->properties) {
+        if (null === $this->properties || [] === $this->properties) {
             return $ranges;
         }
 
         foreach ($this->properties as $property => $value) {
-            if (!empty($context['filters'][$property])) {
+            if (isset($context['filters'][$property]) && '' !== $context['filters'][$property] && [] !== $context['filters'][$property]) {
                 $conf = $this->config[$value];
                 $ranges[] = [
                     'range' => [
@@ -67,7 +67,7 @@ final class DateFilter extends AbstractFilter
 
     public function getDescription(string $resourceClass): array
     {
-        if (!$this->properties) {
+        if (null === $this->properties || [] === $this->properties) {
             return [];
         }
 

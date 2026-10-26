@@ -1,0 +1,102 @@
+on:
+  pull_request:
+
+name: Index mapping drift
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  mapping-drift:
+    runs-on: ubuntu-latest
+    name: Check index mappings against event-database-imports
+    steps:
+      - name: Check out this repository
+        uses: actions/checkout@v7
+
+      - name: Check out event-database-imports (develop)
+        uses: actions/checkout@v7
+        with:
+          repository: itk-dev/event-database-imports
+          ref: develop
+          path: upstream
+
+      - name: Compare committed mappings against upstream
+        id: drift
+        run: |
+          set -uo pipefail
+          ours="tests/resources/mappings"
+          theirs="upstream/resources/mappings"
+          report="drift-report.md"
+          : > "$report"
+          drift=0
+
+          if [ ! -d "$theirs" ]; then
+            echo "Upstream mapping directory '$theirs' not found — has the importers export moved?"
+            echo "drift=true" >> "$GITHUB_OUTPUT"
+            exit 1
+          fi
+
+          # Compare with keys canonicalised (jq -S) so only real schema changes count.
+          for f in "$ours"/*.json; do
+            idx="$(basename "$f")"
+            up="$theirs/$idx"
+            if [ ! -f "$up" ]; then
+              printf -- '- `%s`: present here but **missing upstream**\n' "$idx" >> "$report"
+              drift=1
+              continue
+            fi
+            if ! diff -u <(jq -S . "$up") <(jq -S . "$f") > "/tmp/$idx.diff"; then
+              {
+                printf -- '- `%s` **differs** (`-` upstream, `+` here):\n\n' "$idx"
+                printf '```diff\n'
+                cat "/tmp/$idx.diff"
+                printf '\n```\n\n'
+              } >> "$report"
+              drift=1
+            fi
+          done
+
+          # Flag indices that exist upstream but not here.
+          for f in "$theirs"/*.json; do
+            idx="$(basename "$f")"
+            [ -f "$ours/$idx" ] || {
+              printf -- '- `%s`: present **upstream but missing here**\n' "$idx" >> "$report"
+              drift=1
+            }
+          done
+
+          if [ "$drift" -eq 0 ]; then
+            echo "drift=false" >> "$GITHUB_OUTPUT"
+            echo "✅ Index mappings match event-database-imports@develop." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          echo "drift=true" >> "$GITHUB_OUTPUT"
+          {
+            echo "## 🛑 Index mappings drifted from event-database-imports@develop"
+            echo ""
+            echo "\`tests/resources/mappings/*.json\` no longer matches the committed export in"
+            echo "[event-database-imports](https://github.com/itk-dev/event-database-imports/tree/develop/resources/mappings)."
+            echo "The importers project is the source of truth for these Elasticsearch mappings."
+            echo ""
+            echo "Re-sync each drifted index by copying the upstream file, e.g.:"
+            echo ""
+            echo '```shell'
+            echo "curl -sSL https://raw.githubusercontent.com/itk-dev/event-database-imports/develop/resources/mappings/<index>.json \\"
+            echo "  -o tests/resources/mappings/<index>.json"
+            echo '```'
+            echo ""
+            cat "$report"
+          } | tee -a "$GITHUB_STEP_SUMMARY" > full-report.md
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request' && steps.drift.outputs.drift == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh pr comment "${{ github.event.pull_request.number }}" --body-file full-report.md --create-if-none --edit-last
+
+      - name: Fail if mappings drifted
+        if: steps.drift.outputs.drift == 'true'
+        run: exit 1

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\ApiPlatform;
 
-class ApiTest extends AbstractApiTestCase
+final class ApiTest extends AbstractApiTestCase
 {
     public function testRedirectToDocs(): void
     {
-        static::createClient()->request('GET', '/');
+        self::createClient()->request('GET', '/');
 
         $this->assertResponseRedirects('/api/v2/docs');
     }

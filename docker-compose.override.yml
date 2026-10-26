@@ -33,7 +33,7 @@ services:
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${COMPOSE_DOMAIN}`) && (PathPrefix(`${APP_PATH_PREFIX}`) || PathPrefix(`/_wdt`) || PathPrefix(`/_profiler`))"
 
   elasticsearch:
-    image: elasticsearch:8.13.0
+    image: elasticsearch:8.19.18
     networks:
       - app
       - frontend

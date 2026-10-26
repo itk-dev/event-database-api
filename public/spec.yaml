@@ -25,13 +25,10 @@ paths:
             application/ld+json:
               schema:
                 type: object
-                properties:
-                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/DailyOccurrence.DailyOccurrenceRepresentationProvider.jsonld' } }
-                  'hydra:totalItems': { type: integer, minimum: 0 }
-                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:previous': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } }, example: { '@id': string, type: string, 'hydra:first': string, 'hydra:last': string, 'hydra:previous': string, 'hydra:next': string } }
-                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: [string, 'null'] }, required: { type: boolean } } } } } }
-                required:
-                  - 'hydra:member'
+                description: 'DailyOccurrence.DailyOccurrenceRepresentationProvider.jsonld collection.'
+                allOf:
+                  - { $ref: '#/components/schemas/HydraCollectionBaseSchema' }
+                  - { type: object, required: ['hydra:member'], properties: { 'hydra:member': { type: array, items: { $ref: '#/components/schemas/DailyOccurrence.DailyOccurrenceRepresentationProvider.jsonld' } } } }
       summary: 'Retrieves the collection of DailyOccurrence resources.'
       description: 'Retrieves the collection of DailyOccurrence resources.'
       parameters:
@@ -41,28 +38,24 @@ paths:
           description: 'The collection page number'
           required: false
           deprecated: false
-          allowEmptyValue: true
           schema:
             type: integer
             default: 1
           style: form
-          explode: false
-          allowReserved: false
+          explode: true
         -
           name: itemsPerPage
           in: query
           description: 'The number of items per page'
           required: false
           deprecated: false
-          allowEmptyValue: true
           schema:
             type: integer
             default: 10
             minimum: 0
             maximum: 50
           style: form
-          explode: false
-          allowReserved: false
+          explode: true
         -
           name: event.title
           in: query
@@ -159,217 +152,180 @@ paths:
           description: 'Filter based on start greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. start[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'start[between]'
           in: query
           description: "Filter based on start between two ISO 8601 datetime [(yyyy-MM-dd'T'HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'start[gt]'
           in: query
           description: 'Filter based on start greater than ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'start[gte]'
           in: query
           description: 'Filter based on start greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'start[lt]'
           in: query
           description: 'Filter based on start less then ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'start[lte]'
           in: query
           description: 'Filter based on start less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: end
           in: query
           description: 'Filter based on end less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. end[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'end[between]'
           in: query
           description: "Filter based on end between two ISO 8601 datetime [(yyyy-MM-dd'T'HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'end[gt]'
           in: query
           description: 'Filter based on end greater than ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'end[gte]'
           in: query
           description: 'Filter based on end greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'end[lt]'
           in: query
           description: 'Filter based on end less then ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'end[lte]'
           in: query
           description: 'Filter based on end less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: updated
           in: query
           description: 'Filter based on updated greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. updated[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[between]'
           in: query
           description: "Filter based on updated between two ISO 8601 datetime [(yyyy-MM-dd'T'HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[gt]'
           in: query
           description: 'Filter based on updated greater than ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[gte]'
           in: query
           description: 'Filter based on updated greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[lt]'
           in: query
           description: 'Filter based on updated less then ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[lte]'
           in: query
           description: 'Filter based on updated less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
-      deprecated: false
   '/api/v2/daily_occurrences/{id}':
     get:
       operationId: api_daily_occurrences_id_get
@@ -378,6 +334,10 @@ paths:
       responses:
         '200':
           description: 'Single daily occurrence'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/DailyOccurrence.DailyOccurrenceRepresentationProvider.jsonld'
         '404':
           description: 'Not found'
           content:
@@ -397,16 +357,13 @@ paths:
         -
           name: id
           in: path
-          description: ''
+          description: 'DailyOccurrence identifier'
           required: true
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: integer
           style: simple
           explode: false
-          allowReserved: false
-      deprecated: false
   /api/v2/events:
     get:
       operationId: api_events_get_collection
@@ -419,13 +376,10 @@ paths:
             application/ld+json:
               schema:
                 type: object
-                properties:
-                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Event.EventRepresentationProvider.jsonld' } }
-                  'hydra:totalItems': { type: integer, minimum: 0 }
-                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:previous': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } }, example: { '@id': string, type: string, 'hydra:first': string, 'hydra:last': string, 'hydra:previous': string, 'hydra:next': string } }
-                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: [string, 'null'] }, required: { type: boolean } } } } } }
-                required:
-                  - 'hydra:member'
+                description: 'Event.EventRepresentationProvider.jsonld collection.'
+                allOf:
+                  - { $ref: '#/components/schemas/HydraCollectionBaseSchema' }
+                  - { type: object, required: ['hydra:member'], properties: { 'hydra:member': { type: array, items: { $ref: '#/components/schemas/Event.EventRepresentationProvider.jsonld' } } } }
       summary: 'Retrieves the collection of Event resources.'
       description: 'Retrieves the collection of Event resources.'
       parameters:
@@ -435,28 +389,24 @@ paths:
           description: 'The collection page number'
           required: false
           deprecated: false
-          allowEmptyValue: true
           schema:
             type: integer
             default: 1
           style: form
-          explode: false
-          allowReserved: false
+          explode: true
         -
           name: itemsPerPage
           in: query
           description: 'The number of items per page'
           required: false
           deprecated: false
-          allowEmptyValue: true
           schema:
             type: integer
             default: 10
             minimum: 0
             maximum: 50
           style: form
-          explode: false
-          allowReserved: false
+          explode: true
         -
           name: title
           in: query
@@ -553,217 +503,180 @@ paths:
           description: 'Filter based on occurrences.start greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. occurrences.start[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'occurrences.start[between]'
           in: query
           description: "Filter based on occurrences.start between two ISO 8601 datetime [(yyyy-MM-dd'T'HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'occurrences.start[gt]'
           in: query
           description: 'Filter based on occurrences.start greater than ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'occurrences.start[gte]'
           in: query
           description: 'Filter based on occurrences.start greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'occurrences.start[lt]'
           in: query
           description: 'Filter based on occurrences.start less then ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'occurrences.start[lte]'
           in: query
           description: 'Filter based on occurrences.start less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: occurrences.end
           in: query
           description: 'Filter based on occurrences.end less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. occurrences.end[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'occurrences.end[between]'
           in: query
           description: "Filter based on occurrences.end between two ISO 8601 datetime [(yyyy-MM-dd'T'HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'occurrences.end[gt]'
           in: query
           description: 'Filter based on occurrences.end greater than ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'occurrences.end[gte]'
           in: query
           description: 'Filter based on occurrences.end greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'occurrences.end[lt]'
           in: query
           description: 'Filter based on occurrences.end less then ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'occurrences.end[lte]'
           in: query
           description: 'Filter based on occurrences.end less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: updated
           in: query
           description: 'Filter based on updated greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. updated[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[between]'
           in: query
           description: "Filter based on updated between two ISO 8601 datetime [(yyyy-MM-dd'T'HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[gt]'
           in: query
           description: 'Filter based on updated greater than ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[gte]'
           in: query
           description: 'Filter based on updated greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[lt]'
           in: query
           description: 'Filter based on updated less then ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[lte]'
           in: query
           description: 'Filter based on updated less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
-      deprecated: false
   '/api/v2/events/{id}':
     get:
       operationId: api_events_id_get
@@ -772,6 +685,10 @@ paths:
       responses:
         '200':
           description: 'Single event'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Event.EventRepresentationProvider.jsonld'
         '404':
           description: 'Not found'
           content:
@@ -791,16 +708,13 @@ paths:
         -
           name: id
           in: path
-          description: ''
+          description: 'Event identifier'
           required: true
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: integer
           style: simple
           explode: false
-          allowReserved: false
-      deprecated: false
   /api/v2/locations:
     get:
       operationId: api_locations_get_collection
@@ -813,13 +727,10 @@ paths:
             application/ld+json:
               schema:
                 type: object
-                properties:
-                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Location.LocationRepresentationProvider.jsonld' } }
-                  'hydra:totalItems': { type: integer, minimum: 0 }
-                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:previous': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } }, example: { '@id': string, type: string, 'hydra:first': string, 'hydra:last': string, 'hydra:previous': string, 'hydra:next': string } }
-                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: [string, 'null'] }, required: { type: boolean } } } } } }
-                required:
-                  - 'hydra:member'
+                description: 'Location.LocationRepresentationProvider.jsonld collection.'
+                allOf:
+                  - { $ref: '#/components/schemas/HydraCollectionBaseSchema' }
+                  - { type: object, required: ['hydra:member'], properties: { 'hydra:member': { type: array, items: { $ref: '#/components/schemas/Location.LocationRepresentationProvider.jsonld' } } } }
       summary: 'Retrieves the collection of Location resources.'
       description: 'Retrieves the collection of Location resources.'
       parameters:
@@ -829,28 +740,24 @@ paths:
           description: 'The collection page number'
           required: false
           deprecated: false
-          allowEmptyValue: true
           schema:
             type: integer
             default: 1
           style: form
-          explode: false
-          allowReserved: false
+          explode: true
         -
           name: itemsPerPage
           in: query
           description: 'The number of items per page'
           required: false
           deprecated: false
-          allowEmptyValue: true
           schema:
             type: integer
             default: 20
             minimum: 0
             maximum: 100
           style: form
-          explode: false
-          allowReserved: false
+          explode: true
         -
           name: name
           in: query
@@ -881,73 +788,60 @@ paths:
           description: 'Filter based on updated greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. updated[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[between]'
           in: query
           description: "Filter based on updated between two ISO 8601 datetime [(yyyy-MM-dd'T'HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[gt]'
           in: query
           description: 'Filter based on updated greater than ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[gte]'
           in: query
           description: 'Filter based on updated greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[lt]'
           in: query
           description: 'Filter based on updated less then ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[lte]'
           in: query
           description: 'Filter based on updated less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
-      deprecated: false
   '/api/v2/locations/{id}':
     get:
       operationId: api_locations_id_get
@@ -956,6 +850,10 @@ paths:
       responses:
         '200':
           description: 'Single location'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Location.LocationRepresentationProvider.jsonld'
         '404':
           description: 'Not found'
           content:
@@ -970,21 +868,18 @@ paths:
                 $ref: '#/components/schemas/Error'
           links: {  }
       summary: 'Get single location based on identifier'
-      description: 'Retrieves a Location resource.'
+      description: 'Get single location based on identifier'
       parameters:
         -
           name: id
           in: path
-          description: ''
+          description: 'Location identifier'
           required: true
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: integer
           style: simple
           explode: false
-          allowReserved: false
-      deprecated: false
   /api/v2/occurrences:
     get:
       operationId: api_occurrences_get_collection
@@ -997,13 +892,10 @@ paths:
             application/ld+json:
               schema:
                 type: object
-                properties:
-                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Occurrence.OccurrenceRepresentationProvider.jsonld' } }
-                  'hydra:totalItems': { type: integer, minimum: 0 }
-                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:previous': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } }, example: { '@id': string, type: string, 'hydra:first': string, 'hydra:last': string, 'hydra:previous': string, 'hydra:next': string } }
-                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: [string, 'null'] }, required: { type: boolean } } } } } }
-                required:
-                  - 'hydra:member'
+                description: 'Occurrence.OccurrenceRepresentationProvider.jsonld collection.'
+                allOf:
+                  - { $ref: '#/components/schemas/HydraCollectionBaseSchema' }
+                  - { type: object, required: ['hydra:member'], properties: { 'hydra:member': { type: array, items: { $ref: '#/components/schemas/Occurrence.OccurrenceRepresentationProvider.jsonld' } } } }
       summary: 'Retrieves the collection of Occurrence resources.'
       description: 'Retrieves the collection of Occurrence resources.'
       parameters:
@@ -1013,28 +905,24 @@ paths:
           description: 'The collection page number'
           required: false
           deprecated: false
-          allowEmptyValue: true
           schema:
             type: integer
             default: 1
           style: form
-          explode: false
-          allowReserved: false
+          explode: true
         -
           name: itemsPerPage
           in: query
           description: 'The number of items per page'
           required: false
           deprecated: false
-          allowEmptyValue: true
           schema:
             type: integer
             default: 10
             minimum: 0
             maximum: 50
           style: form
-          explode: false
-          allowReserved: false
+          explode: true
         -
           name: event.title
           in: query
@@ -1119,217 +1007,180 @@ paths:
           description: 'Filter based on start greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. start[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'start[between]'
           in: query
           description: "Filter based on start between two ISO 8601 datetime [(yyyy-MM-dd'T'HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'start[gt]'
           in: query
           description: 'Filter based on start greater than ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'start[gte]'
           in: query
           description: 'Filter based on start greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'start[lt]'
           in: query
           description: 'Filter based on start less then ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'start[lte]'
           in: query
           description: 'Filter based on start less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: end
           in: query
           description: 'Filter based on end less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. end[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'end[between]'
           in: query
           description: "Filter based on end between two ISO 8601 datetime [(yyyy-MM-dd'T'HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'end[gt]'
           in: query
           description: 'Filter based on end greater than ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'end[gte]'
           in: query
           description: 'Filter based on end greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'end[lt]'
           in: query
           description: 'Filter based on end less then ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'end[lte]'
           in: query
           description: 'Filter based on end less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: updated
           in: query
           description: 'Filter based on updated greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. updated[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[between]'
           in: query
           description: "Filter based on updated between two ISO 8601 datetime [(yyyy-MM-dd'T'HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[gt]'
           in: query
           description: 'Filter based on updated greater than ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[gte]'
           in: query
           description: 'Filter based on updated greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[lt]'
           in: query
           description: 'Filter based on updated less then ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[lte]'
           in: query
           description: 'Filter based on updated less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
-      deprecated: false
   '/api/v2/occurrences/{id}':
     get:
       operationId: api_occurrences_id_get
@@ -1338,6 +1189,10 @@ paths:
       responses:
         '200':
           description: 'Single occurrence'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Occurrence.OccurrenceRepresentationProvider.jsonld'
         '404':
           description: 'Not found'
           content:
@@ -1352,21 +1207,18 @@ paths:
                 $ref: '#/components/schemas/Error'
           links: {  }
       summary: 'Get single occurrence based on identifier'
-      description: 'Retrieves a Occurrence resource.'
+      description: 'Get single occurrence based on identifier'
       parameters:
         -
           name: id
           in: path
-          description: ''
+          description: 'Occurrence identifier'
           required: true
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: integer
           style: simple
           explode: false
-          allowReserved: false
-      deprecated: false
   /api/v2/organizations:
     get:
       operationId: api_organizations_get_collection
@@ -1379,13 +1231,10 @@ paths:
             application/ld+json:
               schema:
                 type: object
-                properties:
-                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Organization.OrganizationRepresentationProvider.jsonld' } }
-                  'hydra:totalItems': { type: integer, minimum: 0 }
-                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:previous': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } }, example: { '@id': string, type: string, 'hydra:first': string, 'hydra:last': string, 'hydra:previous': string, 'hydra:next': string } }
-                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: [string, 'null'] }, required: { type: boolean } } } } } }
-                required:
-                  - 'hydra:member'
+                description: 'Organization.OrganizationRepresentationProvider.jsonld collection.'
+                allOf:
+                  - { $ref: '#/components/schemas/HydraCollectionBaseSchema' }
+                  - { type: object, required: ['hydra:member'], properties: { 'hydra:member': { type: array, items: { $ref: '#/components/schemas/Organization.OrganizationRepresentationProvider.jsonld' } } } }
       summary: 'Retrieves the collection of Organization resources.'
       description: 'Retrieves the collection of Organization resources.'
       parameters:
@@ -1395,28 +1244,24 @@ paths:
           description: 'The collection page number'
           required: false
           deprecated: false
-          allowEmptyValue: true
           schema:
             type: integer
             default: 1
           style: form
-          explode: false
-          allowReserved: false
+          explode: true
         -
           name: itemsPerPage
           in: query
           description: 'The number of items per page'
           required: false
           deprecated: false
-          allowEmptyValue: true
           schema:
             type: integer
             default: 20
             minimum: 0
             maximum: 100
           style: form
-          explode: false
-          allowReserved: false
+          explode: true
         -
           name: name
           in: query
@@ -1435,73 +1280,60 @@ paths:
           description: 'Filter based on updated greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00" (DEPRECATED - please use a filter with an explicit operator, e.g. updated[gt]=2004-02-12T15:19:21+00:00) '
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[between]'
           in: query
           description: "Filter based on updated between two ISO 8601 datetime [(yyyy-MM-dd'T'HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns) seperated by '..', e.g. \"2004-02-12T15:19:21+00:00..2004-02-13T16:20:22+00:00\""
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[gt]'
           in: query
           description: 'Filter based on updated greater than ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[gte]'
           in: query
           description: 'Filter based on updated greater then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[lt]'
           in: query
           description: 'Filter based on updated less then ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
         -
           name: 'updated[lte]'
           in: query
           description: 'Filter based on updated less then or equal to ISO 8601 datetime [(yyyy-MM-dd''T''HH:mm:ssz)](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/format/DateTimeFormatter.html#patterns), e.g. "2004-02-12T15:19:21+00:00"'
           required: false
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: form
           explode: false
-          allowReserved: false
-      deprecated: false
   '/api/v2/organizations/{id}':
     get:
       operationId: api_organizations_id_get
@@ -1510,6 +1342,10 @@ paths:
       responses:
         '200':
           description: 'Single organization'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Organization.OrganizationRepresentationProvider.jsonld'
         '404':
           description: 'Not found'
           content:
@@ -1524,21 +1360,18 @@ paths:
                 $ref: '#/components/schemas/Error'
           links: {  }
       summary: 'Get single organization based on identifier'
-      description: 'Retrieves a Organization resource.'
+      description: 'Get single organization based on identifier'
       parameters:
         -
           name: id
           in: path
-          description: ''
+          description: 'Organization identifier'
           required: true
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: integer
           style: simple
           explode: false
-          allowReserved: false
-      deprecated: false
   /api/v2/tags:
     get:
       operationId: api_tags_get_collection
@@ -1551,13 +1384,10 @@ paths:
             application/ld+json:
               schema:
                 type: object
-                properties:
-                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Tag.jsonld' } }
-                  'hydra:totalItems': { type: integer, minimum: 0 }
-                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:previous': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } }, example: { '@id': string, type: string, 'hydra:first': string, 'hydra:last': string, 'hydra:previous': string, 'hydra:next': string } }
-                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: [string, 'null'] }, required: { type: boolean } } } } } }
-                required:
-                  - 'hydra:member'
+                description: 'Tag.jsonld collection.'
+                allOf:
+                  - { $ref: '#/components/schemas/HydraCollectionBaseSchema' }
+                  - { type: object, required: ['hydra:member'], properties: { 'hydra:member': { type: array, items: { $ref: '#/components/schemas/Tag.jsonld' } } } }
       summary: 'Retrieves the collection of Tag resources.'
       description: 'Retrieves the collection of Tag resources.'
       parameters:
@@ -1567,28 +1397,24 @@ paths:
           description: 'The collection page number'
           required: false
           deprecated: false
-          allowEmptyValue: true
           schema:
             type: integer
             default: 1
           style: form
-          explode: false
-          allowReserved: false
+          explode: true
         -
           name: itemsPerPage
           in: query
           description: 'The number of items per page'
           required: false
           deprecated: false
-          allowEmptyValue: true
           schema:
             type: integer
             default: 20
             minimum: 0
             maximum: 100
           style: form
-          explode: false
-          allowReserved: false
+          explode: true
         -
           name: name
           in: query
@@ -1613,7 +1439,6 @@ paths:
           style: form
           explode: false
           allowReserved: false
-      deprecated: false
   '/api/v2/tags/{slug}':
     get:
       operationId: api_tags_slug_get
@@ -1622,6 +1447,10 @@ paths:
       responses:
         '200':
           description: 'Get single tag'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Tag.jsonld'
         '404':
           description: 'Not found'
           content:
@@ -1636,21 +1465,18 @@ paths:
                 $ref: '#/components/schemas/Error'
           links: {  }
       summary: 'Get single tag'
-      description: 'Retrieves a Tag resource.'
+      description: 'Get single tag'
       parameters:
         -
           name: slug
           in: path
-          description: ''
+          description: 'Tag identifier'
           required: true
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: simple
           explode: false
-          allowReserved: false
-      deprecated: false
   /api/v2/vocabularies:
     get:
       operationId: api_vocabularies_get_collection
@@ -1663,13 +1489,10 @@ paths:
             application/ld+json:
               schema:
                 type: object
-                properties:
-                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Vocabulary.jsonld' } }
-                  'hydra:totalItems': { type: integer, minimum: 0 }
-                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:previous': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } }, example: { '@id': string, type: string, 'hydra:first': string, 'hydra:last': string, 'hydra:previous': string, 'hydra:next': string } }
-                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: [string, 'null'] }, required: { type: boolean } } } } } }
-                required:
-                  - 'hydra:member'
+                description: 'Vocabulary.jsonld collection.'
+                allOf:
+                  - { $ref: '#/components/schemas/HydraCollectionBaseSchema' }
+                  - { type: object, required: ['hydra:member'], properties: { 'hydra:member': { type: array, items: { $ref: '#/components/schemas/Vocabulary.jsonld' } } } }
       summary: 'Retrieves the collection of Vocabulary resources.'
       description: 'Retrieves the collection of Vocabulary resources.'
       parameters:
@@ -1679,28 +1502,24 @@ paths:
           description: 'The collection page number'
           required: false
           deprecated: false
-          allowEmptyValue: true
           schema:
             type: integer
             default: 1
           style: form
-          explode: false
-          allowReserved: false
+          explode: true
         -
           name: itemsPerPage
           in: query
           description: 'The number of items per page'
           required: false
           deprecated: false
-          allowEmptyValue: true
           schema:
             type: integer
             default: 20
             minimum: 0
             maximum: 100
           style: form
-          explode: false
-          allowReserved: false
+          explode: true
         -
           name: name
           in: query
@@ -1725,7 +1544,6 @@ paths:
           style: form
           explode: false
           allowReserved: false
-      deprecated: false
   '/api/v2/vocabularies/{slug}':
     get:
       operationId: api_vocabularies_slug_get
@@ -1734,6 +1552,10 @@ paths:
       responses:
         '200':
           description: 'Get single vocabulary'
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Vocabulary.jsonld'
         '404':
           description: 'Not found'
           content:
@@ -1748,66 +1570,46 @@ paths:
                 $ref: '#/components/schemas/Error'
           links: {  }
       summary: 'Get a vocabulary based on slug'
-      description: 'Retrieves a Vocabulary resource.'
+      description: 'Get a vocabulary based on slug'
       parameters:
         -
           name: slug
           in: path
-          description: ''
+          description: 'Vocabulary identifier'
           required: true
           deprecated: false
-          allowEmptyValue: false
           schema:
             type: string
           style: simple
           explode: false
-          allowReserved: false
-      deprecated: false
 components:
   schemas:
     DailyOccurrence.DailyOccurrenceRepresentationProvider.jsonld:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        '@id':
-          readOnly: true
-          type: string
-        '@type':
-          readOnly: true
-          type: string
-        '@context':
-          readOnly: true
-          oneOf:
-            -
-              type: string
-            -
-              type: object
-              properties:
-                '@vocab':
-                  type: string
-                hydra:
-                  type: string
-                  enum: ['http://www.w3.org/ns/hydra/core#']
-              required:
-                - '@vocab'
-                - hydra
-              additionalProperties: true
+      allOf:
+        -
+          $ref: '#/components/schemas/HydraItemBaseSchema'
+        -
+          type: object
     Error:
       type: object
       description: 'A representation of common errors.'
-      deprecated: false
       properties:
         title:
           readOnly: true
           description: 'A short, human-readable summary of the problem.'
-          type: string
+          type:
+            - string
+            - 'null'
         detail:
           readOnly: true
           description: 'A human-readable explanation specific to this occurrence of the problem.'
-          type: string
+          type:
+            - string
+            - 'null'
         status:
-          type: number
+          type:
+            - integer
+            - 'null'
           examples:
             - 404
           default: 400
@@ -1822,74 +1624,115 @@ components:
           description: 'A URI reference that identifies the problem type'
           type: string
     Error.jsonld:
-      type: object
+      allOf:
+        -
+          $ref: '#/components/schemas/HydraItemBaseSchema'
+        -
+          type: object
+          properties:
+            title:
+              readOnly: true
+              description: 'A short, human-readable summary of the problem.'
+              type:
+                - string
+                - 'null'
+            detail:
+              readOnly: true
+              description: 'A human-readable explanation specific to this occurrence of the problem.'
+              type:
+                - string
+                - 'null'
+            status:
+              type:
+                - integer
+                - 'null'
+              examples:
+                - 404
+              default: 400
+            instance:
+              readOnly: true
+              description: 'A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.'
+              type:
+                - string
+                - 'null'
+            type:
+              readOnly: true
+              description: 'A URI reference that identifies the problem type'
+              type: string
+            description:
+              readOnly: true
+              type:
+                - string
+                - 'null'
       description: 'A representation of common errors.'
-      deprecated: false
-      properties:
-        '@context':
-          readOnly: true
-          oneOf:
-            -
-              type: string
-            -
-              type: object
-              properties:
-                '@vocab':
-                  type: string
-                hydra:
-                  type: string
-                  enum: ['http://www.w3.org/ns/hydra/core#']
-              required:
-                - '@vocab'
-                - hydra
-              additionalProperties: true
-        '@id':
-          readOnly: true
-          type: string
-        '@type':
-          readOnly: true
-          type: string
-        title:
-          readOnly: true
-          description: 'A short, human-readable summary of the problem.'
-          type: string
-        detail:
-          readOnly: true
-          description: 'A human-readable explanation specific to this occurrence of the problem.'
-          type: string
-        status:
-          type: number
-          examples:
-            - 404
-          default: 400
-        instance:
-          readOnly: true
-          description: 'A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.'
-          type:
-            - string
-            - 'null'
-        type:
-          readOnly: true
-          description: 'A URI reference that identifies the problem type'
-          type: string
-        description:
-          readOnly: true
-          type:
-            - string
-            - 'null'
     Event.EventRepresentationProvider.jsonld:
+      allOf:
+        -
+          $ref: '#/components/schemas/HydraItemBaseSchema'
+        -
+          type: object
+    HydraCollectionBaseSchema:
+      allOf:
+        -
+          $ref: '#/components/schemas/HydraCollectionBaseSchemaNoPagination'
+        -
+          type: object
+          properties:
+            'hydra:view':
+              type: object
+              properties:
+                '@id':
+                  type: string
+                  format: iri-reference
+                '@type':
+                  type: string
+                'hydra:first':
+                  type: [string, 'null']
+                  format: iri-reference
+                'hydra:last':
+                  type: [string, 'null']
+                  format: iri-reference
+                'hydra:previous':
+                  type: [string, 'null']
+                  format: iri-reference
+                'hydra:next':
+                  type: [string, 'null']
+                  format: iri-reference
+              example:
+                '@id': string
+                '@type': string
+                'hydra:first': string
+                'hydra:last': string
+                'hydra:previous': string
+                'hydra:next': string
+    HydraCollectionBaseSchemaNoPagination:
       type: object
-      description: ''
-      deprecated: false
       properties:
-        '@id':
-          readOnly: true
-          type: string
-        '@type':
-          readOnly: true
-          type: string
+        'hydra:totalItems':
+          type: integer
+          minimum: 0
+        'hydra:search':
+          type: object
+          properties:
+            '@type':
+              type: string
+            'hydra:template':
+              type: string
+            'hydra:variableRepresentation':
+              type: string
+            'hydra:mapping':
+              type: array
+              items:
+                type: object
+                properties:
+                  '@type': { type: string }
+                  variable: { type: string }
+                  property: { type: [string, 'null'] }
+                  required: { type: boolean }
+    HydraItemBaseSchema:
+      type: object
+      properties:
         '@context':
-          readOnly: true
           oneOf:
             -
               type: string
@@ -1905,160 +1748,61 @@ components:
                 - '@vocab'
                 - hydra
               additionalProperties: true
+        '@id':
+          type: string
+        '@type':
+          type: string
+      required:
+        - '@id'
+        - '@type'
     Location.LocationRepresentationProvider.jsonld:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        '@id':
-          readOnly: true
-          type: string
-        '@type':
-          readOnly: true
-          type: string
-        '@context':
-          readOnly: true
-          oneOf:
-            -
-              type: string
-            -
-              type: object
-              properties:
-                '@vocab':
-                  type: string
-                hydra:
-                  type: string
-                  enum: ['http://www.w3.org/ns/hydra/core#']
-              required:
-                - '@vocab'
-                - hydra
-              additionalProperties: true
+      allOf:
+        -
+          $ref: '#/components/schemas/HydraItemBaseSchema'
+        -
+          type: object
     Occurrence.OccurrenceRepresentationProvider.jsonld:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        '@id':
-          readOnly: true
-          type: string
-        '@type':
-          readOnly: true
-          type: string
-        '@context':
-          readOnly: true
-          oneOf:
-            -
-              type: string
-            -
-              type: object
-              properties:
-                '@vocab':
-                  type: string
-                hydra:
-                  type: string
-                  enum: ['http://www.w3.org/ns/hydra/core#']
-              required:
-                - '@vocab'
-                - hydra
-              additionalProperties: true
+      allOf:
+        -
+          $ref: '#/components/schemas/HydraItemBaseSchema'
+        -
+          type: object
     Organization.OrganizationRepresentationProvider.jsonld:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        '@id':
-          readOnly: true
-          type: string
-        '@type':
-          readOnly: true
-          type: string
-        '@context':
-          readOnly: true
-          oneOf:
-            -
-              type: string
-            -
-              type: object
-              properties:
-                '@vocab':
-                  type: string
-                hydra:
-                  type: string
-                  enum: ['http://www.w3.org/ns/hydra/core#']
-              required:
-                - '@vocab'
-                - hydra
-              additionalProperties: true
+      allOf:
+        -
+          $ref: '#/components/schemas/HydraItemBaseSchema'
+        -
+          type: object
     Tag.jsonld:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        '@id':
-          readOnly: true
-          type: string
-        '@type':
-          readOnly: true
-          type: string
-        '@context':
-          readOnly: true
-          oneOf:
-            -
+      allOf:
+        -
+          $ref: '#/components/schemas/HydraItemBaseSchema'
+        -
+          type: object
+          properties:
+            name:
               type: string
-            -
-              type: object
-              properties:
-                '@vocab':
-                  type: string
-                hydra:
-                  type: string
-                  enum: ['http://www.w3.org/ns/hydra/core#']
-              required:
-                - '@vocab'
-                - hydra
-              additionalProperties: true
-        slug:
-          type: string
-        name:
-          type: string
+            slug:
+              type: string
     Vocabulary.jsonld:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        '@id':
-          readOnly: true
-          type: string
-        '@type':
-          readOnly: true
-          type: string
-        '@context':
-          readOnly: true
-          oneOf:
-            -
+      allOf:
+        -
+          $ref: '#/components/schemas/HydraItemBaseSchema'
+        -
+          type: object
+          properties:
+            name:
               type: string
-            -
-              type: object
-              properties:
-                '@vocab':
-                  type: string
-                hydra:
-                  type: string
-                  enum: ['http://www.w3.org/ns/hydra/core#']
-              required:
-                - '@vocab'
-                - hydra
-              additionalProperties: true
-        slug:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
+            slug:
+              type: string
+            description:
+              type: string
+            tags:
+              type: array
+              items:
+                type:
+                  - string
+                  - 'null'
   responses: {  }
   parameters: {  }
   examples: {  }
@@ -2076,16 +1820,23 @@ security:
 tags:
   -
     name: DailyOccurrence
+    description: "Resource 'DailyOccurrence' operations."
   -
     name: Event
+    description: "Resource 'Event' operations."
   -
     name: Location
+    description: "Resource 'Location' operations."
   -
     name: Occurrence
+    description: "Resource 'Occurrence' operations."
   -
     name: Organization
+    description: "Resource 'Organization' operations."
   -
     name: Tag
+    description: "Resource 'Tag' operations."
   -
     name: Vocabulary
+    description: "Resource 'Vocabulary' operations."
 webhooks: {  }

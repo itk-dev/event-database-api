@@ -7,6 +7,7 @@ use Elastic\Elasticsearch\Client;
 use Elastic\Elasticsearch\Exception\ClientResponseException;
 use Elastic\Elasticsearch\Exception\MissingParameterException;
 use Elastic\Elasticsearch\Exception\ServerResponseException;
+use Elastic\Elasticsearch\Response\Elasticsearch;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -21,6 +22,7 @@ class FixtureLoader
         private readonly HttpClientInterface $httpClient,
         private readonly IndexInterface $index,
         private readonly Client $client,
+        private readonly string $mappingsDir,
     ) {
     }
 
@@ -63,13 +65,17 @@ class FixtureLoader
     private function download(string $url): array
     {
         // Load from local file if using "file" URL scheme.
-        if (preg_match('~^file://(?<path>/.+)$~', $url, $matches)) {
+        if (1 === preg_match('~^file://(?<path>/.+)$~', $url, $matches)) {
             $path = $matches['path'];
             if (!is_readable($path)) {
                 throw new \HttpException('Unable to load fixture data');
             }
-            $data = json_decode(file_get_contents($path), true);
-            if (empty($data)) {
+            $contents = file_get_contents($path);
+            if (false === $contents) {
+                throw new \HttpException('Unable to load fixture data');
+            }
+            $data = json_decode($contents, true);
+            if (!is_array($data) || [] === $data) {
                 throw new \HttpException('Unable to load fixture data');
             }
 
@@ -108,9 +114,10 @@ class FixtureLoader
             }
             try {
                 // No other places in this part of the frontend should index data, hence it's not in the index service.
+                /** @var Elasticsearch $response */
                 $response = $this->client->index($params);
 
-                if (!in_array($response->getStatusCode(), [Response::HTTP_OK, Response::HTTP_CREATED, Response::HTTP_NO_CONTENT])) {
+                if (!in_array($response->getStatusCode(), [Response::HTTP_OK, Response::HTTP_CREATED, Response::HTTP_NO_CONTENT], true)) {
                     throw new \Exception('Unable to add item to index', $response->getStatusCode());
                 }
             } catch (ClientResponseException|MissingParameterException|ServerResponseException $e) {
@@ -134,19 +141,37 @@ class FixtureLoader
      */
     private function createIndex(string $indexName): void
     {
-        if (!$this->index->indexExists($indexName)) {
-            // This creation of the index is not in den index service as this is the only place it should be used. In
-            // production and in many cases, you should connect to the index managed by the backend (imports).
-            $this->client->indices()->create([
-                'index' => $indexName,
-                'body' => [
-                    'settings' => [
-                        'number_of_shards' => 5,
-                        'number_of_replicas' => 0,
-                    ],
-                ],
-            ]);
+        if ($this->index->indexExists($indexName)) {
+            return;
         }
+
+        // This creation of the index is not in the index service as this is the only place it should be used. In
+        // production you connect to the index managed by the backend (imports). The mapping applied here is a
+        // production-parity copy of the importer's `dynamic: strict` mappings (tests/resources/mappings/), so filter
+        // tests exercise real Elasticsearch field semantics (keyword vs text) instead of dynamic-mapping artefacts.
+        $mappingFile = $this->mappingsDir.'/'.$indexName.'.json';
+        if (!is_readable($mappingFile)) {
+            throw new \RuntimeException(sprintf('Missing production-parity mapping for index "%s" (expected %s). Export it from event-database-imports (src/Model/Indexing/Mappings); the test harness must never create an index with dynamic mapping.', $indexName, $mappingFile));
+        }
+        $contents = file_get_contents($mappingFile);
+        if (false === $contents) {
+            throw new \RuntimeException(sprintf('Unable to read mapping file %s', $mappingFile));
+        }
+        $mappings = json_decode($contents, true);
+        if (!is_array($mappings)) {
+            throw new \RuntimeException(sprintf('Invalid mapping JSON in %s', $mappingFile));
+        }
+
+        $this->client->indices()->create([
+            'index' => $indexName,
+            'body' => [
+                'settings' => [
+                    'number_of_shards' => 5,
+                    'number_of_replicas' => 0,
+                ],
+                'mappings' => $mappings,
+            ],
+        ]);
     }
 
     /**

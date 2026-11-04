@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Api\Dto;
 
 use ApiPlatform\Metadata\ApiFilter;
@@ -52,22 +54,14 @@ use App\Api\State\VocabularyRepresentationProvider;
 )]
 readonly class Vocabulary
 {
-    #[ApiProperty(
-        identifier: true,
-    )]
-    public string $slug;
-
-    public string $name;
-
-    public string $description;
-
-    public array $tags;
-
-    public function __construct(string $name, string $slug, string $description, array $tags)
-    {
-        $this->name = $name;
-        $this->slug = $slug;
-        $this->description = $description;
-        $this->tags = $tags;
+    public function __construct(
+        public string $name,
+        #[ApiProperty(
+            identifier: true,
+        )]
+        public string $slug,
+        public string $description,
+        public array $tags,
+    ) {
     }
 }

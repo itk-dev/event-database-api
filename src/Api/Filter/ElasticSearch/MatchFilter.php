@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Api\Filter\ElasticSearch;
 
 use ApiPlatform\Elasticsearch\Filter\AbstractFilter;
@@ -19,7 +21,7 @@ final class MatchFilter extends AbstractFilter
 
         /** @var string $property */
         foreach ($properties as $property) {
-            if (!empty($context['filters'][$property])) {
+            if (isset($context['filters'][$property]) && '' !== $context['filters'][$property] && [] !== $context['filters'][$property]) {
                 $matches[] = ['match' => [$property => $context['filters'][$property]]];
             }
         }
@@ -29,12 +31,12 @@ final class MatchFilter extends AbstractFilter
 
     public function getDescription(string $resourceClass): array
     {
-        if (!$this->properties) {
+        if (null === $this->properties || [] === $this->properties) {
             return [];
         }
 
         $description = [];
-        foreach ($this->properties as $filterParameterName => $value) {
+        foreach (array_keys($this->properties) as $filterParameterName) {
             $description[$filterParameterName] = [
                 'property' => $filterParameterName,
                 'type' => TypeIdentifier::STRING->value,

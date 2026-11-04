@@ -56,6 +56,10 @@ services:
         arguments:
             $appEnv: '%env(string:APP_ENV)%'
 
+    App\Fixtures\FixtureLoader:
+        arguments:
+            $mappingsDir: '%kernel.project_dir%/tests/resources/mappings'
+
     App\Security\ApiUserProvider:
         arguments:
             $apikeys: '%env(json:APP_API_KEYS)%'

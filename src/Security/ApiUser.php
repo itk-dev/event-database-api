@@ -1,11 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Security;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class ApiUser implements UserInterface
 {
+    /**
+     * @param non-empty-string $username
+     */
     public function __construct(public readonly string $username)
     {
     }

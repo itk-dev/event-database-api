@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Api\Dto;
 
 use ApiPlatform\Metadata\ApiFilter;
@@ -52,14 +54,10 @@ use App\Api\State\TagRepresentationProvider;
 )]
 readonly class Tag
 {
-    #[ApiProperty(identifier: true)]
-    public string $slug;
-
-    public string $name;
-
-    public function __construct(string $name, string $slug)
-    {
-        $this->name = $name;
-        $this->slug = $slug;
+    public function __construct(
+        public string $name,
+        #[ApiProperty(identifier: true)]
+        public string $slug,
+    ) {
     }
 }

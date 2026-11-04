@@ -1,0 +1,197 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {
+    "COMPOSE_USER": "deploy"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(cat:*)",
+      "Bash(diff:*)",
+      "Bash(echo:*)",
+      "Bash(find:*)",
+      "Bash(gh:*)",
+      "Bash(git:*)",
+      "Bash(grep:*)",
+      "Bash(head:*)",
+      "Bash(ls:*)",
+      "Bash(pwd)",
+      "Bash(tail:*)",
+      "Bash(task:*)",
+      "Bash(tree:*)",
+      "Bash(wc:*)",
+      "Bash(which:*)",
+      "Bash(docker compose exec:*)",
+      "Bash(docker compose run:*)",
+      "Bash(docker compose up:*)",
+      "Bash(docker compose ps:*)",
+      "Bash(docker compose logs:*)",
+      "Bash(docker compose top:*)",
+      "Bash(docker compose config:*)",
+      "Bash(docker compose pull:*)",
+      "Bash(docker compose images:*)",
+      "Bash(docker network:*)"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(gh issue delete:*)",
+      "Bash(gh release delete:*)",
+      "Bash(gh repo delete:*)",
+      "Bash(gh label delete:*)",
+      "Read(./.env.local)",
+      "Read(./.env.local.*)",
+      "Read(./config/secrets/*)"
+    ],
+    "ask": [
+      "Bash(docker compose down:*)",
+      "Bash(docker compose stop:*)",
+      "Bash(docker compose rm:*)",
+      "Bash(docker compose restart:*)",
+      "Bash(gh issue create:*)",
+      "Bash(gh issue close:*)",
+      "Bash(gh issue edit:*)",
+      "Bash(gh issue comment:*)",
+      "Bash(gh pr create:*)",
+      "Bash(gh pr close:*)",
+      "Bash(gh pr merge:*)",
+      "Bash(gh pr edit:*)",
+      "Bash(gh pr comment:*)",
+      "Bash(gh pr review:*)",
+      "Bash(gh release create:*)",
+      "Bash(gh release edit:*)",
+      "Bash(gh repo create:*)",
+      "Bash(gh label create:*)",
+      "Bash(gh label edit:*)",
+      "Bash(git push:*)",
+      "Bash(git branch -d:*)",
+      "Bash(git branch -D:*)",
+      "Bash(git tag -d:*)",
+      "Bash(git tag -a:*)",
+      "Bash(git tag :*)",
+      "Bash(git reset:*)",
+      "Bash(git rebase:*)",
+      "Bash(git merge:*)",
+      "Bash(git stash drop:*)",
+      "Bash(git clean:*)",
+      "Bash(git checkout -- :*)",
+      "Bash(git restore:*)",
+      "Bash(git commit:*)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "docker compose up --detach --quiet-pull 2>/dev/null || true",
+            "timeout": 60,
+            "statusMessage": "Starting Docker services..."
+          }
+        ]
+      },
+      {
+        "matcher": "startup|resume|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "command -v jq >/dev/null 2>&1 || { echo '⚠️  jq is not installed on the host — the Edit/Write formatting hooks read the edited file path from the tool payload via jq and will silently no-op until you install it (brew install jq).' >&2; exit 2; }",
+            "timeout": 10,
+            "statusMessage": "Checking host prerequisites..."
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|MultiEdit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // empty'); case \"$f\" in */composer.lock|*/symfony.lock|*/.env.local|*/.env.*.local|*/config/reference.php|*/vendor/*|*/node_modules/*|*/var/cache/*) echo 'BLOCKED: this path is generated, locked, or operator-only — edit the source instead' >&2; exit 2 ;; esac"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|MultiEdit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // empty'); REL_PATH=\"${f#\"$CLAUDE_PROJECT_DIR\"/}\"; case \"$REL_PATH\" in src/*.php|tests/*.php) docker compose exec -T phpfpm vendor/bin/rector process --no-progress-bar \"$REL_PATH\" >/dev/null 2>&1 || true ;; esac",
+            "timeout": 60
+          },
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // empty'); case \"$f\" in *.php) REL_PATH=\"${f#\"$CLAUDE_PROJECT_DIR\"/}\"; docker compose exec -T phpfpm vendor/bin/php-cs-fixer fix --quiet \"$REL_PATH\" 2>/dev/null || true ;; esac",
+            "timeout": 30
+          },
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // empty'); case \"$f\" in *.php) REL_PATH=\"${f#\"$CLAUDE_PROJECT_DIR\"/}\"; docker compose exec -T phpfpm vendor/bin/phpstan analyse --no-progress --error-format=raw \"$REL_PATH\" 2>/dev/null || true ;; esac",
+            "timeout": 45
+          },
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // empty'); case \"$f\" in *.twig) REL_PATH=\"${f#\"$CLAUDE_PROJECT_DIR\"/}\"; docker compose exec -T phpfpm vendor/bin/twig-cs-fixer lint --fix \"$REL_PATH\" 2>/dev/null || true ;; esac",
+            "timeout": 15
+          },
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // empty'); case \"$f\" in */composer.json) docker compose exec -T phpfpm composer normalize --quiet 2>/dev/null || true ;; esac",
+            "timeout": 30
+          },
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // empty'); case \"$f\" in *.yaml|*.yml|*.js|*.css) REL_PATH=\"${f#\"$CLAUDE_PROJECT_DIR\"/}\"; docker compose run --rm -T prettier \"$REL_PATH\" --write 2>/dev/null || true ;; esac",
+            "timeout": 30
+          },
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // empty'); case \"$f\" in *.md) REL_PATH=\"${f#\"$CLAUDE_PROJECT_DIR\"/}\"; docker compose run --rm -T markdownlint markdownlint --fix \"$REL_PATH\" 2>/dev/null || true ;; esac",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "docker compose exec -T phpfpm bin/console lint:container 2>/dev/null || true",
+            "timeout": 30,
+            "statusMessage": "Validating Symfony DI container..."
+          },
+          {
+            "type": "command",
+            "command": "sh \"$CLAUDE_PROJECT_DIR/scripts/claude-hook-check-index-contract.sh\" || true",
+            "timeout": 10,
+            "statusMessage": "Checking Elasticsearch index contract..."
+          },
+          {
+            "type": "command",
+            "command": "sh \"$CLAUDE_PROJECT_DIR/scripts/claude-hook-check-spec-drift.sh\" || true",
+            "timeout": 10,
+            "statusMessage": "Checking OpenAPI spec is up to date..."
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "php-lsp@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "context7@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": true,
+    "playwright@claude-plugins-official": true,
+    "feature-dev@claude-plugins-official": true,
+    "itkdev-skills@itkdev-marketplace": true
+  },
+  "enabledMcpjsonServers": [
+    "context7"
+  ],
+  "enableAllProjectMcpServers": true
+}

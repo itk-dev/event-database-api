@@ -10,6 +10,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [1.3.0] - 2026-10-07
 
+- [PR-62](https://github.com/itk-dev/event-database-api/pull/62)
+  Targeted updates to clear `composer audit`: symfony/http-foundation, yaml (7.4.22) and expression-language (7.4.21)
 - [PR-61](https://github.com/itk-dev/event-database-api/pull/61)
   Fix the API-spec workflow's no-change detection for oasdiff v0.1.x ("No changelog changes" wording)
 - [PR-60](https://github.com/itk-dev/event-database-api/pull/60)

@@ -1,48 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Attribute class ApiPlatform\\Metadata\\ApiFilter is deprecated\: since API Platform 4\.4, use the \{@see QueryParameter\} attribute instead\. Will be removed in 6\.0\.$#'
-			identifier: attribute.deprecated
-			count: 5
-			path: src/Api/Dto/DailyOccurrence.php
-
-		-
-			message: '#^Attribute class ApiPlatform\\Metadata\\ApiFilter is deprecated\: since API Platform 4\.4, use the \{@see QueryParameter\} attribute instead\. Will be removed in 6\.0\.$#'
-			identifier: attribute.deprecated
-			count: 5
-			path: src/Api/Dto/Event.php
-
-		-
-			message: '#^Attribute class ApiPlatform\\Metadata\\ApiFilter is deprecated\: since API Platform 4\.4, use the \{@see QueryParameter\} attribute instead\. Will be removed in 6\.0\.$#'
-			identifier: attribute.deprecated
-			count: 2
-			path: src/Api/Dto/Location.php
-
-		-
-			message: '#^Attribute class ApiPlatform\\Metadata\\ApiFilter is deprecated\: since API Platform 4\.4, use the \{@see QueryParameter\} attribute instead\. Will be removed in 6\.0\.$#'
-			identifier: attribute.deprecated
-			count: 4
-			path: src/Api/Dto/Occurrence.php
-
-		-
-			message: '#^Attribute class ApiPlatform\\Metadata\\ApiFilter is deprecated\: since API Platform 4\.4, use the \{@see QueryParameter\} attribute instead\. Will be removed in 6\.0\.$#'
-			identifier: attribute.deprecated
-			count: 2
-			path: src/Api/Dto/Organization.php
-
-		-
-			message: '#^Attribute class ApiPlatform\\Metadata\\ApiFilter is deprecated\: since API Platform 4\.4, use the \{@see QueryParameter\} attribute instead\. Will be removed in 6\.0\.$#'
-			identifier: attribute.deprecated
-			count: 1
-			path: src/Api/Dto/Tag.php
-
-		-
-			message: '#^Attribute class ApiPlatform\\Metadata\\ApiFilter is deprecated\: since API Platform 4\.4, use the \{@see QueryParameter\} attribute instead\. Will be removed in 6\.0\.$#'
-			identifier: attribute.deprecated
-			count: 1
-			path: src/Api/Dto/Vocabulary.php
-
-		-
 			message: '#^Offset ''_source'' might not exist on array\|null\.$#'
 			identifier: offsetAccess.notFound
 			count: 1

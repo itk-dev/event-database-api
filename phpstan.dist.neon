@@ -17,6 +17,13 @@ parameters:
         - identifier: missingType.iterableValue
         # The ID properties are set reflectively by API Platform.
         - '#Property App\\Api\\Dto\\[^\\]+::\$id is unused#'
+        # API Platform 4.4 deprecates #[ApiFilter] and replaces it with #[QueryParameter]. #[ApiFilter] is removed
+        # in API Platform 6.0. The change needs application code changes (the DTOs, and AbstractProvider::getFilters(),
+        # which reads the #[ApiFilter] attributes through api_platform.filter_locator). Remove this rule after the change.
+        -
+            identifier: attribute.deprecated
+            message: '#^Attribute class ApiPlatform\\Metadata\\ApiFilter is deprecated#'
+            path: src/Api/Dto/*
     # pb30/phpstan-composer-analysis: report packages used directly but only installed transitively ("shadow
     # dependencies") and dev packages used in production code. Unused/misplaced checks are off: bundles and
     # extensions are used through config, not class references, so they would all be false positives.

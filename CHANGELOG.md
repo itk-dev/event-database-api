@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-XX](https://github.com/itk-dev/event-database-api/pull/XX)
+  Update API Platform to 4.4 (OpenAPI 3.2.0, no `charset` in the `application/ld+json` content type)
 - [PR-75](https://github.com/itk-dev/event-database-api/pull/75)
   Update Rector (2.8) and PHPStan (2.3) and apply the new Rector rules
 - [PR-74](https://github.com/itk-dev/event-database-api/pull/74)

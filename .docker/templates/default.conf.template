@@ -20,12 +20,10 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 
-    location / {
-        # This app shares the domain with event-database-imports (admin). This app is under '/api/v2/' (.env::APP_PATH_PREFIX).
-        # Symfony uses the prefix in 'api_platform.prefix' and 'framework.assets.base_path'. But Symfony installs
-        # the assets in the root path. Thus, remove '/api/v2/' from the URI.
-        rewrite ^${APP_PATH_PREFIX}/(.*) /$1 break;
+    # Project-specific server config (.docker/templates/server.d/*.conf.template).
+    include /etc/nginx/conf.d/server.d/*.conf;
 
+    location / {
         # try to serve file directly, fallback to index.php
         try_files $uri /index.php$is_args$args;
     }

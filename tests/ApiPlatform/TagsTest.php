@@ -16,15 +16,11 @@ final class TagsTest extends AbstractApiTestCase
     use GetEntitiesTestTrait;
     use GetItemTestTrait;
 
-    #[\Override]
     protected static string $requestPath = '/api/v2/tags';
 
-    #[\Override]
     protected static string $resourceClass = Tag::class;
 
-    #[\Override]
     protected static int|string $itemId = 'aros';
 
-    #[\Override]
     protected static int|string $unknownItemId = 'no-such-tag-slug';
 }

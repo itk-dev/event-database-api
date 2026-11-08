@@ -187,7 +187,7 @@ class ApiKeysAddCommand extends Command
      */
     private function parseApiKeys(string $contents): array
     {
-        $value = new Dotenv()->parse($contents)[self::ENV_VAR] ?? '[]';
+        $value = (new Dotenv())->parse($contents)[self::ENV_VAR] ?? '[]';
 
         return json_decode($value, true, 512, JSON_THROW_ON_ERROR);
     }

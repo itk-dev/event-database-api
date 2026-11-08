@@ -15,7 +15,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
  */
 final class EventsFilterTest extends AbstractApiTestCase
 {
-    #[\Override]
     protected static string $requestPath = '/api/v2/events';
 
     #[DataProvider('getEventsProvider')]

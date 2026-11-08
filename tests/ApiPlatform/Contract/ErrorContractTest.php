@@ -22,7 +22,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class ErrorContractTest extends AbstractApiTestCase
 {
-    #[\Override]
     protected static string $requestPath = '/api/v2/events';
 
     public function testUnauthenticatedErrorShape(): void

@@ -13,7 +13,7 @@ return RectorConfig::configure()
     // Coding style and import (`use`) management are owned by php-cs-fixer
     // (PostToolUse hook / coding standards), so Rector does not touch them.
     //
-    // Modernize to the language level declared in composer.json (PHP >= 8.5).
+    // Modernize to the language level declared in composer.json (PHP >= 8.3).
     ->withPhpSets()
     // Version-based upgrade + quality rules resolved from the installed package
     // versions (Symfony 7.4, PHPUnit 13). No domain Doctrine here — the entities

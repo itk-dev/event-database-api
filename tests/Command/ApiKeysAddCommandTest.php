@@ -60,7 +60,7 @@ final class ApiKeysAddCommandTest extends TestCase
         $this->assertFileDoesNotExist($this->dir.'/.env.local.backup');
         $this->assertFileDoesNotExist($this->dir.'/.env.local.temp');
 
-        $env = new Dotenv()->parse((string) file_get_contents($this->dir.'/.env.local'));
+        $env = (new Dotenv())->parse((string) file_get_contents($this->dir.'/.env.local'));
         $this->assertSame('http://elasticsearch:9200', $env['INDEX_URL']);
         $this->assertSame('value', $env['OTHER']);
         $keys = $this->keys();
@@ -181,7 +181,7 @@ final class ApiKeysAddCommandTest extends TestCase
      */
     private function keys(): array
     {
-        $env = new Dotenv()->parse((string) file_get_contents($this->dir.'/.env.local'));
+        $env = (new Dotenv())->parse((string) file_get_contents($this->dir.'/.env.local'));
 
         return json_decode((string) $env['APP_API_KEYS'], true, 512, JSON_THROW_ON_ERROR);
     }

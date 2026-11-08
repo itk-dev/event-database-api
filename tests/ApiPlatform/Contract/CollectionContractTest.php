@@ -19,7 +19,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
  */
 final class CollectionContractTest extends AbstractApiTestCase
 {
-    #[\Override]
     protected static string $requestPath = '/api/v2/events';
 
     #[DataProvider('collectionProvider')]

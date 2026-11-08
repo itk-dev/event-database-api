@@ -35,7 +35,7 @@ class ElasticIndexException extends IndexException
         $message = json_decode($message, false, 512, JSON_THROW_ON_ERROR);
 
         // Convert snake_case type to readable format (e.g., "parse_exception" -> "Parse exception")
-        $type = new UnicodeString($message->error->root_cause[0]->type)
+        $type = (new UnicodeString($message->error->root_cause[0]->type))
             ->replace('_', ' ')
             ->title()
             ->toString();

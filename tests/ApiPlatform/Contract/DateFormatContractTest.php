@@ -13,7 +13,6 @@ use App\Tests\ApiPlatform\AbstractApiTestCase;
  */
 final class DateFormatContractTest extends AbstractApiTestCase
 {
-    #[\Override]
     protected static string $requestPath = '/api/v2/events';
 
     private const string ISO_8601_OFFSET = '/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}[+-]\d{2}:\d{2}$/';

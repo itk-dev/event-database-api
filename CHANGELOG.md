@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-72](https://github.com/itk-dev/event-database-api/pull/72)
+  Update Elasticsearch to 8.19.23 and remove the unused RabbitMQ service
 - [PR-71](https://github.com/itk-dev/event-database-api/pull/71)
   Require PHP 8.5 and apply the Rector PHP 8.5 rules
 

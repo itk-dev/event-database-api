@@ -6,15 +6,24 @@ server {
 
     client_max_body_size ${NGINX_MAX_BODY_SIZE};
 
-    # This also needs to be set in the single server tag and not only in http.
     set_real_ip_from 172.16.0.0/16;
+    set_real_ip_from 192.168.39.0/24;
     real_ip_recursive on;
     real_ip_header X-Forwarded-For;
 
+    location = /cron-metrics {
+        # Proxy to supercronic metrics
+        proxy_pass http://${NGINX_CRON_METRICS}/metrics;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
     location / {
-        # We are co-hosting with the legacy EventDB, so this app is hosted under '/api/v2/' (.env::APP_PATH_PREFIX)
-        # This is configured for Symfony in both 'api_platform.prefix' and 'framework.assets.base_path'. However
-        # Symfony still installs assets in the root path so we need to rewrite the uri to remove '/api/v2/'.
+        # This app shares the domain with event-database-imports (admin). This app is under '/api/v2/' (.env::APP_PATH_PREFIX).
+        # Symfony uses the prefix in 'api_platform.prefix' and 'framework.assets.base_path'. But Symfony installs
+        # the assets in the root path. Thus, remove '/api/v2/' from the URI.
         rewrite ^${APP_PATH_PREFIX}/(.*) /$1 break;
 
         # try to serve file directly, fallback to index.php

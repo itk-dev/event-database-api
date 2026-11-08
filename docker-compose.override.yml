@@ -1,6 +1,5 @@
 services:
   phpfpm:
-    image: itkdev/php8.4-fpm:latest
     networks:
       - frontend
     depends_on:

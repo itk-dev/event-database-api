@@ -1,4 +1,5 @@
 <?php
+
 // This file is copied from config/symfony/php/.php-cs-fixer.dist.php in https://github.com/itk-dev/devops_itkdev-docker.
 // Feel free to edit the file, but consider making a pull request if you find a general issue with the file.
 
@@ -16,8 +17,8 @@ $config = new PhpCsFixer\Config();
 $config->setFinder($finder);
 
 $config->setRules([
-  '@Symfony' => true,
-  'phpdoc_align' => false,
+    '@Symfony' => true,
+    'phpdoc_align' => false,
 ]);
 
 return $config;

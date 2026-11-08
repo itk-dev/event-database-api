@@ -14,6 +14,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
  */
 final class OrganizationsFilterTest extends AbstractApiTestCase
 {
+    #[\Override]
     protected static string $requestPath = '/api/v2/organizations';
 
     #[DataProvider('getOrganizationsProvider')]

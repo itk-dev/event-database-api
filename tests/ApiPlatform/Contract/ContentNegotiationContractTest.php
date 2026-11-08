@@ -16,6 +16,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
  */
 final class ContentNegotiationContractTest extends AbstractApiTestCase
 {
+    #[\Override]
     protected static string $requestPath = '/api/v2/events';
 
     public function testLdJsonIsSupported(): void

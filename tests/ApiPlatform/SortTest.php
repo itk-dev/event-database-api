@@ -16,6 +16,7 @@ namespace App\Tests\ApiPlatform;
  */
 final class SortTest extends AbstractApiTestCase
 {
+    #[\Override]
     protected static string $requestPath = '/api/v2/events';
 
     public function testEventsAreSortedByTitleAscending(): void

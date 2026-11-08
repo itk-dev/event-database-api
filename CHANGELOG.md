@@ -8,6 +8,9 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-XX](https://github.com/itk-dev/event-database-api/pull/XX)
+  Require PHP 8.5 and apply the Rector PHP 8.5 rules
+
 - [PR-70](https://github.com/itk-dev/event-database-api/pull/70)
   Update the docker compose template (itk-version 3.2.4) and the PHP 8.5 image
 

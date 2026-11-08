@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "747cb423309e517227c3648b1003fc5a",
+    "content-hash": "1c8b255e46f2edded27db7812fe8114e",
     "packages": [
         {
             "name": "api-platform/core",
@@ -8030,7 +8030,8 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-07-05T06:31:06+00:00"
+            "time": "2026-07-05T06:31:06+00:00",
+            "published-time": "2026-07-05T06:31:19+00:00"
         },
         {
             "name": "phpstan/phpstan-strict-rules",
@@ -11116,10 +11117,10 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=8.3",
+        "php": ">=8.5",
         "ext-ctype": "*",
         "ext-iconv": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.11.0"
 }

@@ -10,6 +10,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 abstract class AbstractApiTestCase extends ApiTestCase
 {
+    #[\Override]
     protected static ?bool $alwaysBootKernel = false;
 
     protected static string $requestPath;
@@ -52,7 +53,7 @@ abstract class AbstractApiTestCase extends ApiTestCase
 
     protected static function formatDateTime(string $datetime): string
     {
-        return (new \DateTimeImmutable($datetime))->format(\DateTimeImmutable::ATOM);
+        return new \DateTimeImmutable($datetime)->format(\DateTimeImmutable::ATOM);
     }
 
     /**

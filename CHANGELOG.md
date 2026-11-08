@@ -8,7 +8,7 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
-- [PR-XX](https://github.com/itk-dev/event-database-api/pull/XX)
+- [PR-75](https://github.com/itk-dev/event-database-api/pull/75)
   Update Rector (2.8) and PHPStan (2.3) and apply the new Rector rules
 - [PR-74](https://github.com/itk-dev/event-database-api/pull/74)
   Update dependencies in-constraint (Symfony 7.4.23 security release, API Platform 4.3.21, PHPUnit 13.4)

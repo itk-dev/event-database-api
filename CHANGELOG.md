@@ -8,6 +8,9 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-70](https://github.com/itk-dev/event-database-api/pull/70)
+  Update the docker compose template (itk-version 3.2.4) and the PHP 8.5 image
+
 ## [1.3.0] - 2026-11-04
 
 - [PR-62](https://github.com/itk-dev/event-database-api/pull/62)

@@ -34,14 +34,20 @@
 name: Symfony PHP
 
 env:
-  COMPOSE_USER: root
+  COMPOSE_USER: runner
 
 on:
   pull_request:
+    paths: &paths
+      - "**/*.php"
+      - "composer.json"
+      - "composer.lock"
+      - "docker-compose.yml"
   push:
     branches:
       - main
       - develop
+    paths: *paths
 
 jobs:
   coding-standards:

@@ -1,6 +1,5 @@
 services:
   phpfpm:
-    image: itkdev/php8.4-fpm:alpine
     environment:
       - PHP_MEMORY_LIMIT=256M
 
@@ -15,3 +14,5 @@ services:
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.priority=200"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${COMPOSE_SERVER_DOMAIN}`) && PathPrefix(`${APP_PATH_PREFIX}`)"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.priority=200"
+      # This app has no cron jobs. Let the importer on the same domain serve '/cron-metrics'.
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-metrics.priority=1"

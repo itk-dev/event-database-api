@@ -11,7 +11,7 @@ API platform front-end for the Danish event database used by the municipality of
 `migrations/` and `src/Entity/` directories are empty).
 
 Stack: PHP 8.3+, Symfony 7.4, API Platform 4.3, Elasticsearch 8.x. Runs entirely in Docker via
-`itkdev/php8.4-fpm` + nginx.
+`itkdev/php8.5-fpm` + nginx.
 
 ## Common commands
 

@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-XX](https://github.com/itk-dev/event-database-api/pull/XX)
+  Update Symfony Flex recipes
 - [PR-76](https://github.com/itk-dev/event-database-api/pull/76)
   Update API Platform to 4.4 (OpenAPI 3.2.0, no `charset` in the `application/ld+json` content type)
 - [PR-75](https://github.com/itk-dev/event-database-api/pull/75)

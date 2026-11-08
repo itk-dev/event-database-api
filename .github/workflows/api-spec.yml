@@ -38,7 +38,7 @@ jobs:
         run: |
           docker network create frontend
           # The spec export only needs PHP — pull phpfpm alone and run it as a
-          # one-off (--no-deps skips mariadb/rabbit), not the whole stack.
+          # one-off (--no-deps skips mariadb), not the whole stack.
           docker compose pull --quiet phpfpm
           docker compose run --rm --no-deps phpfpm composer install --no-interaction
 

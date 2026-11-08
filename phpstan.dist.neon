@@ -17,3 +17,10 @@ parameters:
         - identifier: missingType.iterableValue
         # The ID properties are set reflectively by API Platform.
         - '#Property App\\Api\\Dto\\[^\\]+::\$id is unused#'
+    # pb30/phpstan-composer-analysis: report packages used directly but only installed transitively ("shadow
+    # dependencies") and dev packages used in production code. Unused/misplaced checks are off: bundles and
+    # extensions are used through config, not class references, so they would all be false positives.
+    composerAnalysis:
+        ignoreAllUnusedDeps: true
+        ignoreAllProdDepsInDev: true
+        disableExtensionsAnalysis: true

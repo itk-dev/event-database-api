@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+- [PR-XX](https://github.com/itk-dev/event-database-api/pull/XX)
+  Add PHPStan deprecation rules (baseline the API Platform 4.4 `#[ApiFilter]` deprecations)
 - [PR-77](https://github.com/itk-dev/event-database-api/pull/77)
   Update Symfony Flex recipes
 - [PR-76](https://github.com/itk-dev/event-database-api/pull/76)

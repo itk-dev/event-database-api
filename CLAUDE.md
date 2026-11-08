@@ -10,7 +10,7 @@ API platform front-end for the Danish event database used by the municipality of
 `docker-compose.yml` is part of the standard ITK Dev Symfony image but is **not used for domain data** (the
 `migrations/` and `src/Entity/` directories are empty).
 
-Stack: PHP 8.3+, Symfony 7.4, API Platform 4.3, Elasticsearch 8.x. Runs entirely in Docker via
+Stack: PHP 8.5+, Symfony 7.4, API Platform 4.3, Elasticsearch 8.x. Runs entirely in Docker via
 `itkdev/php8.5-fpm` + nginx.
 
 ## Common commands

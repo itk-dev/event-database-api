@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class AuthenticationTest extends AbstractApiTestCase
 {
+    #[\Override]
     protected static string $requestPath = '/api/v2/events';
 
     #[DataProvider('protectedEndpointProvider')]

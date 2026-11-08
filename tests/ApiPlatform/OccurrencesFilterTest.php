@@ -15,6 +15,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
  */
 final class OccurrencesFilterTest extends AbstractApiTestCase
 {
+    #[\Override]
     protected static string $requestPath = '/api/v2/occurrences';
 
     #[DataProvider('getOccurrencesProvider')]

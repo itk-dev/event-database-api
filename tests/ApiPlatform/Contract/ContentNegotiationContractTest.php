@@ -24,7 +24,7 @@ final class ContentNegotiationContractTest extends AbstractApiTestCase
         $response = $this->requestWithAccept('application/ld+json');
 
         $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
-        $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
+        $this->assertResponseHeaderSame('content-type', 'application/ld+json');
     }
 
     public function testPlainJsonIsNotAcceptable(): void

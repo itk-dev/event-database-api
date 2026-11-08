@@ -8,6 +8,8 @@ See [keep a changelog] for information about writing changes to this log.
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-11-08
+
 - [PR-78](https://github.com/itk-dev/event-database-api/pull/78)
   Add PHPStan deprecation rules (ignore the API Platform 4.4 `#[ApiFilter]` deprecations)
 - [PR-77](https://github.com/itk-dev/event-database-api/pull/77)
@@ -24,7 +26,6 @@ See [keep a changelog] for information about writing changes to this log.
   Update Elasticsearch to 8.19.23 and remove the unused RabbitMQ service
 - [PR-71](https://github.com/itk-dev/event-database-api/pull/71)
   Require PHP 8.5 and apply the Rector PHP 8.5 rules
-
 - [PR-70](https://github.com/itk-dev/event-database-api/pull/70)
   Update the docker compose template (itk-version 3.2.4) and the PHP 8.5 image
 
@@ -199,7 +200,8 @@ See [keep a changelog] for information about writing changes to this log.
 - Added multi-value filtering for Lactions and Organizations
 
 [keep a changelog]: https://keepachangelog.com/en/1.1.0/
-[Unreleased]: https://github.com/itk-dev/event-database-api/compare/1.3.0...HEAD
+[Unreleased]: https://github.com/itk-dev/event-database-api/compare/1.4.0...HEAD
+[1.4.0]: https://github.com/itk-dev/event-database-api/compare/1.3.0...1.4.0
 [1.3.0]: https://github.com/itk-dev/event-database-api/compare/1.2.6...1.3.0
 [1.2.6]: https://github.com/itk-dev/event-database-api/compare/1.2.5...1.2.6
 [1.2.5]: https://github.com/itk-dev/event-database-api/compare/1.2.4...1.2.5

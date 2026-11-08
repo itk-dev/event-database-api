@@ -30,6 +30,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 final class Os2displayContractTest extends AbstractApiTestCase
 {
+    #[\Override]
     protected static string $requestPath = '/api/v2/occurrences';
 
     // Subscription poster: upcoming occurrences (end[gt]) for a tag/location.

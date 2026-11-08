@@ -33,7 +33,7 @@ final class SearchParamsBuilderTest extends TestCase
     // Goal: with no filters the query defaults to match_all and pagination/sort are set.
     public function testDefaultsToMatchAllWithPagination(): void
     {
-        $params = (new SearchParamsBuilder())->buildParams(IndexName::Events->value, $this->noFilters(), 20, 5);
+        $params = new SearchParamsBuilder()->buildParams(IndexName::Events->value, $this->noFilters(), 20, 5);
 
         $this->assertSame(IndexName::Events->value, $params['index']);
         $this->assertEquals(['match_all' => (object) []], $params['body']['query']);
@@ -45,7 +45,7 @@ final class SearchParamsBuilderTest extends TestCase
     // Goal: a single associative clause (e.g. a MatchFilter hit) is wrapped in bool/must.
     public function testSingleClauseWrappedInBoolMust(): void
     {
-        $params = (new SearchParamsBuilder())->buildParams(
+        $params = new SearchParamsBuilder()->buildParams(
             IndexName::Events->value,
             $this->withFilters([['match' => ['title' => 'x']]]),
             0,
@@ -59,7 +59,7 @@ final class SearchParamsBuilderTest extends TestCase
     // nested under numeric keys.
     public function testListClauseIsFlattenedIntoMust(): void
     {
-        $params = (new SearchParamsBuilder())->buildParams(
+        $params = new SearchParamsBuilder()->buildParams(
             IndexName::Events->value,
             $this->withFilters([[['terms' => ['organizer.entityId' => ['9'], 'boost' => 1.0]]]]),
             0,
@@ -72,7 +72,7 @@ final class SearchParamsBuilderTest extends TestCase
     // Goal: multiple clauses accumulate under a single bool/must.
     public function testMultipleClausesCombine(): void
     {
-        $params = (new SearchParamsBuilder())->buildParams(
+        $params = new SearchParamsBuilder()->buildParams(
             IndexName::Events->value,
             $this->withFilters([
                 ['match' => ['title' => 'x']],
@@ -92,7 +92,7 @@ final class SearchParamsBuilderTest extends TestCase
     #[DataProvider('sortProvider')]
     public function testSortPerIndex(string $index, array $expectedSort): void
     {
-        $params = (new SearchParamsBuilder())->buildParams($index, $this->noFilters(), 0, 10);
+        $params = new SearchParamsBuilder()->buildParams($index, $this->noFilters(), 0, 10);
 
         $this->assertSame($expectedSort, $params['body']['sort']);
     }

@@ -23,6 +23,7 @@ use App\Tests\ApiPlatform\AbstractApiTestCase;
  */
 final class AarhusguidenContractTest extends AbstractApiTestCase
 {
+    #[\Override]
     protected static string $requestPath = '/api/v2/daily_occurrences';
 
     // Calendar / tag view: public events carrying a tag, within a date window,

@@ -28,7 +28,7 @@ class ApiKeysAddCommand extends Command
     private const string ENV_LINE_PATTERN = '/^APP_API_KEYS=(?:\'[^\']*\'|"(?:[^"\\\\]|\\\\.)*"|.*)$/m';
 
     public function __construct(
-        #[Autowire('%kernel.project_dir%')]
+        #[Autowire(param: 'kernel.project_dir')]
         private readonly string $projectDir,
     ) {
         parent::__construct();

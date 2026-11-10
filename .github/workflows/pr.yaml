@@ -17,14 +17,14 @@ jobs:
         uses: actions/cache@v5
         with:
           path: vendor
-          key: vendor-php8.4-${{ hashFiles('composer.lock') }}
-          restore-keys: vendor-php8.4-
+          key: vendor-php8.5-${{ hashFiles('composer.lock') }}
+          restore-keys: vendor-php8.5-
 
       - name: Start docker compose setup and install site
         run: |
           docker network create frontend
-          # API tests need PHP + Elasticsearch only (not mariadb/rabbit/nginx/mail);
-          # --no-deps keeps phpfpm's mariadb/rabbit dependencies from starting.
+          # API tests need PHP + Elasticsearch only (not mariadb/nginx/mail);
+          # --no-deps keeps phpfpm's mariadb dependency from starting.
           docker compose pull --quiet phpfpm elasticsearch
           docker compose up --detach --wait --no-deps phpfpm elasticsearch
           docker compose exec -T phpfpm composer install --no-interaction
@@ -57,8 +57,8 @@ jobs:
         uses: actions/cache@v5
         with:
           path: vendor
-          key: vendor-php8.4-${{ hashFiles('composer.lock') }}
-          restore-keys: vendor-php8.4-
+          key: vendor-php8.5-${{ hashFiles('composer.lock') }}
+          restore-keys: vendor-php8.5-
 
       - name: Install dependencies
         run: |
@@ -81,8 +81,8 @@ jobs:
         uses: actions/cache@v5
         with:
           path: vendor
-          key: vendor-php8.4-${{ hashFiles('composer.lock') }}
-          restore-keys: vendor-php8.4-
+          key: vendor-php8.5-${{ hashFiles('composer.lock') }}
+          restore-keys: vendor-php8.5-
 
       - name: Install dependencies
         run: |

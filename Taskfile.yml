@@ -1,9 +1,9 @@
 # https://taskfile.dev
 
-version: "3"
+version: '3'
 
 # https://taskfile.dev/usage/#env-files
-dotenv: [".env.local", ".env"]
+dotenv: ['.env.local', '.env']
 
 vars:
   # https://taskfile.dev/reference/templating/
@@ -57,20 +57,20 @@ tasks:
           COMPOSE_ARGS: exec phpfpm bin/console app:fixtures:load {{.ITEM}} --url=file:///app/tests/resources/{{.ITEM}}.json
 
   composer:
-    desc: "Run `composer` command. Example: task composer -- normalize"
+    desc: 'Run `composer` command. Example: task composer -- normalize'
     cmds:
       - task: compose
         vars:
           COMPOSE_ARGS: exec phpfpm composer {{.COMPOSER_ARGS}}
 
   compose:
-    desc: "Run `docker compose` command. Example: task compose -- ps"
+    desc: 'Run `docker compose` command. Example: task compose -- ps'
     cmds:
       # Run docker compose with both arguments passed via var plus any cli args.
-      - "{{.DOCKER_COMPOSE}} {{.COMPOSE_ARGS}} {{.CLI_ARGS}}"
+      - '{{.DOCKER_COMPOSE}} {{.COMPOSE_ARGS}} {{.CLI_ARGS}}'
 
   console:
-    desc: "Run Symfony console command. Example: task console -- cache:clear"
+    desc: 'Run Symfony console command. Example: task console -- cache:clear'
     cmds:
       # Run docker compose with both arguments passed via var plus any cli args.
       - task: compose
@@ -78,7 +78,7 @@ tasks:
           COMPOSE_ARGS: exec phpfpm bin/console {{.CONSOLE_ARGS}}
 
   coding-standards:apply:
-    desc: "Apply coding standards"
+    desc: 'Apply coding standards'
     cmds:
       - task: coding-standards:markdown:apply
       - task: coding-standards:php:apply
@@ -87,7 +87,7 @@ tasks:
     silent: true
 
   coding-standards:check:
-    desc: "Apply coding standards"
+    desc: 'Apply coding standards'
     cmds:
       - task: coding-standards:markdown:check
       - task: coding-standards:php:check
@@ -96,14 +96,14 @@ tasks:
     silent: true
 
   coding-standards:markdown:apply:
-    desc: "Apply coding standards for Markdown"
+    desc: 'Apply coding standards for Markdown'
     cmds:
       - task: compose
         vars:
           COMPOSE_ARGS: run --rm markdownlint markdownlint '**/*.md' --fix
 
   coding-standards:markdown:check:
-    desc: "Apply and check coding standards for Markdown"
+    desc: 'Apply and check coding standards for Markdown'
     cmds:
       - task: coding-standards:markdown:apply
       - task: compose
@@ -111,7 +111,7 @@ tasks:
           COMPOSE_ARGS: run --rm markdownlint markdownlint '**/*.md'
 
   coding-standards:php:apply:
-    desc: "Apply coding standards for PHP"
+    desc: 'Apply coding standards for PHP'
     cmds:
       - task: compose
         vars:
@@ -119,7 +119,7 @@ tasks:
     silent: true
 
   coding-standards:php:check:
-    desc: "Apply and check coding standards for PHP"
+    desc: 'Apply and check coding standards for PHP'
     cmds:
       - task: coding-standards:php:apply
       - task: compose
@@ -128,7 +128,7 @@ tasks:
     silent: true
 
   coding-standards:twig:apply:
-    desc: "Apply coding standards for Twig"
+    desc: 'Apply coding standards for Twig'
     cmds:
       - task: compose
         vars:
@@ -136,7 +136,7 @@ tasks:
     silent: true
 
   coding-standards:twig:check:
-    desc: "Apply and check coding standards for Twig"
+    desc: 'Apply and check coding standards for Twig'
     cmds:
       - task: coding-standards:twig:apply
       - task: compose
@@ -145,7 +145,7 @@ tasks:
     silent: true
 
   coding-standards:yaml:apply:
-    desc: "Apply coding standards for YAML"
+    desc: 'Apply coding standards for YAML'
     cmds:
       - task: compose
         vars:
@@ -153,7 +153,7 @@ tasks:
     silent: true
 
   coding-standards:yaml:check:
-    desc: "Apply and check coding standards for YAML"
+    desc: 'Apply and check coding standards for YAML'
     cmds:
       - task: coding-standards:yaml:apply
       - task: compose
@@ -162,14 +162,14 @@ tasks:
     silent: true
 
   code-analysis:
-    desc: "Run code analysis"
+    desc: 'Run code analysis'
     cmds:
       - task: code-analysis:phpstan
       - task: code-analysis:rector
     silent: true
 
   code-analysis:phpstan:
-    desc: "Run PHPStan"
+    desc: 'Run PHPStan'
     cmds:
       - task: compose
         vars:
@@ -177,7 +177,7 @@ tasks:
     silent: true
 
   code-analysis:rector:
-    desc: "Check for Rector suggestions (dry-run; no changes applied)"
+    desc: 'Check for Rector suggestions (dry-run; no changes applied)'
     cmds:
       - task: compose
         vars:
@@ -185,7 +185,7 @@ tasks:
     silent: true
 
   code-analysis:rector:apply:
-    desc: "Apply Rector changes"
+    desc: 'Apply Rector changes'
     cmds:
       - task: compose
         vars:

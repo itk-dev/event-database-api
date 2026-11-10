@@ -26,20 +26,23 @@
 name: Composer
 
 env:
-  COMPOSE_USER: root
+  COMPOSE_USER: runner
 
 on:
   pull_request:
+    paths: &paths
+      - "composer.json"
+      - "composer.lock"
+      - "docker-compose.yml"
   push:
     branches:
       - main
       - develop
+    paths: *paths
 
 jobs:
   composer-validate:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
     steps:
       - uses: actions/checkout@v7
 
@@ -52,8 +55,6 @@ jobs:
 
   composer-normalized:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
     steps:
       - uses: actions/checkout@v7
 
@@ -67,8 +68,6 @@ jobs:
 
   composer-audit:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
     steps:
       - uses: actions/checkout@v7
 

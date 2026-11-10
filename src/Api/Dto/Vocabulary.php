@@ -54,6 +54,9 @@ use App\Api\State\VocabularyRepresentationProvider;
 )]
 readonly class Vocabulary
 {
+    /**
+     * @param list<string> $tags
+     */
     public function __construct(
         public string $name,
         #[ApiProperty(

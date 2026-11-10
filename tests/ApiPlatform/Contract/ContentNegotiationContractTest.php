@@ -16,6 +16,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
  */
 final class ContentNegotiationContractTest extends AbstractApiTestCase
 {
+    #[\Override]
     protected static string $requestPath = '/api/v2/events';
 
     public function testLdJsonIsSupported(): void
@@ -23,7 +24,7 @@ final class ContentNegotiationContractTest extends AbstractApiTestCase
         $response = $this->requestWithAccept('application/ld+json');
 
         $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
-        $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
+        $this->assertResponseHeaderSame('content-type', 'application/ld+json');
     }
 
     public function testPlainJsonIsNotAcceptable(): void

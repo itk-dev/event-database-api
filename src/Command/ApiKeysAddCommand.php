@@ -28,7 +28,7 @@ class ApiKeysAddCommand extends Command
     private const string ENV_LINE_PATTERN = '/^APP_API_KEYS=(?:\'[^\']*\'|"(?:[^"\\\\]|\\\\.)*"|.*)$/m';
 
     public function __construct(
-        #[Autowire('%kernel.project_dir%')]
+        #[Autowire(param: 'kernel.project_dir')]
         private readonly string $projectDir,
     ) {
         parent::__construct();
@@ -187,7 +187,7 @@ class ApiKeysAddCommand extends Command
      */
     private function parseApiKeys(string $contents): array
     {
-        $value = (new Dotenv())->parse($contents)[self::ENV_VAR] ?? '[]';
+        $value = new Dotenv()->parse($contents)[self::ENV_VAR] ?? '[]';
 
         return json_decode($value, true, 512, JSON_THROW_ON_ERROR);
     }

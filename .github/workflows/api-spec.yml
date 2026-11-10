@@ -31,14 +31,14 @@ jobs:
         uses: actions/cache@v5
         with:
           path: vendor
-          key: vendor-php8.4-${{ hashFiles('composer.lock') }}
-          restore-keys: vendor-php8.4-
+          key: vendor-php8.5-${{ hashFiles('composer.lock') }}
+          restore-keys: vendor-php8.5-
 
       - name: Install dependencies
         run: |
           docker network create frontend
           # The spec export only needs PHP — pull phpfpm alone and run it as a
-          # one-off (--no-deps skips mariadb/rabbit), not the whole stack.
+          # one-off (--no-deps skips mariadb), not the whole stack.
           docker compose pull --quiet phpfpm
           docker compose run --rm --no-deps phpfpm composer install --no-interaction
 

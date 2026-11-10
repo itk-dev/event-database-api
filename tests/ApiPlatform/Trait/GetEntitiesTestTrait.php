@@ -17,7 +17,7 @@ trait GetEntitiesTestTrait
         $response = $this->get([]);
 
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
-        $this->assertResponseHeaderSame('content-type', 'application/ld+json; charset=utf-8');
+        $this->assertResponseHeaderSame('content-type', 'application/ld+json');
         $this->assertJson($response->getContent());
 
         $data = $response->toArray();

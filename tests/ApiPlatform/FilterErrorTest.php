@@ -19,6 +19,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
  */
 final class FilterErrorTest extends AbstractApiTestCase
 {
+    #[\Override]
     protected static string $requestPath = '/api/v2/events';
 
     #[DataProvider('invalidDateRangeProvider')]
